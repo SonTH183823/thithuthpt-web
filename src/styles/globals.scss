@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #1786fa;
+  --chkbg: red;
+  --chkfg: green;
+}
+
+.feedback-item::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.modal-preview-post::-webkit-scrollbar {
+  width: 0px;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+.filter-horizontal::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #bbb;
+  border-radius: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  outline: none !important;
+}
+
+.menu-section {
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+}
+
+.custom-read-menu {
+  .szh-menu {
+    padding: 0 !important;
+  }
+}
+
+h1 {
+  display: block;
+  font-size: 2em;
+  margin: 0.67em 0;
+  font-weight: bold;
+}
+
+h2 {
+  display: block;
+  font-size: 1.5em;
+  margin: 0.83em 0;
+  font-weight: bold;
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em;
+  margin: 1em 0;
+  font-weight: bold;
+}
+
+h4 {
+  display: block;
+  margin: 1.33em 0;
+  font-weight: bold;
+}
+
+h5 {
+  display: block;
+  font-size: 0.83em;
+  margin: 1.67em 0;
+  font-weight: bold;
+}
+
+h6 {
+  display: block;
+  font-size: 0.67em;
+  margin: 2.33em 0;
+  font-weight: bold;
+}
+//@font-face {
+//  font-family: "SF-DISPLAY";
+//  src: url("./src/assets/fonts/sf-display/SF-Pro-Display-Thin.ttf");
+//  font-weight: 300;
+//  font-style: normal;
+//}
+//
+//@font-face {
+//  font-family: "SF-DISPLAY";
+//  src: url("../src/assets/fonts/sf-display/SF-Pro-Display-Regular.ttf");
+//  font-weight: 400;
+//  font-style: normal;
+//}
+//
+//@font-face {
+//  font-family: "SF-DISPLAY";
+//  src: url("../src/assets/fonts/sf-display/SF-Pro-Display-Bold.ttf");
+//  font-weight: bold;
+//  font-style: normal;
+//}
+//
+//@font-face {
+//  font-family: "SF-DISPLAY";
+//  src: url("../src/assets/fonts/sf-display/SF-Pro-Display-RegularItalic.ttf");
+//  font-weight: normal;
+//  font-style: italic;
+//}
+
+//@font-face {
+//  font-family: "SF-DISPLAY";
+//  src: url("../src/assets/fonts/sf-display/SF-Pro-Display-Semibold.ttf");
+//  font-weight: 600;
+//  font-style: normal;
+//}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "SF-DISPLAY", Helvetica Neue, sans-serif;
+  word-spacing: 1px;
+  font-weight: 400;
+}
+
+::selection {
+  background-color: #1786fa;
+  color: white !important;
+}
+
+.bg-gradient {
+  background: linear-gradient(
+                  153.38deg,
+                  #1786fa -28.35%,
+                  #007afc 21.72%,
+                  #171f4e 90.45%
+  );
+}
+
+.text-gradient {
+  background: linear-gradient(#1786fa, #007afc, #171f4e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.custom-radio {
+  width: 10px;
+  height: 10px;
+}
+
+.custom-radio > div {
+  box-shadow: 0 0 0 5px #e5e7eb;
+}
+
+.custom-radio input:checked + div {
+  @apply bg-primary;
+  box-shadow: 0 0 0 2.5px white,
+  0 0 0 5px rgb(23 134 250 / var(--tw-bg-opacity));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1184px;
+  margin: 0 auto;
+}
+
+.box-shadow {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
