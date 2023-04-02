@@ -1,7 +1,11 @@
+import {Fragment} from "react";
+
 export default function Home() {
-  return (
-      <h1 className="text-3xl font-bold underline bg-red-400">
-        Hello world!
-      </h1>
-  )
+    return (
+        <Fragment>
+            <div className="mx-auto bg-base-200 h-screen">
+                Hello world!
+            </div>
+        </Fragment>
+    )
 }
