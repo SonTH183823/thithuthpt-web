@@ -4,9 +4,10 @@ import { MenuItem as MyMenuItem } from "./MenuItem";
 import { useRouter } from "next/router";
 export default function NavbarSeeMoreMenu() {
   const menu = [
-    { id: 1, title: "Về TROTOT", path: "/about" },
-    { id: 2, title: "Bảng giá dịch vụ", path: "/pricing" },
-    { id: 3, title: "FAQ", path: "/faq" },
+    { id: 1, title: "Giáo dục", path: "/about" },
+    { id: 2, title: "Tuyển sinh", path: "/pricing" },
+    { id: 3, title: "Kiến thức", path: "/faq" },
+    { id: 4, title: "Tổng hợp", path: "/faq" },
   ];
   const router = useRouter();
   return (
@@ -20,7 +21,7 @@ export default function NavbarSeeMoreMenu() {
                 : "text-info"
             }`}
           >
-            Xem thêm
+            Tin tức
           </span>
         </MenuButton>
       }

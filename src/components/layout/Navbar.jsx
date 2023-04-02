@@ -13,6 +13,9 @@ import {useSelector} from "react-redux";
 import ModalRequireLogin from "../modal/ModalRequireLogin";
 // import NavbarPostNew from "../menu/NavbarPostNew";
 import Image from "next/image";
+import NavbarSubjectMenu from "@/components/menu/NavbarSubjectMenu";
+import Drawer from "@/components/layout/DrawerLeft";
+import DrawerRight from "@/components/layout/DrawerRight";
 // import NavbarChat from "../menu/NavbarChat";
 // import NavbarRentalMenu from "../menu/NavbarRentalMenu";
 // import NavbarBuyMenu from "../menu/NavbarBuyMenu";
@@ -92,9 +95,9 @@ export default function Navbar() {
                 </div>
                 <div className="hidden lg:block">
                     <ul className="flex items-center gap-x-5">
-                        {/*<li className="user-menu">*/}
-                        {/*    <NavbarServiceMenu/>*/}
-                        {/*</li>*/}
+                        <li className="user-menu">
+                            <NavbarSubjectMenu/>
+                        </li>
                         {/*<li className="user-menu">*/}
                         {/*    <NavbarBuyMenu/>*/}
                         {/*</li>*/}
@@ -111,26 +114,23 @@ export default function Navbar() {
                                 router.push("/filter?tradingForm=4");
                             }}
                         >
-                            Tìm bạn ở ghép
+                            Tài liệu ôn tập
                         </li>
-                        <li
-                            className={`nav-item font-bold cursor-pointer ${
-                                router.pathname === "/blog" ? "text-primary" : "text-info"
-                            }`}
-                        >
-                            <Link href={"/blog"}>
-                                <span>Blog</span>
-                            </Link>
-                        </li>
+                        {/*<li*/}
+                        {/*    className={`nav-item font-bold cursor-pointer ${*/}
+                        {/*        router.pathname === "/blog" ? "text-primary" : "text-info"*/}
+                        {/*    }`}*/}
+                        {/*>*/}
+                        {/*    <Link href={"/blog"}>*/}
+                        {/*        <span>Blog</span>*/}
+                        {/*    </Link>*/}
+                        {/*</li>*/}
                         <li className="user-menu nav-item font-bold cursor-pointer text-info">
                             <NavbarSeeMoreMenu/>
                         </li>
 
                         {profile.id && (
                             <Fragment>
-                                {/*<li className="font-bold cursor-pointer h-[40px] w-[40px] flex items-center justify-center rounded-full bg-backgroundGray">*/}
-                                {/*    <Notification/>*/}
-                                {/*</li>*/}
                                 <li className="h-[39px] w-[39px] flex items-center justify-center rounded-full bg-backgroundGray nav-item font-bold cursor-pointer user-menu">
                                     <Notification/>
                                 </li>
@@ -140,7 +140,7 @@ export default function Navbar() {
                             <NavbarUserMenu/>
                         </li>
                         <Fragment>
-                            {!profile?.id ? (
+                            {profile?.id ? (
                                 <li
                                     className="nav-item font-bold cursor-pointer flex items-center space-x-2 bg-primary px-3 py-1 rounded-full"
                                     onClick={handlePostNew}
@@ -157,12 +157,12 @@ export default function Navbar() {
                     </ul>
                 </div>
             </div>
-            {/*<Drawer ref={nodeRef} show={showDrawer} setShow={setShowDrawer}/>*/}
-            {/*<DrawerRight*/}
-            {/*    ref={drawerRightRef}*/}
-            {/*    show={showDrawerRight}*/}
-            {/*    setShow={setShowDrawerRight}*/}
-            {/*/>*/}
+            <Drawer ref={nodeRef} show={showDrawer} setShow={setShowDrawer}/>
+            <DrawerRight
+                ref={drawerRightRef}
+                show={showDrawerRight}
+                setShow={setShowDrawerRight}
+            />
             <ModalRequireLogin id={"modal-require-login"} handleClick={handleLogin}/>
         </div>
     );
