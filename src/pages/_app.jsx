@@ -4,6 +4,7 @@ import Head from "next/head";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import MainLayout from "@/components/layout/MainLayout";
+import {wrapper} from "../store/configStore";
 
 function App({ Component, pageProps }) {
     const Layout = Component.Layout ?? MainLayout;
@@ -25,4 +26,4 @@ function App({ Component, pageProps }) {
     )
 }
 
-export default App;
+export default wrapper.withRedux(App);

@@ -106,6 +106,18 @@ export default function Navbar() {
                         {/*</li>*/}
                         <li
                             className={`nav-item font-bold cursor-pointer ${
+                                router.asPath.includes("/toeic")
+                                    ? "text-primary"
+                                    : "text-info"
+                            }`}
+                            onClick={() => {
+                                router.push("/toeic");
+                            }}
+                        >
+                            Toeic
+                        </li>
+                        <li
+                            className={`nav-item font-bold cursor-pointer ${
                                 router.asPath.includes("tradingForm=4")
                                     ? "text-primary"
                                     : "text-info"
@@ -116,17 +128,17 @@ export default function Navbar() {
                         >
                             Tài liệu ôn tập
                         </li>
-                        {/*<li*/}
-                        {/*    className={`nav-item font-bold cursor-pointer ${*/}
-                        {/*        router.pathname === "/blog" ? "text-primary" : "text-info"*/}
-                        {/*    }`}*/}
-                        {/*>*/}
-                        {/*    <Link href={"/blog"}>*/}
-                        {/*        <span>Blog</span>*/}
-                        {/*    </Link>*/}
-                        {/*</li>*/}
                         <li className="user-menu nav-item font-bold cursor-pointer text-info">
                             <NavbarSeeMoreMenu/>
+                        </li>
+                        <li
+                            className={`nav-item font-bold cursor-pointer ${
+                                router.pathname === "/about" ? "text-primary" : "text-info"
+                            }`}
+                        >
+                            <Link href={"/about"}>
+                                <span>Giới thiệu</span>
+                            </Link>
                         </li>
 
                         {profile.id && (
@@ -146,7 +158,7 @@ export default function Navbar() {
                                     onClick={handlePostNew}
                                 >
                                     <i className="fa-regular fa-pencil text-lg text-white"></i>
-                                    <span className="text-white">Đăng tin</span>
+                                    <span className="text-white">Đóng góp đề thi</span>
                                 </li>
                             ) : (
                                 <div className="user-menu">

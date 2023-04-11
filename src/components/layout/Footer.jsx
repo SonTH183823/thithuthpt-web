@@ -13,30 +13,39 @@ export default function Footer() {
         {id: 1, title: "Về chúng tôi", path: "/about"},
         {id: 4, title: "Blog", path: `/blog`},
     ];
+    const news = [
+        {id: 1, title: "Tin 1", path: "/about"},
+        {id: 4, title: "Tin 2", path: `/blog`},
+    ];
     const services = [
         {
             id: 1,
-            title: "Cho thuê phòng trọ",
+            title: "Toán Học",
             path: "/filter?tradingForm=1&category=4",
         },
         {
             id: 2,
-            title: "Cho thuê chung cư",
+            title: "Vật Lý",
             path: "/filter?tradingForm=1&category=1",
         },
         {
             id: 3,
-            title: "Cần thuê mặt bằng",
+            title: "Hóa Học",
             path: "/filter?tradingForm=1&category=3",
         },
         {
             id: 4,
-            title: "Cần thuê nhà ở",
+            title: "Sinh Học",
             path: "/filter?tradingForm=1&category=2",
         },
         {
             id: 5,
-            title: "Tìm bạn ở ghép",
+            title: "Địa Lý",
+            path: "/filter?tradingForm=1&category=2",
+        },
+        {
+            id: 6,
+            title: "GDCD",
             path: "/filter?tradingForm=4&category=4",
         },
     ];
@@ -47,14 +56,14 @@ export default function Footer() {
     return (
         <div className="bg-[#212121] lg:py-8 py-4 padding-mobile relative bottom-0">
             <div className="container mx-auto text-white">
-                <div className="lg:grid grid-cols-3 lg:space-x-6 mb-8">
+                <div className="lg:grid grid-cols-4 lg:space-x-6 mb-8">
                     <div>
-                        <TitleWithUnderLine title="Thi thử ngay"/>
+                        <TitleWithUnderLine title="Thi ngay"/>
                         <ul className={"my-4"}>
                             {services.map((item) => (
                                 <li
                                     key={item.id}
-                                    className={"mb-4 cursor-pointer text-backgroundGray"}
+                                    className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary"}
                                     onClick={() => handleClick(item)}
                                 >
                                     {item.title}
@@ -67,7 +76,21 @@ export default function Footer() {
                         <ul className={"my-4"}>
                             {about.map((item) => (
                                 <li
-                                    className={"mb-4 cursor-pointer text-backgroundGray"}
+                                    className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary w-fit"}
+                                    key={item.id}
+                                    onClick={() => handleClick(item)}
+                                >
+                                    {item.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <TitleWithUnderLine title="Tin tức"/>
+                        <ul className={"my-4"}>
+                            {news.map((item) => (
+                                <li
+                                    className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary"}
                                     key={item.id}
                                     onClick={() => handleClick(item)}
                                 >

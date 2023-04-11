@@ -45,3 +45,10 @@ export const menuUser = [
         path: "/sign-in",
     },
 ];
+
+export const categoryTitleConfig = {
+    1: "Căn hộ/Chung cư",
+    2: "Nhà ở",
+    3: "Văn phòng/Mặt bằng kinh doanh",
+    4: "Phòng trọ",
+};

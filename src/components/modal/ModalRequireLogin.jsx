@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import ButtonPrimary from "../button/ButtonPrimary";
-import logo from "@/assets/images/logo_no_icon.png";
+import logo from "@/assets/images/logo-full.png";
 const ModalRequireLogin = ({ handleClick = () => {}, id }) => {
   return (
     <div>
@@ -14,7 +14,7 @@ const ModalRequireLogin = ({ handleClick = () => {}, id }) => {
         <label className="modal-box relative" htmlFor="">
           <div className="flex flex-col items-center space-y-2">
             <h3 className="text-lg font-bold my-0">Vui lòng đăng nhập.</h3>
-            <div className="relative w-[200px] h-[50px]">
+            <div className="relative w-[300px] h-[120px]">
               <Image
                 alt="logo"
                 layout="fill"
