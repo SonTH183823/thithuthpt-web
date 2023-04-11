@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import CommentBox from "@/components/comment/CommentBox";
 import { useSelector } from "react-redux";
-import { commentAPI } from "apis/comment";
+// import { commentAPI } from "apis/comment";
 import { convertBase64 } from "utils/uploadImage";
 import CommentItem from "../comment/CommentItem";
 import Link from "next/link";
@@ -16,8 +16,9 @@ const interactives = [
   { id: 3, title: "Chia sẻ", icon: share },
 ];
 
-export default function InteractiveContainer({ postId }) {
-  const profile = useSelector((state) => state.auth.profile);
+export default function InteractiveContainer({ examId }) {
+  // const profile = useSelector((state) => state.auth.profile);
+  const profile = {}
 
   const [limit, setLimit] = useState(5);
   const [totalComment, setTotalComment] = useState(null);
@@ -34,29 +35,29 @@ export default function InteractiveContainer({ postId }) {
 
   const [loading, setLoading] = useState(false);
   const handlePostComment = async () => {
-    try {
-      setLoading(true);
-      const res = await commentAPI.postComment({
-        postId,
-        userId: profile.id,
-        content: comment,
-        base64Image,
-        base64Video,
-      });
-      setLoading(false);
-      if (res) {
-        setComment("");
-        setImageURL("");
-        setVideoURL("");
-        setBase64Image(null);
-        setBase64Video(null);
-        setTotalComment(totalComment + 1);
-        setComments([{ ...res, isEdit: true, isDelete: true }, ...comments]);
-      }
-    } catch (e) {
-      console.log(e);
-      setLoading(false);
-    }
+    // try {
+    //   setLoading(true);
+    //   const res = await commentAPI.postComment({
+    //     examId,
+    //     userId: profile.id,
+    //     content: comment,
+    //     base64Image,
+    //     base64Video,
+    //   });
+    //   setLoading(false);
+    //   if (res) {
+    //     setComment("");
+    //     setImageURL("");
+    //     setVideoURL("");
+    //     setBase64Image(null);
+    //     setBase64Video(null);
+    //     setTotalComment(totalComment + 1);
+    //     setComments([{ ...res, isEdit: true, isDelete: true }, ...comments]);
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    //   setLoading(false);
+    // }
   };
 
   const handlePostCommentReply = async (
@@ -87,15 +88,15 @@ export default function InteractiveContainer({ postId }) {
         return comment;
       });
       setComments([...temp]);
-      const res = await commentAPI.postCommentReply({
-        parentId,
-        userId: profile.id,
-        content,
-        videoBase64,
-        imageBase64,
-        owner,
-        postId,
-      });
+      // const res = await commentAPI.postCommentReply({
+      //   parentId,
+      //   userId: profile.id,
+      //   content,
+      //   videoBase64,
+      //   imageBase64,
+      //   owner,
+      //   examId,
+      // });
     } catch (e) {
       console.log(e);
     }
@@ -138,12 +139,12 @@ export default function InteractiveContainer({ postId }) {
         }
       });
       setComments([...temps]);
-      const res = await commentAPI.updateComment({
-        commentId: item.id,
-        contentUpdate: commentEditInput,
-        imageBase64,
-        videoBase64,
-      });
+      // const res = await commentAPI.updateComment({
+      //   commentId: item.id,
+      //   contentUpdate: commentEditInput,
+      //   imageBase64,
+      //   videoBase64,
+      // });
     } catch (e) {
       console.log(e);
     }
@@ -165,19 +166,19 @@ export default function InteractiveContainer({ postId }) {
   };
 
   const handleShowMoreComment = async () => {
-    try {
-      const res = await commentAPI.getComments({
-        postId,
-        offset: page * limit,
-        limit,
-      });
-      if (res.comments) {
-        setComments([...comments, ...res.comments]);
-        setPage(page + 1);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    // try {
+    //   const res = await commentAPI.getComments({
+    //     examId,
+    //     offset: page * limit,
+    //     limit,
+    //   });
+    //   if (res.comments) {
+    //     setComments([...comments, ...res.comments]);
+    //     setPage(page + 1);
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
 
   const handleDeleteComment = (cmt) => {
@@ -202,23 +203,23 @@ export default function InteractiveContainer({ postId }) {
     setComments([...temps]);
   };
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await commentAPI.getComments({
-          postId,
-          offset: 0,
-          limit,
-        });
-        if (res.comments) {
-          setPage(1);
-          setComments(res.comments);
-          setTotalComment(res.total);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, [postId]);
+    // (async () => {
+    //   try {
+    //     const res = await commentAPI.getComments({
+    //       examId,
+    //       offset: 0,
+    //       limit,
+    //     });
+    //     if (res.comments) {
+    //       setPage(1);
+    //       setComments(res.comments);
+    //       setTotalComment(res.total);
+    //     }
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // })();
+  }, [examId]);
 
   const handleChangeInputUploadImage = async (e) => {
     if (e.target && e.target.files && e.target.files.length) {
@@ -265,7 +266,7 @@ export default function InteractiveContainer({ postId }) {
       <h3>Bình luận</h3>
       {profile.id ? (
         <CommentBox
-          postId={postId}
+          examId={examId}
           profile={profile}
           comment={comment}
           setComment={setComment}

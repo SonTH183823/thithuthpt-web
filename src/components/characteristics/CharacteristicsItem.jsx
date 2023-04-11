@@ -3,8 +3,8 @@ import Image from "next/image";
 export default function CharacteristicsItem({icon, children, className = "",}) {
 
     return (
-        <div className={`flex space-x-1 items-center justify-center text-info ${className}`}>
-            <div className={'w-6 h-6 flex items-center justify-center'}>
+        <div className={`flex space-x-1 items-center justify-center text-info text-sm ${className}`}>
+            <div className={'w-5 h-5 flex items-center justify-center'}>
                 <Image
                     src={icon}
                     className={"object-cover w-full h-full"}

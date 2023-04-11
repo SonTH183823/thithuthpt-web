@@ -20,27 +20,27 @@ export default function NavbarUserMenu() {
     const router = useRouter();
     // const dispatch = useDispatch();
     const handleMenuClick = async (item) => {
-        // if (item.id === 112) {
-        //   if (theme === "light") {
-        //     localStorage.setItem("theme", "dark");
-        //   } else if (theme === "dark") {
-        //     localStorage.setItem("theme", "light");
-        //   } else {
-        //     localStorage.setItem("theme", "dark");
-        //   }
-        //   window.dispatchEvent(new Event("storage"));
-        //   return;
-        // } else if (item.id === 115) {
-        //   const sessionId = Cookies.get(process.env.NEXT_PUBLIC_SESSION_ID);
-        //   const res = await authAPI.logout(sessionId);
-        //   if (res.ok) {
-        //     dispatch(authUpdateProfile({}));
-        //     removeToken();
-        //     router.replace(`/`);
-        //   }
-        // } else if (item.path) {
-        //   router.push(item.path);
-        // }
+        if (item.id === 112) {
+            //   if (theme === "light") {
+            //     localStorage.setItem("theme", "dark");
+            //   } else if (theme === "dark") {
+            //     localStorage.setItem("theme", "light");
+            //   } else {
+            //     localStorage.setItem("theme", "dark");
+            //   }
+            //   window.dispatchEvent(new Event("storage"));
+            //   return;
+            // } else if (item.id === 115) {
+            //   const sessionId = Cookies.get(process.env.NEXT_PUBLIC_SESSION_ID);
+            //   const res = await authAPI.logout(sessionId);
+            //   if (res.ok) {
+            //     dispatch(authUpdateProfile({}));
+            //     removeToken();
+            //     router.replace(`/`);
+            //   }
+        } else if (item.path) {
+            router.push(item.path);
+        }
     };
 
     const getMenu = () => {

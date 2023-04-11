@@ -28,9 +28,9 @@ export const menuUser = [
     },
     {
         id: 4,
-        title: "Tin yêu thích",
+        title: "Đề thi yêu thích",
         icon: "fa-regular fa-heart",
-        path: "/post/favorites",
+        path: "/exam/favorites",
     },
     {
         id: 5,
@@ -47,8 +47,8 @@ export const menuUser = [
 ];
 
 export const categoryTitleConfig = {
-    1: "Căn hộ/Chung cư",
-    2: "Nhà ở",
+    1: "Mới nhất",
+    2: "Nổi bật",
     3: "Văn phòng/Mặt bằng kinh doanh",
     4: "Phòng trọ",
 };

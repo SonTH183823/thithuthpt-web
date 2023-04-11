@@ -69,7 +69,7 @@ function HomeExamItem({item, user = {}}) {
     };
     return (
         <div
-            className="md:w-[372px] w-[360px] mx-3 h-[440px] box-border rounded-xl relative shrink-0 bg-base-100 cursor-pointer mb-2 box-shadow"
+            className="md:w-[372px] w-[360px] mx-3  box-border rounded-xl relative shrink-0 bg-base-100 cursor-pointer mb-2 box-shadow"
             onClick={handleClick}
         >
             <div className="relative w-full h-[300px]">
