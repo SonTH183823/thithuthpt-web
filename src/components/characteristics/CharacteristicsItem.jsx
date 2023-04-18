@@ -1,6 +1,6 @@
 import * as React from "react";
 import Image from "next/image";
-export default function CharacteristicsItem({icon, children, className = "",}) {
+export function CharacteristicsItem({icon, children, className = "",}) {
 
     return (
         <div className={`flex space-x-1 items-center justify-center text-info text-sm ${className}`}>
@@ -13,4 +13,11 @@ export default function CharacteristicsItem({icon, children, className = "",}) {
             </div>
             <div>{children}</div>
         </div>);
+}
+
+export function CharacteristicsItemIcon({ icon = "", children, className = "", }) {
+    return (<div className={`flex space-x-1 items-center text-info ${className}`}>
+        {icon && <i className={icon}></i>}
+        <div>{children}</div>
+    </div>);
 }

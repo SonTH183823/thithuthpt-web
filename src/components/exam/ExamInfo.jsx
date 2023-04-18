@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import TitleExamItem from "@/components/exam/TitleExamItem";
 import {formatPrice, kFormatter} from "../../utils/common";
-import CharacteristicsItem from "@/components/characteristics/CharacteristicsItem";
+import {CharacteristicsItem} from "@/components/characteristics/CharacteristicsItem";
 import Dot from "@/components/common/Dot";
 import {formatDate} from "../../utils/moment";
 import time from "../../assets/images/svg/time.svg";
@@ -24,14 +24,11 @@ function ExamInfo({items}) {
     const showTitle = true
     return (
         <div className={"p-4"}>
-            <TitleExamItem className={"font-bold text-info flex items-center mb-2"}>
-                <span>{item.title} - {formatDate(new Date())}</span>
+            <TitleExamItem className={"font-bold text-info flex items-center mb-2 cursor-pointer"}>
+                <span>{item.title}</span>
             </TitleExamItem>
-            <div className={'flex justify-start space-x-6 '}>
-
-            </div>
             <div className={'bg-base-200 rounded-xl p-3'}>
-                <div className={'flex flex-row justify-start space-x-6 mb-3'}>
+                <div className={'flex flex-row justify-between space-x-6 mb-3'}>
                     <CharacteristicsItem icon={star}>
                         5.0
                     </CharacteristicsItem>
@@ -42,7 +39,7 @@ function ExamInfo({items}) {
                         50 câu
                     </CharacteristicsItem>
                 </div>
-                <div className={'flex justify-start space-x-6 '}>
+                <div className={'flex justify-between space-x-6'}>
                     <CharacteristicsItem icon={list_check}>
                         {kFormatter(1234)} lượt thi
                     </CharacteristicsItem>
@@ -50,6 +47,9 @@ function ExamInfo({items}) {
                         {kFormatter(12345)} lượt xem
                     </CharacteristicsItem>
                 </div>
+                {/*<div>*/}
+                {/*    Cập nhật ngày: {formatDate(new Date())}*/}
+                {/*</div>*/}
             </div>
 
         </div>

@@ -264,7 +264,7 @@ export default function InteractiveContainer({ examId }) {
   return (
     <div>
       <h3>Bình luận</h3>
-      {profile.id ? (
+      {!profile.id ? (
         <CommentBox
           examId={examId}
           profile={profile}

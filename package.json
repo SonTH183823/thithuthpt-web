@@ -30,6 +30,7 @@
     "react-otp-input": "^3.0.0",
     "react-redux": "^8.0.5",
     "react-share": "^4.4.1",
+    "react-star-ratings": "^2.3.0",
     "react-toastify": "^9.1.2",
     "react-tooltip": "^5.11.1",
     "redux-saga": "^1.2.3",

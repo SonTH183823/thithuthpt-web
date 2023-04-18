@@ -4,14 +4,20 @@ import React, {Fragment, useEffect, useState} from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Autoplay, Navigation} from "swiper";
 import ModalShare from "@/components/modal/ModalShare";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 import HomeExamItem from "@/components/exam/HomeExamItem";
-export default function ExamDetail ({exam = {
-    id: 1,
-    title: 'Bai thi mau'
-}}) {
+import DetailExam from "@/components/exam/DetailExam";
+import StarRating from "@/components/feedback/StarRating";
+import ButtonPrimary from "@/components/button/ButtonPrimary";
+
+export default function ExamDetail({
+                                       exam = {
+                                           id: 1,
+                                           title: 'Bai thi mau'
+                                       }
+                                   }) {
     // const profile = useSelector((state) => state.auth.profile);
     const router = useRouter();
     const [isFavorite, setIsFavorite] = useState(null);
@@ -19,6 +25,56 @@ export default function ExamDetail ({exam = {
     const favoritePosts = []
     const [relatedPosts, setRelatedPosts] = useState([]);
     const dispatch = useDispatch();
+    const [rating, setRating] = useState(0);
+    const changeRating = (newRating) => {
+        setRating(newRating);
+    };
+    const listTypeExam = [
+        {
+            name: 'Bất Phương Trình',
+            numQues: 3
+        },
+        {
+            name: 'Cấp Số Cộng - Số Nhân',
+            numQues: 3
+        },
+        {
+            name: 'Hàm Số - Giới Hạn',
+            numQues: 3
+        },
+        {
+            name: 'Hàm Số - Đồ Thị',
+            numQues: 3
+        },
+        {
+            name: 'Hình Học Giải Tích',
+            numQues: 3
+        },
+        {
+            name: 'Hình Học Không Gian',
+            numQues: 3
+        },
+        {
+            name: 'Loại Khác',
+            numQues: 3
+        },
+        {
+            name: 'Mũ - Lũy Thừa',
+            numQues: 3
+        },
+        {
+            name: 'Số Phức',
+            numQues: 3
+        },
+        {
+            name: 'Tích Phân - Đạo Hàm',
+            numQues: 3
+        },
+        {
+            name: 'Tổ Hợp - Xác Suất',
+            numQues: 3
+        },
+    ]
 
     // useEffect(() => {
     //     if (favoritePosts && post.id) {
@@ -98,7 +154,7 @@ export default function ExamDetail ({exam = {
                 dispatch(updateFavoritePosts(array));
             } else {
                 let temp = [...favoritePosts];
-                temp.push({ post: post, userFavorite: profile });
+                temp.push({post: post, userFavorite: profile});
                 dispatch(updateFavoritePosts(temp));
             }
             if (res.ok) {
@@ -134,7 +190,7 @@ export default function ExamDetail ({exam = {
     return (
         <Fragment>
             {exam.id ? (
-                <div className={"bg-base-100"}>
+                <div className={"bg-base-200"}>
                     <div className="container mx-auto py-8 padding-mobile">
                         <div className="text-sm breadcrumbs pb-4">
                             <ul>
@@ -154,17 +210,52 @@ export default function ExamDetail ({exam = {
                         </div>
                         <div className="lg:grid grid-cols-3 lg:space-x-5">
                             <div className="col-span-2 relative">
-                                thong tin de thi
-                                mo ta
-                                cac phan trong de thi
+                                <div className={"bg-base-100 rounded-xl "}>
+                                    <DetailExam/>
+                                </div>
+                                <div className={"bg-base-100 p-4 rounded-xl mt-4"}>
+                                    <h3>Phân loại câu hỏi trong đề thi</h3>
+                                    <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[1px]">
+                                        <div className="px-4 py-2 col-span-1 text-center">#</div>
+                                        <div className="px-4 py-2 col-span-3">Dạng câu hỏi</div>
+                                        <div className="px-4 py-2 col-span-2 text-center">Số câu hỏi</div>
+                                    </div>
+                                    {listTypeExam.map((item, index) => (
+                                        <div className="grid grid-cols-6 gap-4 border-b-primary border-b-[1px]">
+                                            <div className="px-4 py-2 col-span-1 text-center">{index + 1}</div>
+                                            <div className="px-4 py-2 col-span-3">{item.name}</div>
+                                            <div className="px-4 py-2 col-span-2 text-center">{item.numQues}</div>
+                                        </div>
+                                    ))}
+                                    <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[.5px]">
+                                        <div className="px-4 py-2 col-span-1 text-center"></div>
+                                        <div className="px-4 py-2 col-span-3">Tổng số</div>
+                                        <div className="px-4 py-2 col-span-2 text-center">50</div>
+                                    </div>
+                                </div>
+                                <div className={"bg-base-100 p-4 rounded-xl mt-4"}>
+                                    <h3 className="text-lg font-bold">
+                                        Đánh giá
+                                    </h3>
+                                    <div className={'flex flex-row justify-between'}>
+                                        <StarRating rating={rating} changeRating={changeRating}/>
+                                        <ButtonPrimary
+                                            title="Gửi đánh giá"
+                                            className="float-right px-2"
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"bg-base-100 p-4 rounded-xl mt-4"}>
+                                    <InteractiveContainer postId={exam.id}/>
+                                </div>
                             </div>
-                            <div className="hidden col-span-1 lg:flex flex-col gap-y-5">
+                            <div className="hidden col-span-1 lg:flex flex-row gap-y-5">
                                 Danh sach bang xep hang
                                 Bai thi tuong tu
                             </div>
                         </div>
                         <div className="py-4">
-                            <TitleSection title="Xem thêm các tin đăng tương tự" />
+                            <TitleSection title="Xem thêm các tin đăng tương tự"/>
                             <div className="flex items-center gap-x-5 py-4">
                                 {relatedPosts.length ? (
                                     <Fragment>
@@ -190,7 +281,7 @@ export default function ExamDetail ({exam = {
                                             {relatedPosts.length > 0 &&
                                                 relatedPosts.map((item) => (
                                                     <SwiperSlide key={item.id}>
-                                                        <HomeExamItem item={item} key={item.id} />
+                                                        <HomeExamItem item={item} key={item.id}/>
                                                     </SwiperSlide>
                                                 ))}
                                         </Swiper>
@@ -202,10 +293,9 @@ export default function ExamDetail ({exam = {
                                 )}
                             </div>
                         </div>
-                        <InteractiveContainer postId={ exam.id} />
                     </div>
                     {/*<ModalReportPost id={"modal-report-post"} postId={post.id} />*/}
-                    <ModalShare id={"modal-share-post"} title={exam.title} />
+                    <ModalShare id={"modal-share-post"} title={exam.title}/>
                 </div>
             ) : null}
         </Fragment>

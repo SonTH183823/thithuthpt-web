@@ -77,11 +77,9 @@ function HomeExamItem({item, user = {}}) {
                     // src={item.images[0]}
                     src={math}
                     alt="thumbnail image"
-                    layout={"fill"}
                     placeholder={"blur"}
                     // blurDataURL={item.images[0]}
                     blurDataURL={"https://ngocmeow.github.io/ava1.jpg"}
-                    objectFit={"cover"}
                     className={"rounded-tl-xl rounded-tr-xl"}
                 />
                 <ExamTag
