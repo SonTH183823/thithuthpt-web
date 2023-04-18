@@ -11,6 +11,9 @@ import HomeExamItem from "@/components/exam/HomeExamItem";
 import DetailExam from "@/components/exam/DetailExam";
 import StarRating from "@/components/feedback/StarRating";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
+import BXH from "@/components/exam-details/BXH";
+import TableTypeListQues from "@/components/exam-details/TableTypeListQues";
+import RelatedExam from "@/components/exam-details/RelatedExam";
 
 export default function ExamDetail({
                                        exam = {
@@ -29,52 +32,6 @@ export default function ExamDetail({
     const changeRating = (newRating) => {
         setRating(newRating);
     };
-    const listTypeExam = [
-        {
-            name: 'Bất Phương Trình',
-            numQues: 3
-        },
-        {
-            name: 'Cấp Số Cộng - Số Nhân',
-            numQues: 3
-        },
-        {
-            name: 'Hàm Số - Giới Hạn',
-            numQues: 3
-        },
-        {
-            name: 'Hàm Số - Đồ Thị',
-            numQues: 3
-        },
-        {
-            name: 'Hình Học Giải Tích',
-            numQues: 3
-        },
-        {
-            name: 'Hình Học Không Gian',
-            numQues: 3
-        },
-        {
-            name: 'Loại Khác',
-            numQues: 3
-        },
-        {
-            name: 'Mũ - Lũy Thừa',
-            numQues: 3
-        },
-        {
-            name: 'Số Phức',
-            numQues: 3
-        },
-        {
-            name: 'Tích Phân - Đạo Hàm',
-            numQues: 3
-        },
-        {
-            name: 'Tổ Hợp - Xác Suất',
-            numQues: 3
-        },
-    ]
 
     // useEffect(() => {
     //     if (favoritePosts && post.id) {
@@ -192,52 +149,19 @@ export default function ExamDetail({
             {exam.id ? (
                 <div className={"bg-base-200"}>
                     <div className="container mx-auto py-8 padding-mobile">
-                        <div className="text-sm breadcrumbs pb-4">
-                            <ul>
-                                <li className="cursor-pointer" onClick={handleFilterCategory}>
-                                    categoryTitleConfig[post.category]
-                                </li>
-                                <li onClick={handleFilterProvince} className="cursor-pointer">
-                                    provincesConfig[post.province]
-                                </li>
-                                <li className="cursor-pointer" onClick={handleFilterDistrict}>
-                                    districtsConfig[post.district]
-                                </li>
-                                <li className="cursor-pointer" onClick={handleFilterWard}>
-                                    wardsConfig[post.ward]
-                                </li>
-                            </ul>
-                        </div>
                         <div className="lg:grid grid-cols-3 lg:space-x-5">
                             <div className="col-span-2 relative">
                                 <div className={"bg-base-100 rounded-xl "}>
                                     <DetailExam/>
                                 </div>
-                                <div className={"bg-base-100 p-4 rounded-xl mt-4"}>
-                                    <h3>Phân loại câu hỏi trong đề thi</h3>
-                                    <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[1px]">
-                                        <div className="px-4 py-2 col-span-1 text-center">#</div>
-                                        <div className="px-4 py-2 col-span-3">Dạng câu hỏi</div>
-                                        <div className="px-4 py-2 col-span-2 text-center">Số câu hỏi</div>
-                                    </div>
-                                    {listTypeExam.map((item, index) => (
-                                        <div className="grid grid-cols-6 gap-4 border-b-primary border-b-[1px]">
-                                            <div className="px-4 py-2 col-span-1 text-center">{index + 1}</div>
-                                            <div className="px-4 py-2 col-span-3">{item.name}</div>
-                                            <div className="px-4 py-2 col-span-2 text-center">{item.numQues}</div>
-                                        </div>
-                                    ))}
-                                    <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[.5px]">
-                                        <div className="px-4 py-2 col-span-1 text-center"></div>
-                                        <div className="px-4 py-2 col-span-3">Tổng số</div>
-                                        <div className="px-4 py-2 col-span-2 text-center">50</div>
-                                    </div>
+                                <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
+                                    <TableTypeListQues />
                                 </div>
-                                <div className={"bg-base-100 p-4 rounded-xl mt-4"}>
+                                <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
                                     <h3 className="text-lg font-bold">
                                         Đánh giá
                                     </h3>
-                                    <div className={'flex flex-row justify-between'}>
+                                    <div className={'flex flex-row justify-between mb-2'}>
                                         <StarRating rating={rating} changeRating={changeRating}/>
                                         <ButtonPrimary
                                             title="Gửi đánh giá"
@@ -245,13 +169,17 @@ export default function ExamDetail({
                                         />
                                     </div>
                                 </div>
-                                <div className={"bg-base-100 p-4 rounded-xl mt-4"}>
+                                <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
                                     <InteractiveContainer postId={exam.id}/>
                                 </div>
                             </div>
-                            <div className="hidden col-span-1 lg:flex flex-row gap-y-5">
-                                Danh sach bang xep hang
-                                Bai thi tuong tu
+                            <div className="hidden col-span-1 lg:flex flex-col">
+                                <div className={"bg-base-100 rounded-xl px-4 "}>
+                                    <BXH idExam={12}/>
+                                </div>
+                                <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
+                                    <RelatedExam idExam={12}/>
+                                </div>
                             </div>
                         </div>
                         <div className="py-4">
