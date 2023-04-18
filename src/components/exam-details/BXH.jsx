@@ -78,11 +78,10 @@ function BXH({idExam}) {
             {
                 listE.map((item, index) => (
                     <div className="grid grid-cols-12 gap-2 !text-sm">
-                        <div className=" py-2 px-2 col-span-7 flex items-center relative">
+                        <div className=" py-2 px-2 col-span-7 flex items-center relative cursor-pointer">
                             <Avatar sizeAvatar={'small'} className={'w-8 h-8'}/>
                             {genCup(index + 1)}
-
-                            <span className={'ml-2 line-clamp-1 font-semibold'}>{item.name}</span>
+                            <span className={'ml-2 line-clamp-1 font-semibold hover:text-primary hover:underline'}>{item.name}</span>
                         </div>
                         <div className=" py-2 col-span-2 text-center">{item.point}</div>
                         <div className=" py-2 col-span-3 text-center">{item.time}</div>
