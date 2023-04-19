@@ -32,7 +32,10 @@ export default function DoExam() {
                                 <div className={'border-b-primary border-b-2 p-2'} key={index}>
                                     <Image src={examImg} alt={''} className={''}/>
                                     <div className={'flex flex-row justify-between'}>
-                                        {answers.map((item,idx)=> <ButtonSecondary className={'w-1/5 text-center'} title={item} isPrimary={true}/>)}
+                                        {answers.map((item, idx) =>
+                                            <label
+                                                className={'w-1/5 text-center font-bold bg-base-200 py-2 my-2 rounded-md cursor-pointer hover:bg-backgroundPrimary '}>
+                                                {item}</label>)}
                                     </div>
                                 </div>
                             ))}
