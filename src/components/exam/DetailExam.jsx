@@ -14,6 +14,8 @@ import ModalReportPost from "@/components/modal/ModalReportPost";
 import ModalShare from "@/components/modal/ModalShare";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip as ReactTooltip} from "react-tooltip";
+import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
+import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
 
 function DetailExam({i}) {
     const item = {
@@ -95,6 +97,15 @@ function DetailExam({i}) {
             modal.click();
         }
     };
+    const startExam = () => {
+        const modal = document.getElementById("modal-confirm-start-exam-id");
+        if (modal) {
+            modal.click();
+        }
+    };
+    const enterExam = () => {
+
+    }
     return (
         <div className={"p-4"}>
             <div className={"flex justify-between mb-2"}>
@@ -161,12 +172,12 @@ function DetailExam({i}) {
             <ButtonPrimary
                 title="Bắt đầu làm bài"
                 className="w-full mt-3"
-                handleClick={() => {
-                }}
+                handleClick={() => startExam()}
             />
             <ModalReportPost id={"modal-report-post"} postId={item.id}/>
             <ModalShare id={"modal-share-post"} title={item.title}/>
             <ReactTooltip id={'my-tooltip'}/>
+            <ModalConfirmStartExam id={"modal-confirm-start-exam-id"} handleClick={()=> enterExam()}/>
         </div>
     )
 }

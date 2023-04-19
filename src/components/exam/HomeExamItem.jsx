@@ -66,6 +66,7 @@ function HomeExamItem({item, user = {}}) {
     };
     const handleClick = () => {
         // router.push(`/post/${strToSlug(item.title)}-${item.id}`);
+        router.push(`/exam/aaa`);
     };
     return (
         <div
