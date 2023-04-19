@@ -17,7 +17,7 @@ import {Tooltip as ReactTooltip} from "react-tooltip";
 import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
 import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
 
-function DetailExam({i}) {
+function DetailExam({i, isDoExam = false}) {
     const item = {
         tradingForm: 1,
         showTitle: true,
@@ -169,15 +169,15 @@ function DetailExam({i}) {
                 </div>
 
             </div>
-            <ButtonPrimary
+            {!isDoExam && <ButtonPrimary
                 title="Bắt đầu làm bài"
                 className="w-full mt-3"
                 handleClick={() => startExam()}
-            />
+            />}
             <ModalReportPost id={"modal-report-post"} postId={item.id}/>
             <ModalShare id={"modal-share-post"} title={item.title}/>
             <ReactTooltip id={'my-tooltip'}/>
-            <ModalConfirmStartExam id={"modal-confirm-start-exam-id"} handleClick={()=> enterExam()}/>
+            <ModalConfirmStartExam id={"modal-confirm-start-exam-id"} handleClick={() => enterExam()}/>
         </div>
     )
 }
