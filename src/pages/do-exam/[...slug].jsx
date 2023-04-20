@@ -4,6 +4,7 @@ import ButtonPrimary from "@/components/button/ButtonPrimary";
 import Image from "next/image";
 import examImg from '@/assets/images/exam.jpeg'
 import ButtonSecondary from "@/components/button/ButtonSecondary";
+import CountDown from "@/components/exam-details/CountDown";
 
 export default function DoExam() {
     const [idx, setIndex] = useState(0)
@@ -21,7 +22,7 @@ export default function DoExam() {
     }
     return (<Fragment>
         {exam.id ? (<div className={"bg-base-200"}>
-            <div className="container mx-auto py-8 padding-mobile">
+            <div className="container mx-auto py-4 padding-mobile">
                 <div className="lg:grid grid-cols-3 lg:space-x-5">
                     <div className="col-span-2 relative">
                         <div className={"bg-base-100 rounded-xl "}>
@@ -41,9 +42,10 @@ export default function DoExam() {
                             ))}
                         </div>
                     </div>
-                    <div className="hidden col-span-1 lg:flex flex-col">
+                    <div className="hidden col-span-1 lg:flex flex-col !fixed !sticky !top-[0px]">
                         <div className={"bg-base-100 rounded-xl px-4 "}>
-                            Đồng hồ count down
+                            <h3 className={'!m-2'}>Thời gian còn lại</h3>
+                            <CountDown />
                         </div>
                         <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4"}>
                             <h3 className={'!m-2'}>Danh sách câu hỏi</h3>
