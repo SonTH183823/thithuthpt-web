@@ -23,7 +23,7 @@ export default function DoExam() {
     return (<Fragment>
         {exam.id ? (<div className={"bg-base-200"}>
             <div className="container mx-auto py-4 padding-mobile">
-                <div className="lg:grid grid-cols-3 lg:space-x-5">
+                <div className="lg:grid grid-cols-3 lg:space-x-4">
                     <div className="col-span-2 relative">
                         <div className={"bg-base-100 rounded-xl "}>
                             <DetailExam isDoExam={true}/>
