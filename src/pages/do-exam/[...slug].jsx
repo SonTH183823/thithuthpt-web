@@ -19,7 +19,6 @@ export default function DoExam() {
             oldPosition = index
             const divE = document.getElementById('question-' + index)
             const rect = divE.getBoundingClientRect();
-            // const top = rect.top - 80
             let top = rect.top + window.pageYOffset - 80;
             let left = rect.left + window.pageXOffset;
             window.scrollTo({top: top, left: left, behavior: 'smooth'});

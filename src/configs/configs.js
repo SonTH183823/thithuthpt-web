@@ -22,18 +22,12 @@ export const menuUser = [
     },
     {
         id: 3,
-        title: "Quản lý tin đăng",
-        icon: "fa-regular fa-ballot",
-        path: "/management/post",
-    },
-    {
-        id: 4,
         title: "Đề thi yêu thích",
         icon: "fa-regular fa-heart",
         path: "/exam/favorites",
     },
     {
-        id: 5,
+        id: 4,
         title: "Nạp tiền vào tài khoản",
         icon: "fa-duotone fa-money-check",
         path: "/deposit",

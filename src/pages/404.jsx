@@ -16,7 +16,7 @@ export default function FourOhFour() {
       </div>
       <div>
           <Link href={"/"}
-              className="mt-4 flex items-center justify-center gap-x-2 text-primary hover:text-white rounded-lg p-2 px-4 cursor-pointer bg-backgroundPrimary hover:bg-primary"
+              className="mt-4 flex items-center justify-center gap-x-2 text-white rounded-lg p-2 px-4 cursor-pointer bg-primary"
           >
               <span className="text-xl font-bold ">Về trang chủ</span>
           </Link>
