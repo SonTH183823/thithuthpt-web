@@ -16,8 +16,10 @@ import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip as ReactTooltip} from "react-tooltip";
 import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
 import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
+import {useRouter} from "next/router";
 
 function DetailExam({i, isDoExam = false}) {
+    const router = useRouter();
     const item = {
         tradingForm: 1,
         showTitle: true,
@@ -104,7 +106,7 @@ function DetailExam({i, isDoExam = false}) {
         }
     };
     const enterExam = () => {
-
+        router.replace('/do-exam/a');
     }
     return (
         <div className={"p-4"}>

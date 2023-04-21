@@ -49,6 +49,33 @@ export const menuUser = [
 export const categoryTitleConfig = {
     1: "Mới nhất",
     2: "Nổi bật",
-    3: "Văn phòng/Mặt bằng kinh doanh",
+    3: "Nâng cao",
     4: "Phòng trọ",
 };
+
+export const answerConfig = {
+    '0': {
+        value: 0,
+        label: 'Not answer'
+    },
+    'A': {
+        value: 1,
+        label: 'A'
+    },
+    'B': {
+        value: 2,
+        label: 'B'
+    },
+    'C': {
+        value: 3,
+        label: 'C'
+    },
+    'D': {
+        value: 4,
+        label: 'D'
+    },
+    'Mark': {
+        value: 5,
+        label: 'Mark'
+    },
+}

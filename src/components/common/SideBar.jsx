@@ -4,10 +4,10 @@ import SideBarItem from "@/components/side-bar/SideBarItem";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
-import { authAPI } from "apis/auth";
-import { removeToken } from "utils/auth";
-import { authUpdateProfile } from "store/auth/auth-slice";
+// import Cookies from "js-cookie";
+// import { authAPI } from "apis/auth";
+// import { removeToken } from "utils/auth";
+// import { authUpdateProfile } from "store/auth/auth-slice";
 const sideBars = [
   { id: 1, icon: "fa-regular fa-ballot", title: "Quản lý tin đăng" },
   {
@@ -60,7 +60,8 @@ const sideBarsCollaborator = [
 export default function SideBar(props) {
   const dispatch = useDispatch();
   const [sideBarActive, setSideBarActive] = useState(1);
-  const profile = useSelector((state) => state.auth.profile);
+  const profile = {}
+  // const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
   const handleChangeSideBarItem = async (index) => {
     setSideBarActive(index);
@@ -107,18 +108,18 @@ export default function SideBar(props) {
         break;
       }
       case 9: {
-        try {
-          const sessionId = Cookies.get(process.env.NEXT_PUBLIC_SESSION_ID);
-          const res = await authAPI.logout(sessionId);
-          if (res.ok) {
-            dispatch(authUpdateProfile({}));
-            removeToken();
-            router.replace(`/sign-in/permission`);
-          }
-          break;
-        } catch (e) {
-          console.log(e);
-        }
+        // try {
+        //   const sessionId = Cookies.get(process.env.NEXT_PUBLIC_SESSION_ID);
+        //   const res = await authAPI.logout(sessionId);
+        //   if (res.ok) {
+        //     dispatch(authUpdateProfile({}));
+        //     removeToken();
+        //     router.replace(`/sign-in/permission`);
+        //   }
+        //   break;
+        // } catch (e) {
+        //   console.log(e);
+        // }
       }
       default: {
         break;

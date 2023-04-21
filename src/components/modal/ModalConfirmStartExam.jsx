@@ -3,10 +3,11 @@ import React from "react";
 import ButtonPrimary from "../button/ButtonPrimary";
 import logo from "@/assets/images/logo-full.png";
 
-const ModalConfirmStartExam = ({
-                                   handleClick = () => {
-                                   }, id
-                               }) => {
+const ModalConfirmStartExam = (
+    {
+        handleClick = () => {
+        }, id
+    }) => {
     return (
         <div>
             <input type="checkbox" id={id} className="modal-toggle"/>

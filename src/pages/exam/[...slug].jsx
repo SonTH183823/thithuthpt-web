@@ -149,7 +149,7 @@ export default function ExamDetail({
             {exam.id ? (
                 <div className={"bg-base-200"}>
                     <div className="container mx-auto py-8 padding-mobile">
-                        <div className="lg:grid grid-cols-3 lg:space-x-5">
+                        <div className="lg:grid grid-cols-3 lg:space-x-4">
                             <div className="col-span-2 relative">
                                 <div className={"bg-base-100 rounded-xl "}>
                                     <DetailExam/>
@@ -180,45 +180,6 @@ export default function ExamDetail({
                                 <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
                                     <RelatedExam idExam={12}/>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="py-4">
-                            <TitleSection title="Xem thêm các tin đăng tương tự"/>
-                            <div className="flex items-center gap-x-5 py-4">
-                                {relatedPosts.length ? (
-                                    <Fragment>
-                                        <Swiper
-                                            slidesPerView={1}
-                                            spaceBetween={10}
-                                            modules={[Navigation, Autoplay]}
-                                            breakpoints={{
-                                                640: {
-                                                    slidesPerView: 1,
-                                                    spaceBetween: 10,
-                                                },
-                                                768: {
-                                                    slidesPerView: 2,
-                                                    spaceBetween: 5,
-                                                },
-                                                1024: {
-                                                    slidesPerView: 3,
-                                                    spaceBetween: 10,
-                                                },
-                                            }}
-                                        >
-                                            {relatedPosts.length > 0 &&
-                                                relatedPosts.map((item) => (
-                                                    <SwiperSlide key={item.id}>
-                                                        <HomeExamItem item={item} key={item.id}/>
-                                                    </SwiperSlide>
-                                                ))}
-                                        </Swiper>
-                                    </Fragment>
-                                ) : (
-                                    <div className="text-center w-full">
-                                        Không có tin đăng tương tự nào.
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>

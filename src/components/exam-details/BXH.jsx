@@ -1,8 +1,8 @@
 import React from 'react';
 import Avatar from "@/components/user/Avatar";
-// import gold from "@/assets/images/bxh/gold.png"
-// import silver from "@/assets/images/bxh/silver.png"
-// import bronze from "@/assets/images/bxh/bronze.png"
+import gold from "@/assets/images/bxh/gold.png"
+import silver from "@/assets/images/bxh/silver.png"
+import bronze from "@/assets/images/bxh/bronze.png"
 import Image from "next/image";
 
 const listE = [
@@ -60,9 +60,9 @@ const listE = [
 
 function BXH({idExam}) {
     const genCup = (index) => {
-        // if (index === 1) return <Image src={gold} alt={''} className={'absolute w-3 h-3 left-[-10px]'}/>
-        // if (index === 2) return <Image src={silver} alt={''} className={'absolute w-3 h-3 left-[-10px]'}/>
-        // if (index === 3) return <Image src={bronze} alt={''} className={'absolute w-3 h-3 left-[-10px]'}/>
+        if (index === 1) return <Image src={gold} alt={''} className={'absolute w-3 h-3 left-[-10px]'}/>
+        if (index === 2) return <Image src={silver} alt={''} className={'absolute w-3 h-3 left-[-10px]'}/>
+        if (index === 3) return <Image src={bronze} alt={''} className={'absolute w-3 h-3 left-[-10px]'}/>
         return <></>
     }
     return (
@@ -83,8 +83,8 @@ function BXH({idExam}) {
                             {genCup(index + 1)}
                             <span className={'ml-2 line-clamp-1 font-semibold hover:text-primary hover:underline'}>{item.name}</span>
                         </div>
-                        <div className=" py-2 col-span-2 text-center">{item.point}</div>
-                        <div className=" py-2 col-span-3 text-center">{item.time}</div>
+                        <div className=" py-2 col-span-2 text-center items-center flex justify-center">{item.point}</div>
+                        <div className=" py-2 col-span-3 text-center items-center flex justify-center">{item.time}</div>
                     </div>
                 ))
             }
