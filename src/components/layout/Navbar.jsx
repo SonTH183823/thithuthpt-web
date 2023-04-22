@@ -130,6 +130,7 @@ export default function Navbar() {
                         </li>
                         <li className="user-menu nav-item font-bold cursor-pointer text-info">
                             <NavbarSeeMoreMenu/>
+                            {/*    tin tức*/}
                         </li>
                         <li
                             className={`nav-item font-bold cursor-pointer ${

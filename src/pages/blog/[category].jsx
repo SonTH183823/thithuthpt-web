@@ -1,17 +1,23 @@
 import React, { Fragment, useEffect, useState } from "react";
-import banner from "@/assets/images/banners/1.png";
+// import banner from "@/assets/images/banners/1.png";
 import Image from "next/image";
 import PrimayNewItem from "@/components/new/PrimayNewItem";
 import NewCategorySection from "@/components/blog/NewCategorySection";
-import { NewAPI } from "apis/new";
+// import { NewAPI } from "apis/new";
 import NewHomeItem from "@/components/home/news/NewHomeItem";
-import { NewCategoryAPI } from "apis/new-category";
+// import { NewCategoryAPI } from "apis/new-category";
 import { strToSlug } from "utils/common";
 import { useRouter } from "next/router";
 import BannerSection from "@/components/blog/BannerSection";
 const PostByCategory = () => {
-  const [newsByCategory, setNewsByCategory] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [newsByCategory, setNewsByCategory] = useState([1,2,3,4,5]);
+  const [categories, setCategories] = useState([
+    'Toán học',
+    'Tuyển sinh',
+    'Tuyển sinh 1',
+    'Tuyển sinh 2',
+    'Tuyển sinh 3',
+  ]);
   const router = useRouter();
   const [category, setCategory] = useState(null);
   const [showLoadMore, setShowLoadMore] = useState(null);
@@ -61,13 +67,13 @@ const PostByCategory = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      if (router.asPath) {
-        const id = router.asPath.split("-").slice(-1);
-        setCategoryId(id);
-        getNews({ cateId: id, offset: 0 });
-      }
-    })();
+    // (async () => {
+    //   if (router.asPath) {
+    //     const id = router.asPath.split("-").slice(-1);
+    //     setCategoryId(id);
+    //     getNews({ cateId: id, offset: 0 });
+    //   }
+    // })();
   }, [router.asPath]);
 
   const handleClickCategory = (item) => {
@@ -120,7 +126,7 @@ const PostByCategory = () => {
                     onClick={() => handleClickCategory(item)}
                   >
                     <i className="fa-regular fa-chevron-right text-xs"></i>
-                    <span>{item.name}</span>
+                    <span>{item}</span>
                   </div>
                 ))}
               </div>
