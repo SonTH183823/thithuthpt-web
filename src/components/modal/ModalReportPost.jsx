@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import ButtonPrimary from "../button/ButtonPrimary";
-import logo from "@/assets/images/logo_no_icon.png";
 import InputWithoutValidate from "../input/InputWithoutValidate";
 import CheckBox from "../input/CheckBox";
 import RadioWithoutValidate from "../input/RadioWithoutValidate";

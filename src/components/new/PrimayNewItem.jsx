@@ -15,7 +15,7 @@ const PrimayNewItem = ({primary = false, item1}) => {
     const router = useRouter();
     const handleDetail = () => {
         const slug = strToSlug(item.title);
-        router.push(`/new/${slug}-${item.id}`);
+        router.push(`/news/${slug}-${item.id}`);
     };
     return (
         <div

@@ -18,7 +18,7 @@ export default function NewHomeItem({item1}) {
     }
     const handleClick = () => {
         const slug = strToSlug(item.title);
-        router.push(`/new/${slug}-${item.id}`);
+        router.push(`/news/${slug}-${item.id}`);
     };
     return (
         <div

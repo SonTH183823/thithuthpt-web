@@ -123,7 +123,7 @@ export default function Navbar() {
                                     : "text-info"
                             }`}
                             onClick={() => {
-                                router.push("/filter?tradingForm=4");
+                                router.push("/document");
                             }}
                         >
                             Tài liệu ôn tập

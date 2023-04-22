@@ -7,8 +7,7 @@ export default function Home() {
     return (
         <Fragment>
             <div className="mx-auto bg-base-200">
-                {/*<PrimaryBanner/>*/}
-                {/*<AboutSection/>*/}
+                <PrimaryBanner/>
                 <div>
                     <div className="container">
                         <HomeExamList title={"Những đề thi nổi bật"} category={1}/>
@@ -17,6 +16,7 @@ export default function Home() {
                         <HomeExamList title={"HÓA HỌC"} category={4}/>
                     </div>
                 </div>
+                <AboutSection/>
             </div>
         </Fragment>
     )

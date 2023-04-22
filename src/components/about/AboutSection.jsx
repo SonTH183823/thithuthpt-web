@@ -2,8 +2,17 @@ import React, {useEffect, useState} from "react";
 import TitleSection from "../common/TitleSection";
 import Image from "next/image";
 import about from "@/assets/images/about.png";
+import check from "@/assets/images/icons/check-mark.svg";
+import {kFormatter} from "../../utils/common";
 
 export default function AboutSection() {
+    const list = [
+        'Tìm kiếm đề thi, bài kiểm tra trắc nghiệm, đề cương ôn tập tự luyện',
+        'Làm bài thi online và đánh giá kết quả',
+        'Lịch sử làm bài, thảo luận câu hỏi',
+        'Đề thi luôn được cập nhật nhanh chóng, mới nhất',
+        'Tạo đề thi tự luyện ngẫu nhiên trong kho đề của chúng tôi'
+    ]
     // const [info, setInfo] = useState();
 
     // useEffect(() => {
@@ -18,6 +27,14 @@ export default function AboutSection() {
     //     }
     //   })();
     // }, []);
+    const genDesUI = (text) => {
+        return (
+            <div className={'text-white w-full flex flex-row items-center space-x-1'}>
+                <Image src={check} alt={""} className={"object-cover"} height={16} width={24}/>
+                <span>{text}</span>
+            </div>
+        )
+    }
     return (
         <div className="bg-backgroundSecondary mb-8">
             <div className="container md:grid grid-cols-2 gap-x-5">
@@ -31,33 +48,32 @@ export default function AboutSection() {
                         />
                     </div>
                 </div>
-                <div className="flex items-center flex-col space-y-4 md:py-8 pb-8 lg:px-4 px-2">
-                    <TitleSection title={"Tại sao chọn chúng tôi"} isColorWhite={true}/>
-                    <div className="lg:text-4xl text-xl font-bold text-white">
-                        <div className="pb-2">Chúng tôi cung cấp</div>
-                        <div>Dịch vụ đáng tin cậy</div>
+                <div className="flex items-center flex-col space-y-4 md:py-8 pb-8 lg:px-4 ">
+                    {/*<TitleSection title={"Tại sao chọn chúng tôi"} isColorWhite={true}/>*/}
+                    <div className="lg:text-4xl text-xl font-bold text-white flex justify-center flex-col items-center">
+                        <div className="pb-2">thithuthpt có gì?</div>
+                        <div className="bg-white mr-2 h-[4px] w-[100px]"></div>
                     </div>
                     <p className="text-white py-2 leading-8 text-justify">
-                        TROTOT cung cấp nền tảng đăng tin/xem tin Bất động sản đơn giản,
-                        nhanh chóng và dễ dàng. Khi sử dụng dịch vụ của TROTOT, tin đăng của
-                        bạn sẽ được tiếp cận với lượng khách hàng lớn. Từ đó, tăng khả năng
-                        tương tác, trao đổi và giao dịch.
+                        THITHUTHPT cung cấp nền tảng thi thử online các môn học một cách tiện lợi và dễ dàng.
+                        Kết quả và đánh giá sẽ có ngay sau mỗi đề thi được hoàn thành giúp bạn tăng hiệu quả ôn luyện.
                     </p>
-                    <div className="flex items-center justify-evenly w-full">
+                    {list.map(item => genDesUI(item))}
+                    <div className="flex items-center justify-evenly w-full text-white">
                         <div className="flex flex-col items-center">
-              <span className="font-bold text-primary lg:text-3xl text-xl">
-                {'12'}
-              </span>
+                                <span className="font-bold lg:text-3xl text-xl">
+                                  {'112'}
+                                </span>
                             <div className="text-white font-bold lg:text-xl py-1">
-                                khách hàng
+                                đề thi
                             </div>
                         </div>
                         <div className="flex flex-col items-center">
-              <span className="font-bold lg:text-3xl text-xl text-primary">
-                {'11'}
-              </span>
+                    <span className="font-bold lg:text-3xl text-xl ">
+                      {kFormatter(2345)}
+                    </span>
                             <div className="text-white font-bold lg:text-xl py-1">
-                                tin đăng
+                                câu hỏi
                             </div>
                         </div>
                     </div>
