@@ -4,7 +4,7 @@ import {useRouter} from "next/router";
 import {strToSlug} from "utils/common";
 import {formatDate} from "utils/moment";
 
-export default function NewHomeItem({item1}) {
+export default function NewHomeItem({isHome = false, isPrimary = false, item1}) {
     const router = useRouter();
     const item = {
         title: 'Bùng nổ nhu cầu AI, vốn hóa thị trường NVIDIA tăng gần gấp đôi sau 4 tháng',
@@ -20,6 +20,57 @@ export default function NewHomeItem({item1}) {
         const slug = strToSlug(item.title);
         router.push(`/news/${slug}-${item.id}`);
     };
+    if (isHome) {
+        return (
+            <div className="col-span-12 lg:col-span-4 flex justify-center items-center mx-2 lg:mx-0 cursor-pointer" onClick={handleClick}>
+                <div className="w-full bg-white hover:shadow-xl transition-all duration-300">
+                    <div className="hidden lg:block">
+                        <div className={`h-[360px] relative bg-primary`}>
+                            <Image
+                                alt={item.title}
+                                src={item.thumbnail}
+                                placeholder={"blur"}
+                                blurDataURL={item.thumbnail}
+                                layout={"fill"}
+                                className="h-full w-full max-w-[496px] object-cover row-span-1"
+                                objectFit={"cover"}
+                            />
+                        </div>
+                        <div className={`p-6 row-span-1 h-[200px] ${isPrimary ? 'bg-primary text-white' : 'bg-white'}`}>
+                            <div className=" xl:text-2xl text-xl font-bold mb-3 line-clamp-2">{item.title}</div>
+                            <div
+                                className={`text-gray-400 text-justify text-sm line-clamp-3 ${isPrimary ? 'text-white' : ''}`}>
+                                {item.description}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="block lg:hidden relative">
+                        <div
+                            className="md:grid grid-cols-3 lg:space-x-5 md:space-x-3 lg:py-4 pb-0 cursor-pointer"
+                            onClick={handleClick}
+                        >
+                            <div className={`relative lg:h-[150px] md:h-[120px] h-[180px] `}>
+                                <Image
+                                    alt={item.title}
+                                    src={item.thumbnail}
+                                    placeholder={"blur"}
+                                    blurDataURL={item.thumbnail}
+                                    layout={"fill"}
+                                    objectFit={"cover"}
+                                />
+                            </div>
+                            <div className="col-span-2 my-2 md:my-0 p-2">
+                                <h2 className="m-0 text-info lg:text-xl text-[16px] line-clamp-2 hover:text-primary">
+                                    {item.title}
+                                </h2>
+                                <p className="leading-6 text-sm line-clamp-2">{item.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
     return (
         <div
             className="md:grid grid-cols-3 lg:space-x-5 md:space-x-3 lg:py-4 pb-4 cursor-pointer"

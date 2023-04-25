@@ -2,17 +2,11 @@ import React, {useEffect, useState} from "react";
 import TitleSection from "../common/TitleSection";
 import Image from "next/image";
 import about from "@/assets/images/about.png";
-// import check from "@/assets/images/icons/check-mark.svg";
+import check from "@/assets/images/icons/check-mark.svg";
 import {kFormatter} from "../../utils/common";
 
 export default function AboutSection() {
-    const list = [
-        'Tìm kiếm đề thi, bài kiểm tra trắc nghiệm, đề cương ôn tập tự luyện',
-        'Làm bài thi online và đánh giá kết quả',
-        'Lịch sử làm bài, thảo luận câu hỏi',
-        'Đề thi luôn được cập nhật nhanh chóng, mới nhất',
-        'Tạo đề thi tự luyện ngẫu nhiên trong kho đề của chúng tôi'
-    ]
+    const list = ['Tìm kiếm đề thi, bài kiểm tra trắc nghiệm, đề cương ôn tập tự luyện', 'Làm bài thi online và đánh giá kết quả', 'Lịch sử làm bài, thảo luận câu hỏi', 'Đề thi luôn được cập nhật nhanh chóng, mới nhất', 'Tạo đề thi tự luyện ngẫu nhiên trong kho đề của chúng tôi']
     // const [info, setInfo] = useState();
 
     // useEffect(() => {
@@ -28,15 +22,12 @@ export default function AboutSection() {
     //   })();
     // }, []);
     const genDesUI = (text) => {
-        return (
-            <div className={'text-white w-full flex flex-row items-center space-x-1'}>
+        return (<div className={'text-white w-full flex flex-row items-center space-x-1'}>
                 {/*<Image src={check} alt={""} className={"object-cover"} height={16} width={24}/>*/}
                 <span>{text}</span>
-            </div>
-        )
+            </div>)
     }
-    return (
-        <div className="bg-backgroundSecondary mb-8">
+    return (<div className="bg-backgroundSecondary mb-8">
             <div className="container md:grid grid-cols-2 gap-x-5">
                 <div className="flex items-center justify-center">
                     <div className="relative md:w-[386px] w-[193px] md:h-[380px] h-[190px]">
@@ -79,6 +70,5 @@ export default function AboutSection() {
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        </div>);
 }

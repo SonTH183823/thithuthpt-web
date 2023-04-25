@@ -9,7 +9,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import NewHomeItem from "./NewHomeItem";
 
 export default function NewHomeSection() {
-    const [news, setNews] = useState([1, 2, 3, 4]);
+    const [news, setNews] = useState([1, 2, 3]);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
@@ -31,16 +31,21 @@ export default function NewHomeSection() {
         //   }
         // })();
     }, []);
+    const genUINews = () => {
+        return (
+            <div className={'grid grid-cols-12 gap-4 lg:gap-2'}>
+                {news.length > 0 &&
+                    news.map((item, index) =>
+                        <NewHomeItem isHome={true} isPrimary={index === 1} key={item.id} item={item}/>)}
+            </div>
+        )
+    }
     return (
         <div className="container mx-auto padding-mobile py-8">
             {loading ? (
                 <Fragment>
                     <div className="flex items-center justify-center">
-                        <div
-                            className={
-                                "animate-pulse h-6 w-[250px] bg-slate-200 rounded-lg my-2"
-                            }
-                        ></div>
+                        <div className={"animate-pulse h-6 w-[250px] bg-slate-200 rounded-lg my-2"}/>
                     </div>
                     <NewSekeleton/>
                     <NewSekeleton/>
@@ -48,10 +53,11 @@ export default function NewHomeSection() {
                 </Fragment>
             ) : (
                 <Fragment>
-                    <TitleSection title="Kinh nghiệm bất động sản"/>
-                    {news.length > 0 &&
-                        news.map((item) => <NewHomeItem key={item.id} item={item}/>)}
-                    <div className="flex justify-center">
+                    <TitleSection title="Tin tức nổi bật"/>
+                    {/*{news.length > 0 &&*/}
+                    {/*    news.map((item) => <NewHomeItem key={item.id} item={item}/>)}*/}
+                    {genUINews()}
+                    <div className="flex justify-center mt-4">
                         <ButtonPrimary
                             handleClick={handleClick}
                             title={"Xem thêm"}

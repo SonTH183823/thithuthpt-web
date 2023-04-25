@@ -20,7 +20,7 @@ export default function ExamTag({ tag, category, classCustom="" }) {
   return (
     <div
       className={`${classCustom} ${getBackground()} ${
-        styles["post-tag"]
+        styles["exam-tag"]
       } px-1 rounded-tr-md rounded-br-md rounded-tl-md absolute top-2 -left-3 z-10 text-white`}
     >
       <span className="px-1 text-sm">{tag}</span>
