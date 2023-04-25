@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import TitleSection from "../common/TitleSection";
 import Image from "next/image";
 import about from "@/assets/images/about.png";
-import check from "@/assets/images/icons/check-mark.svg";
+// import check from "@/assets/images/icons/check-mark.svg";
 import {kFormatter} from "../../utils/common";
 
 export default function AboutSection() {
@@ -30,7 +30,7 @@ export default function AboutSection() {
     const genDesUI = (text) => {
         return (
             <div className={'text-white w-full flex flex-row items-center space-x-1'}>
-                <Image src={check} alt={""} className={"object-cover"} height={16} width={24}/>
+                {/*<Image src={check} alt={""} className={"object-cover"} height={16} width={24}/>*/}
                 <span>{text}</span>
             </div>
         )

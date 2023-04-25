@@ -2,6 +2,7 @@ import {Fragment} from "react";
 import AboutSection from "@/components/about/AboutSection";
 import PrimaryBanner from "@/components/banner/PrimaryBanner";
 import HomeExamList from "@/components/exam/HomeExamList";
+import NewHomeSection from "@/components/home/news/NewHomeSection";
 
 export default function Home() {
     return (
@@ -14,6 +15,7 @@ export default function Home() {
                         <HomeExamList title={"MÔN TOÁN"} category={2}/>
                         <HomeExamList title={"MÔN LÝ"} category={3}/>
                         <HomeExamList title={"HÓA HỌC"} category={4}/>
+                        <NewHomeSection />
                     </div>
                 </div>
                 <AboutSection/>
