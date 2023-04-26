@@ -57,7 +57,7 @@ export default function DoExam() {
                                         {answers.map((ans, idx) =>
                                             <div
                                                 key={"ans-" + index + "-" + idx}
-                                                className={'w-1/5 text-center font-bold bg-base-200 py-2 my-2 rounded-md cursor-pointer ' + `${(item === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
+                                                className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base' + `${(item === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
                                                 onClick={() => handleAnsQues(index, ans)}
                                             >{ans}{index + 1}</div>)}
                                     </div>
@@ -66,14 +66,14 @@ export default function DoExam() {
                             <div className={'text-primary text-center font-semibold mt-4'}>- HẾT -</div>
                         </div>
                     </div>
-                    <div className="hidden col-span-1 lg:flex flex-col sticky top-20 h-screen">
+                    <div className="block col-span-1 lg:flex flex-col sticky top-20 h-screen lg:h-fit">
                         <div className={"bg-base-100 rounded-xl px-4 "}>
                             <h3 className={'!m-2'}>Thời gian còn lại</h3>
                             <CountDown/>
                         </div>
                         <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4"}>
                             <h3 className={'!m-2'}>Danh sách câu hỏi</h3>
-                            <div className={'grid grid-cols-5 gap-2'}>
+                            <div className={'grid grid-cols-8 2xl:grid-cols-5 gap-2'}>
                                 {listQues.map((item, index) => <div
                                     onClick={() => questionClick(index)}
                                     className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${item ? 'active-ques' : ''}`}

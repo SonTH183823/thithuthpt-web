@@ -115,7 +115,7 @@ function DetailExam({i, isDoExam = false}) {
                     className={"font-bold text-info text-2xl flex items-center mb-2 cursor-pointer !m-0 !mr-4 hover:!text-black "}>
                     {item.title}
                 </TitleExamItem>
-                <div className={"flex flex-row space-x-1"}>
+                <div className={"flex flex-col sm:flex-row space-x-1"}>
                     <div
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content={'Yêu thích'}
