@@ -73,7 +73,7 @@ export default function DoExam() {
                         </div>
                         <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4"}>
                             <h3 className={'!m-2'}>Danh sách câu hỏi</h3>
-                            <div className={'grid grid-cols-8 2xl:grid-cols-5 gap-2'}>
+                            <div className={'grid grid-cols-8 DSxl:grid-cols-5 gap-2'}>
                                 {listQues.map((item, index) => <div
                                     onClick={() => questionClick(index)}
                                     className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${item ? 'active-ques' : ''}`}
