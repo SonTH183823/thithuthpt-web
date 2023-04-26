@@ -57,7 +57,7 @@ export default function DoExam() {
                                         {answers.map((ans, idx) =>
                                             <div
                                                 key={"ans-" + index + "-" + idx}
-                                                className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base' + `${(item === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
+                                                className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(item === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
                                                 onClick={() => handleAnsQues(index, ans)}
                                             >{ans}{index + 1}</div>)}
                                     </div>
