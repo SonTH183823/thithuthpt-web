@@ -142,30 +142,40 @@ export default function Navbar() {
                             </Link>
                         </li>
 
-                        {profile.id && (
+                        <div className={'flex space-x-3'}>
                             <Fragment>
-                                <li className="h-[39px] w-[39px] flex items-center justify-center rounded-full bg-backgroundGray nav-item font-bold cursor-pointer user-menu">
-                                    <Notification/>
+                                <li className="h-[39px] w-[39px] flex items-center justify-center rounded-full bg-backgroundGray font-bold cursor-pointer"
+                                    onClick={() => router.push('/exam/favorites')}>
+                                    <i className={`fa-sharp fa-solid fa-heart text-lg ${router.pathname === "/exam/favorites" ? 'text-primary' : 'text-colorIconMenu'}`}></i>
                                 </li>
                             </Fragment>
-                        )}
-                        <li className="nav-item font-bold cursor-pointer user-menu">
-                            <NavbarUserMenu/>
-                        </li>
-                        <Fragment>
-                            {profile?.id ? (
-                                <li
-                                    className="nav-item font-bold cursor-pointer flex items-center space-x-2 bg-primary px-3 py-1 rounded-full"
-                                    onClick={handlePostNew}
-                                >
-                                    <i className="fa-regular fa-pencil text-lg text-white"></i>
-                                    <span className="text-white">Đóng góp đề thi</span>
-                                </li>
-                            ) : (
-                                <div className="user-menu">
-                                    {/*<NavbarPostNew/>*/}
-                                </div>
+
+                            {profile.id && (
+                                <Fragment>
+                                    <li className="h-[39px] w-[39px] flex items-center justify-center rounded-full bg-backgroundGray nav-item font-bold cursor-pointer user-menu">
+                                        <Notification/>
+                                    </li>
+                                </Fragment>
                             )}
+                            <li className="nav-item font-bold cursor-pointer user-menu">
+                                <NavbarUserMenu/>
+                            </li>
+                        </div>
+
+                        <Fragment>
+                            {/*{profile?.id ? (*/}
+                            {/*    <li*/}
+                            {/*        className="nav-item font-bold cursor-pointer flex items-center space-x-2 bg-primary px-3 py-1 rounded-full"*/}
+                            {/*        onClick={handlePostNew}*/}
+                            {/*    >*/}
+                            {/*        <i className="fa-regular fa-heart text-lg text-white"></i>*/}
+                            {/*        <span className="text-white">Đề thi yêu thích</span>*/}
+                            {/*    </li>*/}
+                            {/*) : (*/}
+                            {/*    <div className="user-menu">*/}
+                            {/*        /!*<NavbarPostNew/>*!/*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
                         </Fragment>
                     </ul>
                 </div>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import TitleExamItem from "@/components/exam/TitleExamItem";
-import {CharacteristicsItem, CharacteristicsItemIcon} from "@/components/characteristics/CharacteristicsItem";
+import {CharacteristicsItem} from "@/components/characteristics/CharacteristicsItem";
 import star from "@/assets/images/svg/star.svg";
 import time from "@/assets/images/svg/time.svg";
 import question from "@/assets/images/svg/question-number.svg";

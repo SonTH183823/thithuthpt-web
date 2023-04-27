@@ -21,12 +21,6 @@ export const menuUser = [
         path: "/management/profile",
     },
     {
-        id: 3,
-        title: "Đề thi yêu thích",
-        icon: "fa-regular fa-heart",
-        path: "/exam/favorites",
-    },
-    {
         id: 4,
         title: "Nạp tiền vào tài khoản",
         icon: "fa-duotone fa-money-check",
