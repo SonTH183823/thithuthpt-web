@@ -33,7 +33,7 @@ export default function Navbar() {
     };
     const handlePostNew = () => {
         if (profile.id) {
-            router.push(`/post/create-post`);
+            router.push('/exam/favorites')
         } else {
             const label = document.getElementById("modal-require-login-id");
             label.click();
@@ -145,7 +145,7 @@ export default function Navbar() {
                         <div className={'flex space-x-3'}>
                             <Fragment>
                                 <li className="h-[39px] w-[39px] flex items-center justify-center rounded-full bg-backgroundGray font-bold cursor-pointer"
-                                    onClick={() => router.push('/exam/favorites')}>
+                                    onClick={handlePostNew}>
                                     <i className={`fa-sharp fa-solid fa-heart text-lg ${router.pathname === "/exam/favorites" ? 'text-primary' : 'text-colorIconMenu'}`}></i>
                                 </li>
                             </Fragment>

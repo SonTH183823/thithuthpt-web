@@ -9,7 +9,7 @@ const Favorites = () => {
         <div className="container mx-auto py-8 padding-mobile">
             <h3>Danh sách đề thi yêu thích</h3>
             {favoritePosts?.length ? (
-                <div className="md:grid lg:grid-cols-3 md:grid-cols-2 md:space-x-3">
+                <div className="md:grid xl:grid-cols-3 md:grid-cols-2 lg:gap-3 gap-1">
                     {favoritePosts.map((item) => (
                         <HomeExamItem
                             key={item}
