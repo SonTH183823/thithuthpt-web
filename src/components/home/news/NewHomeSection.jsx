@@ -53,7 +53,7 @@ export default function NewHomeSection() {
                 </Fragment>
             ) : (
                 <Fragment>
-                    <TitleSection title="Tin tức nổi bật"/>
+                    <TitleSection className={'uppercase'} title="Tin tức nổi bật"/>
                     {/*{news.length > 0 &&*/}
                     {/*    news.map((item) => <NewHomeItem key={item.id} item={item}/>)}*/}
                     {genUINews()}

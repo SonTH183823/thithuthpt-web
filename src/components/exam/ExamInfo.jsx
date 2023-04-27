@@ -27,28 +27,28 @@ function ExamInfo({items}) {
                 <span>{item.title}</span>
             </TitleExamItem>
             <div className={'bg-base-200 rounded-xl p-3'}>
-                <div className={'flex flex-row justify-between space-x-6 mb-3'}>
+                <div className={'flex flex-row justify-between space-x-4 mb-3'}>
                     <CharacteristicsItem icon={star}>
                         5.0
                     </CharacteristicsItem>
+                    <CharacteristicsItem icon={list_check}>
+                        {kFormatter(1244)} lượt thi
+                    </CharacteristicsItem>
+                    <CharacteristicsItem icon={list_view}>
+                        {kFormatter(12345)} lượt xem
+                    </CharacteristicsItem>
+                </div>
+                <div className={'flex justify-between space-x-4'}>
                     <CharacteristicsItem icon={time}>
                         60 phút
                     </CharacteristicsItem>
                     <CharacteristicsItem icon={question}>
                         50 câu
                     </CharacteristicsItem>
-                </div>
-                <div className={'flex justify-between space-x-6'}>
-                    <CharacteristicsItem icon={list_check}>
-                        {kFormatter(1234)} lượt thi
-                    </CharacteristicsItem>
-                    <CharacteristicsItem icon={list_view}>
-                        {kFormatter(12345)} lượt xem
+                    <CharacteristicsItem icon={date}>
+                        {formatDate(new Date())}
                     </CharacteristicsItem>
                 </div>
-                {/*<div>*/}
-                {/*    Cập nhật ngày: {formatDate(new Date())}*/}
-                {/*</div>*/}
             </div>
 
         </div>

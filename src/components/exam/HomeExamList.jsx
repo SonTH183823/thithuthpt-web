@@ -37,13 +37,14 @@ export default function HomeExamList({title, category}) {
     //     }
     //   })();
     // }, []);
-    const handleClick = () => {}
+    const handleClick = () => {
+    }
     return (
         <>
             <div className="pb-8 padding-mobile">
                 {loading ? (
                     <Fragment>
-                        <div className="flex items-center justify-center">
+                        <div className="pt-8 flex items-center justify-center">
                             <div
                                 className={
                                     "animate-pulse h-6 w-[250px] bg-slate-200 rounded-lg my-2"

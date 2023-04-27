@@ -56,7 +56,7 @@ export default function FeedbackSection() {
         <div className={'padding-mobile bg-backgroundPrimary '}>
             <div className="max-w-[1536px] mx-auto">
                 <div className="flex flex-col items-center gap-y-2 pt-8 ">
-                    <TitleSection title={"Đánh giá"}/>
+                    <TitleSection className={'uppercase'} title={"Đánh giá"}/>
                 </div>
                 <div className="pt-4">
                     {

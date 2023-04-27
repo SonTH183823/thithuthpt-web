@@ -148,7 +148,7 @@ export default function ExamDetail({
         <Fragment>
             {exam.id ? (
                 <div className={"bg-base-200"}>
-                    <div className="container mx-auto py-8 padding-mobile">
+                    <div className="container mx-auto py-2 sm:py-4 padding-mobile">
                         <div className="lg:grid grid-cols-3 lg:space-x-4">
                             <div className="col-span-2 relative">
                                 <div className={"bg-base-100 rounded-xl "}>
@@ -173,8 +173,8 @@ export default function ExamDetail({
                                     <InteractiveContainer postId={exam.id}/>
                                 </div>
                             </div>
-                            <div className="hidden col-span-1 lg:flex flex-col">
-                                <div className={"bg-base-100 rounded-xl px-4 "}>
+                            <div className="block col-span-1 lg:flex flex-col">
+                                <div className={"bg-base-100 rounded-xl px-4 hidden lg:block"}>
                                     <BXH idExam={12}/>
                                 </div>
                                 <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
