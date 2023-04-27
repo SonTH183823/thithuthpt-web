@@ -32,7 +32,7 @@ export default function NewHomeItem({isHome = false, isPrimary = false, item1}) 
                                 placeholder={"blur"}
                                 blurDataURL={item.thumbnail}
                                 layout={"fill"}
-                                className="h-full w-full max-w-[496px] object-cover row-span-1"
+                                className="h-full w-full max-w-[507px] object-cover row-span-1"
                                 objectFit={"cover"}
                             />
                         </div>

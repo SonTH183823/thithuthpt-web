@@ -26,7 +26,7 @@ const TextArea = ({
         placeholder={
           placeholder
             ? placeholder
-            : '"Tôi muốn biết quy trình cho thuê phòng trọ"'
+            : 'Viết đánh giá ở đây nha!!!'
         }
       ></textarea>
       {error.length > 0 && (

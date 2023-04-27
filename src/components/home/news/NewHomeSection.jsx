@@ -33,7 +33,7 @@ export default function NewHomeSection() {
     }, []);
     const genUINews = () => {
         return (
-            <div className={'grid grid-cols-12 gap-4 lg:gap-2'}>
+            <div className={'grid grid-cols-12 gap-5 lg:gap-2 my-8'}>
                 {news.length > 0 &&
                     news.map((item, index) =>
                         <NewHomeItem isHome={true} isPrimary={index === 1} key={item.id} item={item}/>)}
@@ -41,7 +41,7 @@ export default function NewHomeSection() {
         )
     }
     return (
-        <div className="container mx-auto padding-mobile py-8">
+        <div className="containerXl mx-auto padding-mobile py-8">
             {loading ? (
                 <Fragment>
                     <div className="flex items-center justify-center">
@@ -57,7 +57,7 @@ export default function NewHomeSection() {
                     {/*{news.length > 0 &&*/}
                     {/*    news.map((item) => <NewHomeItem key={item.id} item={item}/>)}*/}
                     {genUINews()}
-                    <div className="flex justify-center mt-4">
+                    <div className="flex justify-center mt-8">
                         <ButtonPrimary
                             handleClick={handleClick}
                             title={"Xem thêm"}

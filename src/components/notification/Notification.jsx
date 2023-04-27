@@ -8,7 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import NotificationITem from "./NotificationItem";
 
 export default function Notification(props) {
-    const [notifications, setNotifications] = useState([]);
+    const [notifications, setNotifications] = useState([1, 2, 3]);
     const [total, setTotal] = useState(4);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);

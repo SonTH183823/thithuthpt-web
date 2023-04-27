@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function NotificationITem({notification}) {
     notification = {
         isRead: false,
-        content: 'aloooo'
+        content: 'Thông báo này tạo ra để test độ dài của thông báo nếu dài hơn ữa thì sao sao saoThông báo này tạo ra để test độ dài của thông báo nếu dài hơn ữa thì sao sao sao'
     }
     const router = useRouter();
     const handleClick = () => {
@@ -35,9 +35,9 @@ export default function NotificationITem({notification}) {
             onClick={() => handleClick()}
             className="!flex items-center space-x-3 py-2 !justify-between !px-0"
         >
-            <div className="flex items-start space-x-3 px-1">
+            <div className="flex space-x-3 px-1 bg-amber-300 items-center">
                 {!notification.isRead ? (
-                    <div className="w-[5px] h-[5px] bg-primary rounded-full"></div>
+                    <div className="w-[5px] h-[5px] bg-primary rounded-full absolute"></div>
                 ) : (
                     <div className="w-[5px]"></div>
                 )}
