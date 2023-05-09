@@ -6,41 +6,37 @@ import DrawerItem from "../drawer-menu/drawer-menu-left/DrawerItem";
 const menu = [
   {
     id: 1,
-    title: "Cho thuê",
+    title: "Thi ngay",
     children: [
-      { id: 1, title: "Căn hộ/Chung cư" },
-      { id: 2, title: "Nhà ở" },
-      { id: 3, title: "Văn phòng/Mặt bằng" },
-      { id: 4, title: "Phòng trọ" },
+      { id: 1, title: "Toán học" },
+      { id: 2, title: "Vật Lý" },
+      { id: 3, title: "Hóa Học" },
+      { id: 4, title: "Sinh Học" },
+      { id: 5, title: "Lịch Sử" },
+      { id: 6, title: "Tiếng Anh" },
+      { id: 7, title: "Địa Lý" },
+      { id: 8, title: "GDCD" },
     ],
   },
   {
     id: 2,
-    title: "Cần thuê",
-    children: [
-      { id: 1, title: "Căn hộ/Chung cư" },
-      { id: 2, title: "Nhà ở" },
-      { id: 3, title: "Văn phòng/Mặt bằng" },
-      { id: 4, title: "Phòng trọ" },
-    ],
+    title: "Toeic",
+    path: '/toeic'
   },
   {
     id: 3,
-    title: "Mua bán",
-    children: [
-      { id: 1, title: "Căn hộ/Chung cư" },
-      { id: 2, title: "Nhà ở" },
-      { id: 3, title: "Văn phòng/Mặt bằng" },
-    ],
-  },
-  {
-    id: 4,
-    title: "Tìm bạn ở ghép",
+    title: "Tài liệu ôn tập",
+    path: '/document'
   },
   {
     id: 5,
-    title: "Blog",
+    title: "Tin tức",
     path: "/blog",
+  },
+  {
+    id: 4,
+    title: "Giới thiệu",
+    path: "/about",
   },
   {
     id: 6,

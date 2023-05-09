@@ -12,6 +12,7 @@ import ModalRequireLogin from "../modal/ModalRequireLogin";
 import {useSelector} from "react-redux";
 import useWindowSize from "hooks/useWindowSize";
 import {useRouter} from "next/router";
+import ButtonPrimary from "@/components/button/ButtonPrimary";
 
 export default function FeedbackSection() {
     const [feedbacks, setFeedbacks] = useState([1, 2, 3]);
@@ -109,16 +110,17 @@ export default function FeedbackSection() {
                     {profile.id ? (
                         <label
                             htmlFor="modal-feedback"
-                            className="btn bg-primary text-white normal-case w-[200px] hover:bg-primary hover:border-primary"
+                            className="btn bg-primary hover:cursor-pointer text-white normal-case w-[200px] hover:bg-primary hover:border-primary"
                         >
                             Nhận xét ngay
                         </label>
                     ) : (
-                        <div
-                            className="btn bg-primary text-white normal-case w-[200px] hover:bg-primary hover:border-primary"
-                            onClick={showModal}
-                        >
-                            Nhận xét ngay
+                        <div className="flex justify-center mt-8">
+                            <ButtonPrimary
+                                handleClick={showModal}
+                                title={"Nhận xét ngay"}
+                                className={"w-[200px]"}
+                            />
                         </div>
                     )}
                 </div>

@@ -10,22 +10,22 @@ const RightMenuItemDrawer = ({ item, showDrawerRight }) => {
   const router = useRouter();
   // const dispatch = useDispatch();
   const handleClick = async () => {
-    // if (item.id === 115) {
-    //   const sessionId = Cookies.get(process.env.NEXT_PUBLIC_SESSION_ID);
-    //   try {
-    //     const res = await authAPI.logout(sessionId);
-    //     if (res.ok) {
-    //       dispatch(authUpdateProfile({}));
-    //       removeToken();
-    //       router.replace(`/`);
-    //     }
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // } else if (item.path) {
-    //   router.push(item.path);
-    //   showDrawerRight(false);
-    // }
+    if (item.id === 115) {
+      // const sessionId = Cookies.get(process.env.NEXT_PUBLIC_SESSION_ID);
+      // try {
+      //   const res = await authAPI.logout(sessionId);
+      //   if (res.ok) {
+      //     dispatch(authUpdateProfile({}));
+      //     removeToken();
+      //     router.replace(`/`);
+      //   }
+      // } catch (e) {
+      //   console.log(e);
+      // }
+    } else if (item.path) {
+      router.push(item.path);
+      showDrawerRight(false);
+    }
   };
   return (
     <div

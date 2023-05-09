@@ -10,7 +10,9 @@ import {
 
 const DrawerRight = React.forwardRef(({ show, setShow }, nodeRef) => {
   // const profile = useSelector((state) => state.auth.profile);
-  const profile = {}
+  const profile = {
+    role: 1
+  }
 
   const getMenu = () => {
     if (profile.role === 0) {

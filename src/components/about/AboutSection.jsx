@@ -28,7 +28,7 @@ export default function AboutSection() {
         </div>)
     }
     return (<div className="bg-backgroundSecondary">
-        <div className="container md:grid grid-cols-2 gap-x-5 ">
+        <div className="container md:grid grid-cols-2 gap-x-5 px-4 sm:px-0">
             <div className="flex items-center justify-center">
                 <div className="relative md:w-[386px] w-[193px] md:h-[380px] h-[190px]">
                     <Image

@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, {Fragment, useState, useEffect} from "react";
 import icon_facebook from "@/assets/images/icons/facebook.svg";
 import icon_google from "@/assets/images/icons/google.svg";
-import background from "@/assets/images/background.png";
+import background from "@/assets/images/background.jpg";
 
 import {useRouter} from "next/router";
 import {useController, useForm} from "react-hook-form";
