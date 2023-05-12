@@ -4,6 +4,8 @@ import Image from "next/image";
 import about from "@/assets/images/about.png";
 import check from "@/assets/images/icons/check-mark.svg";
 import {kFormatter} from "../../utils/common";
+import ButtonSecondary from "@/components/button/ButtonSecondary";
+import ButtonPrimary from "@/components/button/ButtonPrimary";
 
 export default function AboutSection() {
     const list = ['Tìm kiếm đề thi, bài kiểm tra trắc nghiệm, đề cương ôn tập tự luyện', 'Làm bài thi online và đánh giá kết quả', 'Lịch sử làm bài, thảo luận câu hỏi', 'Đề thi luôn được cập nhật nhanh chóng, mới nhất', 'Tạo đề thi tự luyện ngẫu nhiên trong kho đề của chúng tôi']
@@ -67,6 +69,7 @@ export default function AboutSection() {
                             câu hỏi
                         </div>
                     </div>
+                    {/*<button className={'px-5 py-2 rounded-md bg-white hover:bg-backgroundPrimary text-primary font-semibold'}>Tham gia ngay</button>*/}
                 </div>
             </div>
         </div>

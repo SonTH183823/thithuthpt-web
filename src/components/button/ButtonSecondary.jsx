@@ -12,7 +12,7 @@ export default function ButtonSecondary({
       onClick={handleClick}
       className={`${className} ${
         isPrimary
-          ? `bg-blue-200 text-primary hover:bg-primary hover:text-white`
+          ? `bg-backgroundPrimary text-primary hover:bg-primary hover:text-white`
           : `border-primary border text-primary `
       } py-1 px-2 rounded-lg w-fit cursor-pointer`}
     >

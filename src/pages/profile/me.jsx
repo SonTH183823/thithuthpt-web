@@ -61,7 +61,7 @@ export default function ProfileUser() {
               </div>
               <div className="col-span-2 lg:px-0 px-2 pb-2">
                 <div className="p-2 rounded-lg box-shadow items-center flex justify-between bg-base-100 lg:mt-0 lg:my-4 my-2">
-                  <span className="text-xl font-bold">Lịch sử làm bài</span>
+                  <span className="text-xl font-bold">Tổng quan</span>
                   {/* <div className="py-1 px-4 bg-gray-200 flex items-center space-x-2 rounded-lg">
                 <Image src={filter} width={15} height={15} alt="icon-filter" />
                 <span>Bộ lọc</span>

@@ -7,6 +7,7 @@ import {toast} from "react-toastify";
 import {formatPrice, generateDate} from "utils/common";
 import ButtonSecondary from "../button/ButtonSecondary";
 import DetailInfoItem from "./DetailUserInfoItem";
+import ButtonPrimary from "@/components/button/ButtonPrimary";
 
 export default function DetailUserInfoContainer({
                                                     profile1: user1,
@@ -19,8 +20,8 @@ export default function DetailUserInfoContainer({
         id: 1,
     }
     const user = {
-        id: 2,
-        bio: 'Xin chào các bạn'
+        id: 1,
+        bio: ''
     }
     const dispatch = useDispatch();
     const handleChangeInput = (e) => {
@@ -93,17 +94,16 @@ export default function DetailUserInfoContainer({
                             {user.bio && !showEditBio ? (
                                 <div>
                                     <p className={"text-center text-info mb-4"}>{user?.bio}</p>
-                                    <ButtonSecondary
+                                    <ButtonPrimary
                                         isPrimary={true}
                                         title={"Chỉnh giới thiệu"}
                                         className={"w-full text-center mt-4 mb-2"}
                                         handleClick={handleShowEditBio}
                                     />
                                 </div>
-                            ) : (
-                                <Fragment>
+                            ) : (<Fragment>
                                     {!user.bio && !showEditBio ? (
-                                        <ButtonSecondary
+                                        <ButtonPrimary
                                             isPrimary={true}
                                             title={"Cập nhật giới thiệu"}
                                             className={"w-full text-center mt-4 mb-2"}
@@ -112,13 +112,10 @@ export default function DetailUserInfoContainer({
                                     ) : (
                                         <Fragment>
                       <textarea
-                          className={
-                              "w-full outline-none border border-primary my-2 resize-none p-4 rounded-lg bg-base-100"
-                          }
+                          className={"w-full outline-none border border-primary my-2 resize-none p-4 rounded-lg bg-base-100"}
                           placeholder={"Giới thiệu về bản thân nhé..."}
                           value={bio}
-                          onChange={handleChangeInput}
-                      />
+                          onChange={handleChangeInput}/>
                                             <div className="flex justify-end space-x-3 items-center">
                         <span
                             className="cursor-pointer"
