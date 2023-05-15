@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import banner1 from "@/assets/images/banner/1.png";
-import banner2 from "@/assets/images/banner/2.png";
-import banner3 from "@/assets/images/banner/3.png";
+import banner2 from "@/assets/images/banner/english.png";
+import banner3 from "@/assets/images/banner/math1.png";
 import Banner from "./Banner";
 // import { bannerAPI } from "apis/banner";
 const PrimaryBanner = () => {

@@ -6,7 +6,6 @@ import ButtonSecondary from "@/components/button/ButtonSecondary";
 // import Select from "react-select";
 import FormGroup from "@/components/common/FormGroup";
 import {Label} from "@/components/label";
-import {Input} from "@/components/input";
 import {useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -34,11 +33,11 @@ export default function MyProfile() {
         email: 'sonto2k@gmail.com'
     }
     const [address, setAddress] = useState("");
+    const [name, setName] = useState("");
     const dispatch = useDispatch();
     const {
         control,
         handleSubmit,
-        reset,
         formState: {errors},
     } = useForm({
         resolver: yupResolver(schema),
@@ -46,10 +45,8 @@ export default function MyProfile() {
 
     useEffect(() => {
         if (profile.displayName) {
-            const initialValue = {};
             setAddress(profile.address);
-            initialValue.displayName = profile.displayName;
-            reset({...initialValue});
+            setName(profile.displayName)
         }
     }, [profile]);
 
@@ -124,23 +121,28 @@ export default function MyProfile() {
                             <div className={"flex-col flex space-y-2"}>
                                 <FormGroup isMb={false}>
                                     <Label>Họ tên</Label>
-                                    <Input
-                                        control={control}
-                                        name={"displayName"}
-                                        error={errors.displayName?.message}
-                                        placeholder={"VD: Quang Thuận"}
-                                    />
-                                </FormGroup>
-
-                                <FormGroup>
-                                    <div className="font-bold w-[120px]">Địa chỉ cụ thể</div>
                                     <input
                                         type={"text"}
                                         className={
                                             "px-2 py-3 rounded-lg border border-gray-200 flex-1 outline-none focus:border-primary"
                                         }
                                         placeholder={
-                                            "VD: 40, ngõ 562 Trần Cung, Cổ Nhuế 1, Bắc Từ Liêm, Hà Nội."
+                                            "VD: Nguyễn Văn Anh"
+                                        }
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <div className="font-bold w-[120px]">Trường THPT</div>
+                                    <input
+                                        type={"text"}
+                                        className={
+                                            "px-2 py-3 rounded-lg border border-gray-200 flex-1 outline-none focus:border-primary"
+                                        }
+                                        placeholder={
+                                            "VD: THPT Thường Tín"
                                         }
                                         value={address}
                                         onChange={(e) => setAddress(e.target.value)}
