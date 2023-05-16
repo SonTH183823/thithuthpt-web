@@ -41,6 +41,20 @@ export const categoryTitleConfig = {
     4: "Phòng trọ",
 };
 
+export const categoryConfig = [
+    { id: 1, title: "Căn hộ/Chung cư", isChecked: false },
+    { id: 2, title: "Nhà ở", isChecked: false },
+    { id: 3, title: "Văn phòng/Mặt bằng kinh doanh", isChecked: false },
+    { id: 4, title: "Phòng trọ", isChecked: false },
+];
+
+export const tradingFormConfig = {
+    BUY_SELL: 2,
+    FOR_RENTAL: 1,
+    RENTAL: 3,
+    ROOM_MATE: 4,
+};
+
 export const answerConfig = {
     '0': {
         value: 0,
@@ -841,3 +855,7 @@ export const districtsConfig = {
     972: "Huyện Phú Tân",
     973: "Huyện Ngọc Hiển",
 };
+
+export const danhMucConfig = {
+
+}
