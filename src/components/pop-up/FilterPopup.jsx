@@ -17,6 +17,9 @@ import {
 import ButtonPrimary from "../button/ButtonPrimary";
 import { addressAPI } from "apis/address";
 import { useRouter } from "next/router";
+import FeatureSection from "@/components/filter/FilterSection";
+import ItemSelect from "@/components/filter/ItemSelect";
+import InputRange from "react-input-range";
 const FilterPopup = ({ show, setShow }) => {
   const router = useRouter();
   const [filterUrl, setFilterUrl] = useState("");
@@ -30,31 +33,14 @@ const FilterPopup = ({ show, setShow }) => {
   const [furniture, setFurniture] = useState(null);
   const [hasVideo, setHasVideo] = useState(null);
   const [category, setCategory] = useState(categoryConfig);
-  const [priceRange, setPriceRange] = useState({
-    min: 10000,
-    max: 10000000,
-  });
-  const [areaRange, setAreaRange] = useState({
-    min: 5,
-    max: 100,
-  });
+  const [checked, setChecked] = useState(false);
+  const [maxNumQuestion, setMaxNumQuestion] = useState(1);
+  const [timeToDo, setTimeToDo] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const res = await addressAPI.getProvinces();
-      if (res) {
-        const temp = res.map((item) => ({
-          value: item.id,
-          label: item.fullName,
-        }));
-        setProvinceOption([...temp]);
-      }
-    })();
-  }, []);
-  useEffect(() => {
-    (async () => {
       if (selectedProvince?.label) {
-        const res = await addressAPI.getDistricts(selectedProvince.value);
+        // const res = await addressAPI.getDistricts(selectedProvince.value);
         if (res) {
           const temp = res.map((item) => ({
             value: item.id,
@@ -69,7 +55,7 @@ const FilterPopup = ({ show, setShow }) => {
   useEffect(() => {
     (async () => {
       if (selectedDistrict?.label) {
-        const res = await addressAPI.getWards(selectedDistrict.value);
+        // const res = await addressAPI.getWards(selectedDistrict.value);
         if (res) {
           const temp = res.map((item) => ({
             value: item.id,
@@ -104,14 +90,6 @@ const FilterPopup = ({ show, setShow }) => {
           return item;
         });
         setCategory([...categoryArray]);
-      }
-      if (priceRangeUrl) {
-        const priceTemp = priceRangeUrl.split(",");
-        setPriceRange({ min: priceTemp[0], max: priceTemp[1] });
-      }
-      if (areaRangeUrl) {
-        const areaTemp = areaRangeUrl.split(",");
-        setAreaRange({ min: areaTemp[0], max: areaTemp[1] });
       }
       if (address) {
         const addressTemp = address.split(",");
@@ -173,14 +151,6 @@ const FilterPopup = ({ show, setShow }) => {
     setSelectedWard(option);
   };
 
-  const handleChangePriceRange = (value) => {
-    setPriceRange(value);
-  };
-
-  const handleChangeAreaRange = (value) => {
-    setAreaRange(value);
-  };
-
   const selectCategory = (id) => {
     const temp = category.map((item) => {
       if (item.id === id) {
@@ -230,8 +200,6 @@ const FilterPopup = ({ show, setShow }) => {
       .filter((item) => item.isChecked)
       .map((i) => i.id)
       .join(",")}`;
-    filterParams.priceRange = `${priceRange.min},${priceRange.max}`;
-    filterParams.areaRange = `${areaRange.min},${areaRange.max}`;
 
     const q = Object.fromEntries(
       Object.entries(filterParams).filter(([_, v]) => v)
@@ -251,259 +219,90 @@ const FilterPopup = ({ show, setShow }) => {
       }`}
     >
       <HeaderPopupFilter setShow={setShow} />
-      <div
-        className={"flex flex-col space-y-5 px-2 overflow-y-auto h-full pb-32"}
-      >
-        <Collapse title={"Hình thức"}>
-          <div className="flex items-center space-x-2 justify-evenly">
-            <div className="flex items-center space-x-2">
-              <RadioWithoutValidate
-                checked={tradingForm == tradingFormConfig["BUY_SELL"]}
-                name={"tradingForm"}
-                id={"kindRadio1"}
-                value={tradingFormConfig["BUY_SELL"]}
-                onChange={(e) => handleSelectTradingForm(e)}
-              />
-              <label className="flex-1 cursor-pointer" htmlFor={"kindRadio1"}>
-                Bán
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioWithoutValidate
-                checked={tradingForm == tradingFormConfig["FOR_RENTAL"]}
-                name={"tradingForm"}
-                id={"kindRadio1"}
-                value={tradingFormConfig["FOR_RENTAL"]}
-                onChange={(e) => handleSelectTradingForm(e)}
-              />
-              <label className="flex-1 cursor-pointer" htmlFor={"kindRadio1"}>
-                Cho thuê
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioWithoutValidate
-                checked={tradingForm == tradingFormConfig["RENTAL"]}
-                name={"tradingForm"}
-                id={"kindRadio1"}
-                value={tradingFormConfig["RENTAL"]}
-                onChange={(e) => handleSelectTradingForm(e)}
-              />
-              <label className="flex-1 cursor-pointer" htmlFor={"kindRadio1"}>
-                Cần thuê
-              </label>
-            </div>
-          </div>
-          <div className="flex items-center space-x-10 justify-evenly mt-4">
-            <div className="flex items-center space-x-2">
-              <RadioWithoutValidate
-                checked={tradingForm == tradingFormConfig["ROOM_MATE"]}
-                name={"tradingForm"}
-                id={"kindRadio1"}
-                value={tradingFormConfig["ROOM_MATE"]}
-                onChange={(e) => handleSelectTradingForm(e)}
-              />
-              <label className="flex-1 cursor-pointer" htmlFor={"kindRadio1"}>
-                Tìm bạn ở ghép
-              </label>
-            </div>
-          </div>
+      <div className={"flex flex-col space-y-5 px-2 overflow-y-auto h-full pb-32"}>
+        {/*<FeatureSection isSmall={true}/>*/}
+        <Collapse title={"Môn học"}>
+          <ItemSelect checked={checked} label={'Toán Học'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Vật Lý'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Hóa học'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Sinh Học'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Lịch Sử'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Địa Lý'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'GDCD'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
         </Collapse>
-        <Collapse title={"Vị trí"}>
-          <Select
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                borderRadius: "8px",
-                borderColor: "#e5e7eb",
-                margin: "8px 0",
-              }),
-            }}
-            options={provinceOption}
-            onChange={(option) => {
-              handleSelectProvince(option);
-            }}
-            isSearchable
-            value={selectedProvince}
-            placeholder={"Chọn Tỉnh/Thành phố"}
-          />
-          <Select
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                borderRadius: "8px",
-                borderColor: "#e5e7eb",
-                margin: "8px 0",
-              }),
-            }}
-            options={districtOption}
-            onChange={(option) => {
-              handleSelectDistrict(option);
-            }}
-            isSearchable
-            value={selectedDistrict}
-            placeholder={"Chọn Quận/Huyện"}
-          />
-          <Select
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                borderRadius: "8px",
-                borderColor: "#e5e7eb",
-                margin: "8px 0",
-              }),
-            }}
-            options={wardOption}
-            onChange={(option) => {
-              handleSelectWard(option);
-            }}
-            isSearchable
-            value={selectedWard}
-            placeholder={"Chọn Phường/Xã"}
-          />
+        <Collapse title={"Độ khó"}>
+          <ItemSelect checked={checked} label={'Cơ bản'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Trung bình'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Nâng cao'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Khó'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
         </Collapse>
-        <Collapse title={"Loại bất động sản"}>
-          <div>
-            {category.map((item) => (
-              <div className="flex items-center space-x-2 py-1" key={item.id}>
-                <input
-                  type="checkbox"
-                  checked={item.isChecked}
-                  onChange={() => selectCategory(item.id)}
-                  className="checkbox checkbox-primary"
-                />
-                <span>{item.title}</span>
-              </div>
-            ))}
+        <Collapse title={"Đánh giá"}>
+          <ItemSelect checked={checked} label={'⭐⭐⭐⭐⭐'} hasIcon={true} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'⭐⭐⭐⭐'} hasIcon={true} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'⭐⭐⭐'} hasIcon={true} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'⭐⭐'} hasIcon={true} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'⭐'} hasIcon={true} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+          <ItemSelect checked={checked} label={'Không có'} handleSelect={() => {
+            setChecked(!checked)
+          }}/>
+        </Collapse>
+        <Collapse title={'Số lượng câu hỏi tối đa'}>
+          <div
+              className={'text-base text-center border-b-[1px] border-b-gray-300 pb-3 select-none px-3'}>
+            <div className={'mb-3'}>1 câu ~ 500 câu</div>
+            <InputRange
+                maxValue={500}
+                minValue={1}
+                value={maxNumQuestion}
+                onChange={value => setMaxNumQuestion(value)}/>
+            <div
+                className={'mt-3'}>{maxNumQuestion === 1 ? 'Không giới hạn' : `${maxNumQuestion} câu`}</div>
           </div>
         </Collapse>
-        {/*<Collapse title={"Khoảng giá"}>*/}
-        {/*  <div className="pb-4">*/}
-        {/*    <InputRange*/}
-        {/*      maxValue={1000000000}*/}
-        {/*      minValue={1000000}*/}
-        {/*      // formatLabel={value => <span className={'font-sans'}>{`${value} vnđ`}</span>}*/}
-        {/*      value={priceRange}*/}
-        {/*      onChange={handleChangePriceRange}*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*</Collapse>*/}
-        {/*<Collapse title={"Diện tích"}>*/}
-        {/*  <div className="pb-4">*/}
-        {/*    <InputRange*/}
-        {/*      maxValue={500}*/}
-        {/*      minValue={10}*/}
-        {/*      // formatLabel={value => <span className={'font-sans'}>{`${value} vnđ`}</span>}*/}
-        {/*      value={areaRange}*/}
-        {/*      onChange={handleChangeAreaRange}*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*</Collapse>*/}
-        {/*<Collapse title={"Nội thất"}>*/}
-        {/*  <div className="p-2">*/}
-        {/*    <div className="text-black">*/}
-        {/*      <div className="flex flex-col space-y-1">*/}
-        {/*        <div className="flex items-center space-x-4">*/}
-        {/*          <RadioWithoutValidate*/}
-        {/*            checked={furniture == furnitueConfig["NONE"]}*/}
-        {/*            name={"furniture"}*/}
-        {/*            id={"kindRadio2"}*/}
-        {/*            value={furnitueConfig["NONE"]}*/}
-        {/*            onChange={(e) => handleSelectFurniture(e)}*/}
-        {/*          />*/}
-        {/*          <label*/}
-        {/*            className="flex-1 cursor-pointer"*/}
-        {/*            htmlFor={"kindRadio2"}*/}
-        {/*          >*/}
-        {/*            Không có*/}
-        {/*          </label>*/}
-        {/*        </div>*/}
-        {/*        <div className="flex items-center space-x-4">*/}
-        {/*          <RadioWithoutValidate*/}
-        {/*            checked={furniture == furnitueConfig["BASIC"]}*/}
-        {/*            name={"furniture"}*/}
-        {/*            id={"kindRadio2"}*/}
-        {/*            value={furnitueConfig["BASIC"]}*/}
-        {/*            onChange={(e) => handleSelectFurniture(e)}*/}
-        {/*          />*/}
-        {/*          <label*/}
-        {/*            className="flex-1 cursor-pointer"*/}
-        {/*            htmlFor={"kindRadio2"}*/}
-        {/*          >*/}
-        {/*            Cơ bản*/}
-        {/*          </label>*/}
-        {/*        </div>*/}
-        {/*        <div className="flex items-center space-x-4">*/}
-        {/*          <RadioWithoutValidate*/}
-        {/*            checked={furniture == furnitueConfig["FULL"]}*/}
-        {/*            name={"furniture"}*/}
-        {/*            id={"kindRadio2"}*/}
-        {/*            value={furnitueConfig["FULL"]}*/}
-        {/*            onChange={(e) => handleSelectFurniture(e)}*/}
-        {/*          />*/}
-        {/*          <label*/}
-        {/*            className="flex-1 cursor-pointer"*/}
-        {/*            htmlFor={"kindRadio2"}*/}
-        {/*          >*/}
-        {/*            Đầy đủ*/}
-        {/*          </label>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</Collapse>*/}
-        {/*<Collapse title={"Tin có video"}>*/}
-        {/*  <div className="p-2">*/}
-        {/*    <div className="text-black">*/}
-        {/*      <div className="flex flex-col space-y-1">*/}
-        {/*        <div className="flex items-center space-x-4">*/}
-        {/*          <RadioWithoutValidate*/}
-        {/*            checked={hasVideo == hasVideoConfig["NONE"]}*/}
-        {/*            name={"hasVideo"}*/}
-        {/*            id={"kindRadio3"}*/}
-        {/*            value={hasVideoConfig["NONE"]}*/}
-        {/*            onChange={(e) => handleSelectHasVideo(e)}*/}
-        {/*          />*/}
-        {/*          <label*/}
-        {/*            className="flex-1 cursor-pointer"*/}
-        {/*            htmlFor={"kindRadio3"}*/}
-        {/*          >*/}
-        {/*            Không video*/}
-        {/*          </label>*/}
-        {/*        </div>*/}
-        {/*        <div className="flex items-center space-x-4">*/}
-        {/*          <RadioWithoutValidate*/}
-        {/*            checked={hasVideo == hasVideoConfig["HAS_VIDEO"]}*/}
-        {/*            name={"hasVideo"}*/}
-        {/*            id={"kindRadio3"}*/}
-        {/*            value={hasVideoConfig["HAS_VIDEO"]}*/}
-        {/*            onChange={(e) => handleSelectHasVideo(e)}*/}
-        {/*          />*/}
-        {/*          <label*/}
-        {/*            className="flex-1 cursor-pointer"*/}
-        {/*            htmlFor={"kindRadio3"}*/}
-        {/*          >*/}
-        {/*            Có video*/}
-        {/*          </label>*/}
-        {/*        </div>*/}
-        {/*        <div className="flex items-center space-x-4">*/}
-        {/*          <RadioWithoutValidate*/}
-        {/*            checked={hasVideo == hasVideoConfig["ALL"]}*/}
-        {/*            name={"hasVideo"}*/}
-        {/*            id={"kindRadio3"}*/}
-        {/*            value={hasVideoConfig["ALL"]}*/}
-        {/*            onChange={(e) => handleSelectHasVideo(e)}*/}
-        {/*          />*/}
-        {/*          <label*/}
-        {/*            className="flex-1 cursor-pointer"*/}
-        {/*            htmlFor={"kindRadio3"}*/}
-        {/*          >*/}
-        {/*            Tất cả*/}
-        {/*          </label>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</Collapse>*/}
+        <Collapse title={'Thời gian làm bài tối đa'}>
+          <div
+              className={'text-base text-center border-b-[1px] border-b-gray-300 pb-3 select-none px-3'}>
+            <div className={'mb-3'}>0 phút ~ 360 phút</div>
+            <InputRange
+                maxValue={360}
+                minValue={0}
+                value={timeToDo}
+                onChange={value => setTimeToDo(value)}/>
+            <div className={'mt-3'}>{timeToDo === 0 ? 'Không giới hạn' : `${timeToDo} phút`}</div>
+          </div>
+        </Collapse>
       </div>
       <div className="bg-base-100 fixed bottom-0 pb-5 left-1/2 -translate-x-2/4 w-full flex items-center space-x-3 px-2">
         <ButtonPrimary
@@ -515,11 +314,6 @@ const FilterPopup = ({ show, setShow }) => {
       </div>
     </div>
   );
-};
-
-FilterPopup.propTypes = {
-  show: PropTypes.bool,
-  setShow: PropTypes.func,
 };
 
 export default FilterPopup;

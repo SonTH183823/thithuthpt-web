@@ -7,7 +7,7 @@ import math from "../../assets/images/test/math.jpg"
 import Image from "next/image";
 import ExamInfo from "./ExamInfo"
 
-function HomeExamItem({item, user = {}}) {
+function HomeExamItem({item, user = {}, isSearch = false}) {
     // const favoritePosts = useSelector((state) => state.post.favoritePosts);
     const favoritePosts = true
     // const profile = useSelector((state) => state.auth.profile);
@@ -70,7 +70,7 @@ function HomeExamItem({item, user = {}}) {
     };
     return (
         <div
-            className="md:w-[372px] w-[360px] mx-3  box-border rounded-xl relative shrink-0 bg-base-100 cursor-pointer mb-2 box-shadow"
+            className={`mx-3 box-border rounded-xl relative shrink-0 bg-base-100 cursor-pointer mb-2 box-shadow ${isSearch ? "" : "md:w-[372px] w-[360px]"}`}
             onClick={handleClick}
         >
             <div className="relative w-full h-[300px]">
@@ -81,7 +81,7 @@ function HomeExamItem({item, user = {}}) {
                     placeholder={"blur"}
                     // blurDataURL={item.images[0]}
                     blurDataURL={"https://ngocmeow.github.io/ava1.jpg"}
-                    className={"rounded-tl-xl rounded-tr-xl"}
+                    className={"rounded-tl-xl rounded-tr-xl !h-full object-cover"}
                 />
                 <ExamTag
                     tag={categoryTitleConfig[item.category || 1]}

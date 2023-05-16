@@ -3,6 +3,7 @@ import {Fragment} from "react";
 import Head from "next/head";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
+import "react-input-range/lib/css/index.css";
 import MainLayout from "@/components/layout/MainLayout";
 import {wrapper} from "../store/configStore";
 

@@ -26,7 +26,7 @@ module.exports = {
         backgroundGray: "#e4e6eb",
         backgroundHeart: "#fd213b",
         colorIcon: "#8c939d",
-        colorIconMenu: "#1d1f23",
+        colorIconMenu: "#2c2d32",
       },
     },
   },

@@ -4,13 +4,12 @@ import FilterPopup from "../pop-up/FilterPopup";
 const FilterButton = () => {
     const [showFilterPopup, setShowFilterPopup] = useState(false);
     const handleShowFilterPopup = () => {
-        console.log('aa')
         setShowFilterPopup(!showFilterPopup);
     };
     return (
-        <div className=" lg:hidden flex justify-center w-full">
+        <div className=" lg:hidden z-20 flex fixed bottom-0 justify-center w-full">
             <div
-                className="flex items-center justify-center w-[250px] space-x-2 px-3 py-1 rounded-lg border border-gray-300 cursor-pointer"
+                className="flex items-center justify-center w-[250px] space-x-2 bg-primary text-white px-3 py-2 rounded-tl-lg rounded-tr-lg shadow-xl cursor-pointer"
                 onClick={handleShowFilterPopup}
             >
                 <i className="fa-regular fa-sliders"></i>

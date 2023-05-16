@@ -13,10 +13,11 @@ import dynamic from "next/dynamic";
 import RadioWithoutValidate from "../input/RadioWithoutValidate";
 import FilterButton from "../filter/FilterButton";
 import {formatPrice} from "utils/common";
+import ModalSearch from "@/components/modal/ModalSearch";
 
 const Select = dynamic(() => import("react-select"), {ssr: false});
 
-export default function FeatureSection() {
+export default function FeatureSection({isSmall = false}) {
     const router = useRouter();
     const [filterUrl, setFilterUrl] = useState("");
     const [priceRange, setPriceRange] = useState({
@@ -324,27 +325,27 @@ export default function FeatureSection() {
 
     useEffect(() => {
         (async () => {
-            const res = await addressAPI.getProvinces();
-            if (res) {
-                const temp = res.map((item) => ({
-                    value: item.id,
-                    label: item.fullName,
-                }));
-                setProvinceOption([...temp]);
-            }
+            // const res = await addressAPI.getProvinces();
+            // if (res) {
+            //     const temp = res.map((item) => ({
+            //         value: item.id,
+            //         label: item.fullName,
+            //     }));
+            //     setProvinceOption([...temp]);
+            // }
         })();
     }, []);
     useEffect(() => {
         (async () => {
             if (selectedProvince?.label) {
-                const res = await addressAPI.getDistricts(selectedProvince.value);
-                if (res) {
-                    const temp = res.map((item) => ({
-                        value: item.id,
-                        label: item.fullName,
-                    }));
-                    setDistrictOption([...temp]);
-                }
+                // const res = await addressAPI.getDistricts(selectedProvince.value);
+                // if (res) {
+                //     const temp = res.map((item) => ({
+                //         value: item.id,
+                //         label: item.fullName,
+                //     }));
+                //     setDistrictOption([...temp]);
+                // }
             }
         })();
     }, [selectedProvince]);
@@ -364,7 +365,7 @@ export default function FeatureSection() {
         })();
     }, [selectedDistrict]);
     return (
-        <div className="bg-base-100 md:py-8 pt-8 pb-4">
+        <div className={`${isSmall ? "" : "bg-base-100 md:py-8 pt-8 pb-4"}`}>
             <div className="container mx-auto padding-mobile">
                 <form onSubmit={(e) => handleApplySearch(e)}>
                     <div className="mb-4 relative">
@@ -377,11 +378,6 @@ export default function FeatureSection() {
                         />
                     </div>
                 </form>
-                {/*<div*/}
-                {/*    className="flex items-center justify-center space-x-2 w-[150px] px-3 py-1 rounded-lg border border-gray-300 cursor-pointer">*/}
-                {/*    <i className="fa-light fa-sliders"></i>*/}
-                {/*    <span>Lọc</span>*/}
-                {/*</div>*/}
                 <FilterButton/>
                 {/*<div className="hidden lg:flex items-center space-x-5 justify-center py-4">*/}
 

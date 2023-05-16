@@ -7,6 +7,17 @@ export const menuGuest = [
     },
 ];
 
+export const xapSepConfig = [
+    {
+        value: 1,
+        label: 'Mới nhất'
+    },
+    {
+        value: 2,
+        label: 'Đánh giá cao nhất'
+    }
+]
+
 export const menuUser = [
     {
         id: 1,
