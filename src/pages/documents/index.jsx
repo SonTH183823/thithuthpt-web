@@ -1,31 +1,29 @@
-import PrimaryBanner from "@/components/banner/PrimaryBanner";
-import FeatureSection from "@/components/filter/FilterSection";
-import {
-    districtsConfig,
-    tradingFormConfig,
-    provincesConfig,
-    categoryConfig,
-    xapSepConfig,
-    subjectConfig,
-    levelConfig
-} from "configs/configs";
+import React, {Fragment, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
-import React, {Fragment, useEffect, useState} from "react";
-import ButtonSeeMore from "@/components/button/ButtonSeeMore";
-import PostSekeleton from "@/components/Sekeleton/PostSekeleton";
-import {formatPrice} from "utils/common";
-import HomeExamItem from "@/components/exam/HomeExamItem";
+import {
+    categoryConfig,
+    districtsConfig, levelConfig,
+    provincesConfig,
+    subjectConfig,
+    tradingFormConfig,
+    xapSepConfig
+} from "../../configs/configs";
+import {ExamAPI} from "../../apis/exam";
+import {formatPrice} from "../../utils/common";
+import FeatureSection from "@/components/filter/FilterSection";
 import Collapse from "@/components/common/Collapse";
 import ItemSelect from "@/components/filter/ItemSelect";
-import ButtonPrimary from "@/components/button/ButtonPrimary";
 import InputRange from "react-input-range";
+import ButtonPrimary from "@/components/button/ButtonPrimary";
 import Select from "react-select";
+import PostSekeleton from "@/components/Sekeleton/PostSekeleton";
+import HomeExamItem from "@/components/exam/HomeExamItem";
+import ButtonSeeMore from "@/components/button/ButtonSeeMore";
 import FilterButton from "@/components/filter/FilterButton";
-import {ExamAPI} from "../../apis/exam";
-import {emitter} from "next/client";
 
-const FilterPage = () => {
+function Documents(props) {
     const router = useRouter();
+    const [criteriaFilter, setCriteriaFilter] = useState([]);
     const [exams, setExams] = useState([1, 2, 3, 4, 5, 6]);
     const [total, setTotal] = useState(null);
     const [showButtonLoadMore, setShowButtonLoadMore] = useState(null);
@@ -33,12 +31,12 @@ const FilterPage = () => {
     const [offset, setOffset] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loadMore, setLoadMore] = useState(false);
-
+    const [tradingForm, setTradingForm] = useState(null);
+    const [checked, setChecked] = useState(false);
     const [maxNumQuestion, setMaxNumQuestion] = useState(1);
     const [timeToDo, setTimeToDo] = useState(0);
     const [subject, setSubject] = useState(null);
     const [level, setLevel] = useState(null);
-    const [rate, setRate] = useState(null);
     const [sapXep, setSapXep] = useState(xapSepConfig[0]);
 
 
@@ -49,7 +47,8 @@ const FilterPage = () => {
                 ...router.query,
                 offset: offsetProp,
                 limit,
-                active: 1,
+                status: 1,
+                isActive: 1,
             });
             if (res) {
                 if (offsetProp === 0) {
@@ -72,6 +71,120 @@ const FilterPage = () => {
     useEffect(() => {
         (async () => {
             if (Object.keys(router.query).length) {
+                let categoryValue = [];
+                let priceRangeValue = {};
+                let areaRangeValue = {};
+                let addressValue = {};
+                let tradingFormValue = "";
+                let furnitureValue = "";
+                let hasVideoValue = "";
+                if (Object.keys(router.query).length) {
+                    const {
+                        category,
+                        priceRange,
+                        areaRange,
+                        address,
+                        tradingForm,
+                        keyword,
+                        isFurniture,
+                        hasVideo,
+                    } = router.query;
+                    if (category) {
+                        category.split(",").forEach((item) => {
+                            categoryValue.push(categoryConfig.find((i) => i.id === +item));
+                        });
+                    }
+
+                    if (priceRange) {
+                        const priceRangeArray = priceRange.split(",");
+                        priceRangeValue = {
+                            title: `Khoảng giá ${formatPrice(
+                                priceRangeArray[0]
+                            )}đ - ${formatPrice(priceRangeArray[1])}đ`,
+                        };
+                    }
+
+                    if (areaRange) {
+                        const areaRangeArray = areaRange.split(",");
+                        areaRangeValue = {
+                            title: `Diện tích ${areaRangeArray[0]}m2 - ${areaRangeArray[1]}m2`,
+                        };
+                    }
+                    if (address) {
+                        const addressArray = address.split(",");
+                        addressValue = {
+                            title: `Vị trí ${provincesConfig[addressArray[0]]}${
+                                addressArray[1]
+                                    ? ", " +
+                                    `${districtsConfig[addressArray[1]]}${
+                                        addressArray[2] ? ", " + wardsConfig[addressArray[2]] : ""
+                                    }`
+                                    : ""
+                            }`,
+                        };
+                    }
+
+                    if (tradingForm) {
+                        if (tradingForm == tradingFormConfig["BUY_SELL"]) {
+                            tradingFormValue = {
+                                title: `Hình thức Bán`,
+                            };
+                        } else if (tradingForm == tradingFormConfig["FOR_RENTAL"]) {
+                            tradingFormValue = {
+                                title: `Hình thức Cho thuê`,
+                            };
+                        } else if (tradingForm == tradingFormConfig["ROOM_MATE"]) {
+                            tradingFormValue = {
+                                title: `Hình thức Tìm bạn ở ghép`,
+                            };
+                        } else {
+                            tradingFormValue = {
+                                title: `Hình thức Cần thuê`,
+                            };
+                        }
+                    }
+                    if (router.query.isFurniture) {
+                        if (+isFurniture == furnitueConfig["NONE"]) {
+                            furnitureValue = {
+                                title: `Không có nội thất`,
+                            };
+                        } else if (+router.query.isFurnitue == furnitueConfig["BASIC"]) {
+                            furnitureValue = {
+                                title: `Nội thất cơ bản`,
+                            };
+                        } else {
+                            furnitureValue = {
+                                title: `Nội thất đầy đủ`,
+                            };
+                        }
+                    }
+
+                    if (hasVideo) {
+                        if (+hasVideo == hasVideoConfig["NONE"]) {
+                            hasVideoValue = {
+                                title: `Tin không video`,
+                            };
+                        } else if (+hasVideo == hasVideoConfig["HAS_VIDEO"]) {
+                            hasVideoValue = {
+                                title: `Tin có video`,
+                            };
+                        } else {
+                            hasVideoValue = {
+                                title: `Tin có hoặc không có video`,
+                            };
+                        }
+                    }
+                }
+                setCriteriaFilter([
+                    tradingFormValue,
+                    ...categoryValue,
+                    addressValue,
+                    priceRangeValue,
+                    areaRangeValue,
+                    furnitureValue,
+                    hasVideoValue,
+                ]);
+
                 getExams(0);
             }
         })();
@@ -91,50 +204,45 @@ const FilterPage = () => {
         setOffset(offset + limit);
         setLoadMore(false);
     };
-    const deleteFilter = () => {
-        setSubject(null)
-        setLevel(null)
-        setMaxNumQuestion(0)
-        setTimeToDo(0)
-        setRate(null)
-        emitter.emit('clearInputSearch')
-        router.push("/filter")
-    }
-    const handleApply = () => {
-        // emitter.emit('clearInputSearch')
-        let filterParams = {};
-        if ("subject" in router.query) {
-            delete router.query.subject;
+    const handleDeleteFilterLabel = (item) => {
+        let {category} = router.query;
+
+        if (item.title.includes("Khoảng giá")) {
+            delete router.query.priceRange;
+        } else if (item.title.includes("Diện tích")) {
+            delete router.query.areaRange;
+        } else if (item.title.includes("Vị trí")) {
+            delete router.query.address;
+        } else if (item.title.includes("Nội thất")) {
+            delete router.query.isFurniture;
+        } else if (item.title.includes("video")) {
+            delete router.query.hasVideo;
+        } else if (item.title.includes("Hình thức")) {
+            delete router.query.tradingForm;
+        } else if (category.includes(item.id)) {
+            const categoryTemp = category
+                .split(",")
+                .filter((i) => i !== item.id.toString())
+                .join(",");
+
+            if (categoryTemp.length) {
+                router.query.category = categoryTemp;
+            } else {
+                delete router.query.category;
+            }
         }
-        if ("rate" in router.query) {
-            delete router.query.rate;
+        if (!Object.keys(router.query).length) {
+            router.push("/");
+        } else {
+            let queryTemp = [];
+            for (const key in router.query) {
+                queryTemp.push(`${key}=${router.query[key]}`);
+            }
+            router.push(`/filter?${queryTemp.join("&")}`);
         }
-        if ("level" in router.query) {
-            delete router.query.level;
-        }
-        if ("maxques" in router.query) {
-            delete router.query.maxques;
-        }
-        if ("time" in router.query) {
-            delete router.query.time;
-        }
-        if ("keyword" in router.query) {
-            filterParams.keyword = router.query.keyword;
-            delete router.query.keyword;
-        }
-        filterParams.subject = subject;
-        filterParams.rate = rate;
-        filterParams.level = level;
-        filterParams.maxques = maxNumQuestion;
-        filterParams.time = timeToDo;
-        const q = Object.fromEntries(
-            Object.entries(filterParams).filter(([_, v]) => v)
-        );
-        let queryTemp = [];
-        for (const key in q) {
-            queryTemp.push(`${key}=${q[key]}`);
-        }
-        router.push(`/filter?${queryTemp.join("&")}`);
+    };
+    const handleSelectTradingForm = (e) => {
+        setTradingForm(e.target.value);
     };
     return (
         <div className={'relative bg-base-200'}>
@@ -145,7 +253,7 @@ const FilterPage = () => {
                         <div className={'flex items-center justify-between cursor-pointer pb-2'}>
                             <div className={'font-bold pb-1'}>Tìm kiếm</div>
                             <div className={'text-primary text-sm pb-1 hover:opacity-80'}
-                                 onClick={deleteFilter}>Xóa bộ lọc
+                                 onClick={() => router.push("/filter")}>Xóa bộ lọc
                             </div>
                         </div>
                         <FeatureSection isSmall={true}/>
@@ -200,20 +308,23 @@ const FilterPage = () => {
                             }}/>
                         </Collapse>
                         <Collapse title={"Đánh giá"}>
-                            <ItemSelect checked={rate === 5} label={'⭐⭐⭐⭐⭐'} hasIcon={true} handleSelect={() => {
-                                setRate(5)
+                            <ItemSelect checked={checked} label={'⭐⭐⭐⭐⭐'} hasIcon={true} handleSelect={() => {
+                                setSubject(subjectConfig['toan'].value)
                             }}/>
-                            <ItemSelect checked={rate === 4} label={'⭐⭐⭐⭐'} hasIcon={true} handleSelect={() => {
-                                setRate(4)
+                            <ItemSelect checked={checked} label={'⭐⭐⭐⭐'} hasIcon={true} handleSelect={() => {
+                                setSubject(subjectConfig['toan'].value)
                             }}/>
-                            <ItemSelect checked={rate === 3} label={'⭐⭐⭐'} hasIcon={true} handleSelect={() => {
-                                setRate(3)
+                            <ItemSelect checked={checked} label={'⭐⭐⭐'} hasIcon={true} handleSelect={() => {
+                                setSubject(subjectConfig['toan'].value)
                             }}/>
-                            <ItemSelect checked={rate === 2} label={'⭐⭐'} hasIcon={true} handleSelect={() => {
-                                setRate(2)
+                            <ItemSelect checked={checked} label={'⭐⭐'} hasIcon={true} handleSelect={() => {
+                                setSubject(subjectConfig['toan'].value)
                             }}/>
-                            <ItemSelect checked={rate === 1} label={'⭐'} hasIcon={true} handleSelect={() => {
-                                setRate(1)
+                            <ItemSelect checked={checked} label={'⭐'} hasIcon={true} handleSelect={() => {
+                                setSubject(subjectConfig['toan'].value)
+                            }}/>
+                            <ItemSelect checked={checked} label={'Không có'} handleSelect={() => {
+                                setSubject(subjectConfig['toan'].value)
                             }}/>
                         </Collapse>
                         <Collapse title={'Số lượng câu hỏi tối đa'}>
@@ -241,8 +352,7 @@ const FilterPage = () => {
                                 <div className={'mt-3'}>{timeToDo === 0 ? 'Không giới hạn' : `${timeToDo} phút`}</div>
                             </div>
                         </Collapse>
-                        <ButtonPrimary title={'Áp dụng bộ lọc'} isPrimary={true} className={'w-full mt-3'}
-                                       handleClick={handleApply}/>
+                        <ButtonPrimary title={'Áp dụng bộ lọc'} isPrimary={true} className={'w-full mt-3'}/>
                     </div>
                     <div className={'col-span-9'}>
                         <div className={'flex lg:hidden w-full px-3'}>
@@ -276,10 +386,8 @@ const FilterPage = () => {
                                 <div className="my-4 grid md:grid-cols-2 grid-col-1 gap-1 md:gap-3">
                                     {loading ? (
                                         <Fragment>
-                                            <PostSekeleton isSearch={true}/>
-                                            <PostSekeleton isSearch={true}/>
-                                            <PostSekeleton isSearch={true}/>
-                                            <PostSekeleton isSearch={true}/>
+                                            <PostSekeleton isSearch={true}></PostSekeleton>
+                                            <PostSekeleton isSearch={true}></PostSekeleton>
                                         </Fragment>
                                     ) : (
                                         <Fragment>
@@ -289,8 +397,8 @@ const FilterPage = () => {
 
                                             {!loadMore && (
                                                 <Fragment>
-                                                    <PostSekeleton isSearch={true}/>
-                                                    <PostSekeleton isSearch={true}/>
+                                                    <PostSekeleton isSearch={true}></PostSekeleton>
+                                                    <PostSekeleton isSearch={true}></PostSekeleton>
                                                 </Fragment>
                                             )}
                                         </Fragment>
@@ -313,9 +421,10 @@ const FilterPage = () => {
                     </div>
                 </div>
                 <FilterButton/>
+                {/*<FeatureSection />*/}
             </div>
         </div>
     );
-};
-export default FilterPage;
+}
 
+export default Documents;

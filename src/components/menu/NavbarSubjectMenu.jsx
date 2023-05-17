@@ -17,13 +17,13 @@ export default function NavbarSubjectMenu() {
         {
             id: 1,
             title: "Toán Học",
-            path: "/filter?subject=2",
+            path: "/filter?subject=1",
         },
         {id: 2, title: "Vật Lý", path: "/filter?subject=2"},
         {
             id: 3,
             title: "Hóa Học",
-            path: "/filter?subject=1",
+            path: "/filter?subject=3",
         },
         {id: 4, title: "Sinh Học", path: "/filter?subject=4"},
         {id: 5, title: "Tiếng Anh", path: "/filter?subject=5"},
@@ -42,7 +42,7 @@ export default function NavbarSubjectMenu() {
                 <MenuButton>
                   <span
                       className={`nav-item font-bold cursor-pointer ${
-                          router.pathname !== "/" ? "text-primary" : "text-info"
+                          router.asPath.includes("/filter") ? "text-primary" : "text-info"
                       }`}
                   >
                     <span className={`${checkURL ? "text-primary" : ""}`}>

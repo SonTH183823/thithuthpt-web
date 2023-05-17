@@ -118,12 +118,12 @@ export default function Navbar() {
                         </li>
                         <li
                             className={`nav-item font-bold cursor-pointer ${
-                                router.asPath.includes("tradingForm=4")
+                                router.asPath.includes("/documents")
                                     ? "text-primary"
                                     : "text-info"
                             }`}
                             onClick={() => {
-                                router.push("/document");
+                                router.push("/documents");
                             }}
                         >
                             Tài liệu ôn tập

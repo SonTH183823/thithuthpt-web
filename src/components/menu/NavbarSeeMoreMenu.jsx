@@ -17,7 +17,7 @@ export default function NavbarSeeMoreMenu() {
                 <MenuButton>
           <span
               className={`nav-item font-bold cursor-pointer ${
-                  router.pathname === "/blog"
+                  router.asPath.includes("/blog")
                       ? "text-primary"
                       : "text-info"
               }`}

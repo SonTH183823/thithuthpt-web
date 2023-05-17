@@ -87,10 +87,6 @@ export const answerConfig = {
         value: 4,
         label: 'D'
     },
-    'Mark': {
-        value: 5,
-        label: 'Mark'
-    },
 };
 
 export const provincesConfig = {
@@ -867,6 +863,56 @@ export const districtsConfig = {
     973: "Huyện Ngọc Hiển",
 };
 
-export const danhMucConfig = {
-
+export const subjectConfig = {
+    'toan': {
+        value: 1,
+        label: 'Toán Học'
+    },
+    'ly': {
+        value: 2,
+        label: 'Vật Lý'
+    },
+    'hoa': {
+        value: 3,
+        label: 'Hóa Học'
+    },
+    'sinh': {
+        value: 4,
+        label: 'Sinh Học'
+    },
+    'anh': {
+        value: 5,
+        label: 'Tiếng Anh'
+    },
+    'su': {
+        value: 6,
+        label: 'Lịch Sử'
+    },
+    'dia': {
+        value: 7,
+        label: 'Địa Lý'
+    },
+    'gdcd': {
+        value: 8,
+        label: 'GDCD'
+    },
 }
+
+export const levelConfig = [
+    {
+        value: 1,
+        label: 'Cơ bản'
+    },
+    {
+        value: 2,
+        label: 'Trung bình'
+    },
+    {
+        value: 3,
+        label: 'Nâng cao'
+    },
+    {
+        value: 4,
+        label: 'Khó'
+    }
+]
