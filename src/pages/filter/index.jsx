@@ -34,7 +34,7 @@ const FilterPage = () => {
     const [subject, setSubject] = useState(null);
     const [level, setLevel] = useState(null);
     const [rate, setRate] = useState(null);
-    const [sapXep, setSapXep] = useState(xapSepConfig[0]);
+    const [sort, setSort] = useState(xapSepConfig[0]);
 
 
     const getExams = async (offsetProp) => {
@@ -66,11 +66,30 @@ const FilterPage = () => {
 
     useEffect(() => {
         (async () => {
-            if (Object.keys(router.query).length) {
-                getExams(0);
-            }
+            await getExams(0);
         })();
     }, [router.query]);
+
+    useEffect(() => {
+        if (sort.value === xapSepConfig[1].value) {
+            let queryTemp = [];
+            for (const key in router.query) {
+                queryTemp.push(`${key}=${router.query[key]}`);
+            }
+            router.push(`/filter?${queryTemp.join("&")}&outstanding=1`);
+        }else {
+            if(Object.keys(router.query).length && !("keyword" in router.query)){
+                if ("outstanding" in router.query) {
+                    delete router.query.outstanding;
+                }
+                let queryTemp = [];
+                for (const key in router.query) {
+                    queryTemp.push(`${key}=${router.query[key]}`);
+                }
+                router.push(`/filter?${queryTemp.join("&")}`);
+            }
+        }
+    }, [sort.value]);
 
     useEffect(() => {
         if (total && total > 0 && exams.length < total) {
@@ -96,7 +115,6 @@ const FilterPage = () => {
         router.push("/filter")
     }
     const handleApply = () => {
-        // emitter.emit('clearInputSearch')
         let filterParams = {};
         if ("subject" in router.query) {
             delete router.query.subject;
@@ -260,9 +278,9 @@ const FilterPage = () => {
                                     }}
                                     options={xapSepConfig}
                                     onChange={(option) => {
-                                        setSapXep(option)
+                                        setSort(option)
                                     }}
-                                    value={sapXep}
+                                    value={sort}
                                 />
                             </div>
                         </div>

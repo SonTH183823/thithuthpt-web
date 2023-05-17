@@ -14,7 +14,7 @@ export const xapSepConfig = [
     },
     {
         value: 2,
-        label: 'Đánh giá cao nhất'
+        label: 'Nổi bật'
     }
 ]
 
