@@ -1,10 +1,6 @@
 import PrimaryBanner from "@/components/banner/PrimaryBanner";
 import FeatureSection from "@/components/filter/FilterSection";
 import {
-    districtsConfig,
-    tradingFormConfig,
-    provincesConfig,
-    categoryConfig,
     xapSepConfig,
     subjectConfig,
     levelConfig
@@ -13,7 +9,6 @@ import {useRouter} from "next/router";
 import React, {Fragment, useEffect, useState} from "react";
 import ButtonSeeMore from "@/components/button/ButtonSeeMore";
 import PostSekeleton from "@/components/Sekeleton/PostSekeleton";
-import {formatPrice} from "utils/common";
 import HomeExamItem from "@/components/exam/HomeExamItem";
 import Collapse from "@/components/common/Collapse";
 import ItemSelect from "@/components/filter/ItemSelect";
@@ -22,7 +17,7 @@ import InputRange from "react-input-range";
 import Select from "react-select";
 import FilterButton from "@/components/filter/FilterButton";
 import {ExamAPI} from "../../apis/exam";
-import {emitter} from "next/client";
+import eventEmitter from "../../utils/eventEmitter";
 
 const FilterPage = () => {
     const router = useRouter();
@@ -97,7 +92,7 @@ const FilterPage = () => {
         setMaxNumQuestion(0)
         setTimeToDo(0)
         setRate(null)
-        emitter.emit('clearInputSearch')
+        eventEmitter.emit('clearInputSearch')
         router.push("/filter")
     }
     const handleApply = () => {

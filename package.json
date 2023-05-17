@@ -18,6 +18,7 @@
     "daisyui": "^2.51.5",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
+    "events": "^3.3.0",
     "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
     "next": "13.2.4",

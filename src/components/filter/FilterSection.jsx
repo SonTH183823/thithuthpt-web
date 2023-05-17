@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
-import {emitter} from "next/client";
+import eventEmitter from "../../utils/eventEmitter";
 
 export default function FeatureSection({isSmall = false}) {
     const router = useRouter();
@@ -12,7 +12,7 @@ export default function FeatureSection({isSmall = false}) {
     };
 
     useEffect(() => {
-        emitter.on('clearInputSearch', () => {
+        eventEmitter.on('clearInputSearch', () => {
             setKeyword('')
         })
     })
