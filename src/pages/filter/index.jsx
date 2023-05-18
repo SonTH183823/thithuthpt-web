@@ -77,8 +77,8 @@ const FilterPage = () => {
                 queryTemp.push(`${key}=${router.query[key]}`);
             }
             router.push(`/filter?${queryTemp.join("&")}&outstanding=1`);
-        }else {
-            if(Object.keys(router.query).length && !("keyword" in router.query)){
+        } else {
+            if (Object.keys(router.query).length && !("keyword" in router.query)) {
                 if ("outstanding" in router.query) {
                     delete router.query.outstanding;
                 }
@@ -325,7 +325,7 @@ const FilterPage = () => {
                         )}
                     </div>
                 </div>
-                <FilterButton/>
+                {(loading || loadMore) ? <></> : <FilterButton/>}
             </div>
         </div>
     );
