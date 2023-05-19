@@ -3,71 +3,49 @@ import Image from "next/image";
 import camera from "@/assets/images/camera.png";
 import video from "@/assets/images/video.png";
 import Avatar from "../user/Avatar";
-import { BigPlayButton, ControlBar, Player } from "video-react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {BigPlayButton, ControlBar, Player} from "video-react";
+import {faImage, faPlus, faVideo} from "@fortawesome/free-solid-svg-icons";
+
 export default function CommentBox({
-  postId,
-  profile,
-  comment,
-  setComment,
-  handlePostComment,
-  handleChangeInput,
-  handleChangeVideoInput,
-  imageURL,
-  videoURL,
-  setImageURL,
-  setVideoURL,
-  loading,
-}) {
+                                     postId,
+                                     profile,
+                                     comment,
+                                     setComment,
+                                     handlePostComment,
+                                     handleChangeInput,
+                                     handleChangeVideoInput,
+                                     imageURL,
+                                     videoURL,
+                                     setImageURL,
+                                     setVideoURL,
+                                     loading,
+                                   }) {
   return (
     <div className={`flex items-start space-x-3`}>
-      <Avatar sizeAvatar="w-12" avatar={profile.avatar} />
+      <Avatar sizeAvatar="w-12" avatar={profile.avatar}/>
       <div className={` bg-base-200 w-full rounded-lg overflow-hidden`}>
         <div className={"p-3"}>
-          <CommentInput comment={comment} setComment={setComment} />
+          <CommentInput comment={comment} setComment={setComment}/>
           <div className="flex items-center justify-end">
             <div
               className={
                 "flex justify-end pt-3 cursor-pointer items-center space-x-2"
               }
             >
-              <label
-                htmlFor="upload-img"
-                className="cursor-pointer flex items-center"
-              >
-                <Image
-                  src={camera}
-                  alt={"camera"}
-                  width={40}
-                  height={35}
-                  objectFit={"contain"}
-                />
+              <label className={'cursor-pointer h-full w-5'}>
+                <FontAwesomeIcon icon={faImage} className={'text-primary'}/>
+                <input type="file" accept="image/png, image/jpeg" className="hidden cursor-pointer"
+                       multiple={false}
+                       onChange={(e) => handleChangeInput(e)}/>
               </label>
-              <label
-                htmlFor="upload-video"
-                className="cursor-pointer flex items-center"
-              >
-                <Image
-                  src={video}
-                  alt={"video"}
-                  width={40}
-                  height={39}
-                  objectFit={"contain"}
-                />
+
+              <label className={'cursor-pointer h-full w-5'}>
+                <FontAwesomeIcon icon={faVideo} className={'text-primary'}/>
+                <input type="file" accept=".mov,.mp4" className="hidden cursor-pointer"
+                       multiple={false}
+                       onChange={(e) => handleChangeVideoInput(e)}/>
               </label>
-              <input
-                type={"file"}
-                id={"upload-img"}
-                accept="image/png, image/jpeg"
-                className={"hidden"}
-                onChange={(e) => handleChangeInput(e)}
-              />
-              <input
-                type={"file"}
-                id={"upload-video"}
-                accept=".mov,.mp4"
-                className={"hidden"}
-                onChange={(e) => handleChangeVideoInput(e)}
-              />
             </div>
             <div
               className={"flex justify-end pt-3 cursor-pointer ml-2.5"}
@@ -79,7 +57,7 @@ export default function CommentBox({
                 {!loading ? (
                   <span>Bình luận</span>
                 ) : (
-                  <i class="fas fa-spinner fa-spin text-white"></i>
+                  <i className="fas fa-spinner fa-spin text-white"></i>
                 )}
               </span>
             </div>
@@ -111,10 +89,10 @@ export default function CommentBox({
                   playsInline
                   src={videoURL}
                   className={"h-[150px]"}
-                  poster="https://res.cloudinary.com/dqrn1uojt/image/upload/v1675062159/thumbnail-video-no-button_qf1rax.png"
+                  // poster={'https://global.discourse-cdn.com/business4/uploads/prezi/original/2X/a/aaaff5d5dec03e32799015d424b4a5db51c9eeff.png'}
                 >
-                  <ControlBar autoHide={false} className="my-class" />
-                  <BigPlayButton position="center" />
+                  <ControlBar autoHide={false} className="my-class"/>
+                  <BigPlayButton position="center"/>
                 </Player>
               </div>
               <div

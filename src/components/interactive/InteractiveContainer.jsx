@@ -2,21 +2,22 @@ import like from "@/assets/images/interactive/like.svg";
 import commentImg from "@/assets/images/interactive/comment.svg";
 import share from "@/assets/images/interactive/share.svg";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import CommentBox from "@/components/comment/CommentBox";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 // import { commentAPI } from "apis/comment";
-import { convertBase64 } from "utils/uploadImage";
+import {convertBase64} from "utils/uploadImage";
 import CommentItem from "../comment/CommentItem";
 import Link from "next/link";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
+
 const interactives = [
-  { id: 1, title: "Thích", icon: like },
-  { id: 2, title: "Bình luận", icon: commentImg },
-  { id: 3, title: "Chia sẻ", icon: share },
+  {id: 1, title: "Thích", icon: like},
+  {id: 2, title: "Bình luận", icon: commentImg},
+  {id: 3, title: "Chia sẻ", icon: share},
 ];
 
-export default function InteractiveContainer({ examId }) {
+export default function InteractiveContainer({examId}) {
   // const profile = useSelector((state) => state.auth.profile);
   const profile = {}
 
@@ -25,7 +26,7 @@ export default function InteractiveContainer({ examId }) {
   const [page, setPage] = useState(1);
 
   //comment
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([1, 2, 3, 4]);
   const [comment, setComment] = useState("");
   const [base64Image, setBase64Image] = useState(null);
   const [base64Video, setBase64Video] = useState(null);
@@ -72,13 +73,13 @@ export default function InteractiveContainer({ examId }) {
     try {
       const temp = comments.map((comment) => {
         if (comment.id === parentId) {
-          const { firstChild } = comment;
-          const { id, avatar, displayName } = profile;
+          const {firstChild} = comment;
+          const {id, avatar, displayName} = profile;
           const temp = {
             content,
             imageAttach: imageURL,
             videoAttach: videoURL,
-            userComment: { id, avatar, displayName },
+            userComment: {id, avatar, displayName},
           };
           return {
             ...comment,
@@ -124,16 +125,16 @@ export default function InteractiveContainer({ examId }) {
             ...comment,
             firstChild: comment.firstChild
               ? comment.firstChild.map((childComment) => {
-                  if (childComment.id === item.id) {
-                    return {
-                      ...childComment,
-                      content: commentEditInput,
-                      imageAttach: imageURL,
-                      videoAttach: videoURL,
-                    };
-                  }
-                  return childComment;
-                })
+                if (childComment.id === item.id) {
+                  return {
+                    ...childComment,
+                    content: commentEditInput,
+                    imageAttach: imageURL,
+                    videoAttach: videoURL,
+                  };
+                }
+                return childComment;
+              })
               : null,
           };
         }
@@ -190,7 +191,7 @@ export default function InteractiveContainer({ examId }) {
       temps = comments.filter((comment) => comment.id !== cmt.id);
     } else {
       temps = comments.map((comment) => {
-        const { firstChild } = comment;
+        const {firstChild} = comment;
         return {
           ...comment,
           totalReply: comment.totalReply - 1,
@@ -300,7 +301,7 @@ export default function InteractiveContainer({ examId }) {
             handleUpdateComment={handleUpdateComment}
             setComments={setComments}
             setComment={setComment}
-            totalReplyProp={comment.totalReply}
+            totalReplyProp={comment.totalReply || 3}
           />
         ))}
         {totalComment > comments.length && (

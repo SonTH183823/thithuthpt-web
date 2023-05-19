@@ -1,31 +1,44 @@
-import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
+import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu";
 // import { commentAPI } from "apis/comment";
 // import { userAPI } from "apis/user";
 import moment from "moment";
 import "moment/locale/vi";
 moment.locale("vi");
 import Image from "next/image";
-import React, { Fragment, useEffect, useState } from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import Lightbox from "react-image-lightbox";
-import { convertBase64 } from "utils/uploadImage";
+import {convertBase64} from "utils/uploadImage";
 import CommentInput from "./CommentInput";
 import ModalComfirmDeleteComment from "../modal/ModalComfirmDeleteComment";
-import camera from "@/assets/images/camera.png";
 import Avatar from "../user/Avatar";
-import { BigPlayButton, ControlBar, Player } from "video-react";
+import {BigPlayButton, ControlBar, Player} from "video-react";
 import CommentBoxReply from "./CommentBoxReply";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faImage, faVideo} from "@fortawesome/free-solid-svg-icons";
+import like from "@/assets/images/svg/like.svg"
+import likegray from "@/assets/images/svg/likegray.svg"
+import dislike from "@/assets/images/svg/dislike.svg"
+
 export default function CommentItem({
-  comment,
-  profile,
-  setComment,
-  setComments,
-  handleDeleteComment: handleDeleteCommentProp,
-  handleShowMoreReplyComment: showMoreReplyComment,
-  handleUpdateComment: handleUpdateCommentProp,
-  handlePostCommentReply,
-  totalReplyProp,
-}) {
+                                      comments,
+                                      profiles,
+                                      setComment,
+                                      setComments,
+                                      handleDeleteComment: handleDeleteCommentProp,
+                                      handleShowMoreReplyComment: showMoreReplyComment,
+                                      handleUpdateComment: handleUpdateCommentProp,
+                                      handlePostCommentReply,
+                                      totalReplyProp,
+                                    }) {
+  const profile = {
+    displayName: 'Tô Hoài Sơn'
+  }
+  const comment = {
+    isEdit: true,
+    content: 'Đay là bình luận mẫu Đay là bình luận mẫu Đay là bình luận mẫu Đay là bình luận mẫu',
+    firstChild: [1]
+  }
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentEditInput, setCommentEditInput] = useState();
   const [newComment, setNewComment] = useState("");
@@ -53,14 +66,14 @@ export default function CommentItem({
     setVideoBase64(null);
   };
 
-  useEffect(() => {
-    if (comment.firstChild) {
-    }
-  }, [comment]);
+  // useEffect(() => {
+  //   if (comment.firstChild) {
+  //   }
+  // }, [comment]);
 
   useEffect(() => {
     if (comment.firstChild) {
-      setTotalReply(totalReplyProp);
+      setTotalReply(totalReplyProp || 3);
       if (totalReplyProp > 1) {
         setLoadMoreReply(true);
       } else if (
@@ -298,10 +311,10 @@ export default function CommentItem({
                         playsInline
                         src={videoURL}
                         className={"h-[150px]"}
-                        poster="https://res.cloudinary.com/dqrn1uojt/image/upload/v1675062159/thumbnail-video-no-button_qf1rax.png"
+                        // poster="https://res.cloudinary.com/dqrn1uojt/image/upload/v1675062159/thumbnail-video-no-button_qf1rax.png"
                       >
-                        <ControlBar autoHide={false} className="my-class" />
-                        <BigPlayButton position="center" />
+                        <ControlBar autoHide={false} className="my-class"/>
+                        <BigPlayButton position="center"/>
                       </Player>
                     </div>
                   </div>
@@ -343,8 +356,8 @@ export default function CommentItem({
                       className={"h-[150px]"}
                       poster="https://res.cloudinary.com/dqrn1uojt/image/upload/v1675062159/thumbnail-video-no-button_qf1rax.png"
                     >
-                      <ControlBar autoHide={false} className="my-class" />
-                      <BigPlayButton position="center" />
+                      <ControlBar autoHide={false} className="my-class"/>
+                      <BigPlayButton position="center"/>
                     </Player>
                   </div>
                   <div
@@ -365,56 +378,25 @@ export default function CommentItem({
                   Hủy bỏ
                 </div>
                 <div className="flex items-center ">
-                  <div
-                    className={"flex justify-end cursor-pointer items-center"}
-                  >
-                    <label
-                      htmlFor="upload-img-comment-item"
-                      className="cursor-pointer flex items-center"
-                    >
-                      <Image
-                        src={camera}
-                        alt={"camera"}
-                        width={70}
-                        height={35}
-                        objectFit={"contain"}
-                      />
+                  <div className={"flex justify-end cursor-pointer items-center space-x-2"}>
+                    <label className={'cursor-pointer h-full w-5'}>
+                      <FontAwesomeIcon icon={faImage} className={'text-primary'}/>
+                      <input type="file" accept="image/png, image/jpeg" className="hidden cursor-pointer"
+                             multiple={false}
+                             onChange={(e) => handleChangeInput(e)}/>
                     </label>
 
-                    <label
-                      htmlFor="upload-video-comment-item"
-                      className="cursor-pointer flex items-center"
-                    >
-                      <Image
-                        src={camera}
-                        alt={"camera"}
-                        width={70}
-                        height={35}
-                        objectFit={"contain"}
-                      />
+                    <label className={'cursor-pointer h-full w-5'}>
+                      <FontAwesomeIcon icon={faVideo} className={'text-primary'}/>
+                      <input type="file" accept=".mov,.mp4" className="hidden cursor-pointer"
+                             multiple={false}
+                             onChange={(e) => handleChangeVideoInput(e)}/>
                     </label>
-                    <input
-                      type={"file"}
-                      id={"upload-img-comment-item"}
-                      className={"hidden"}
-                      accept="image/png, image/jpeg"
-                      onChange={(e) => handleChangeInput(e)}
-                    />
-                    <input
-                      type={"file"}
-                      id={"upload-video-comment-item"}
-                      className={"hidden"}
-                      accept=".mov,.mp4"
-                      onChange={(e) => handleChangeVideoInput(e)}
-                    />
-                  </div>
-                  <div
-                    onClick={handleUpdateComment}
-                    className={
-                      "cursor-pointer px-3 py-2 bg-primary rounded-lg text-white text-sm font-semibold"
-                    }
-                  >
-                    Cập nhật
+                    <div
+                      onClick={handleUpdateComment}
+                      className={"cursor-pointer px-3 py-2 bg-primary rounded-lg text-white text-sm font-semibold"}>
+                      Cập nhật
+                    </div>
                   </div>
                 </div>
               </div>
@@ -424,8 +406,17 @@ export default function CommentItem({
       </div>
       {!showEditCommentInput && !comment.parentId && (
         <div className={"ml-14 flex items-center space-x-3 text-sm"}>
-          {/* <span>Thích</span>
-          <div className={"w-1 h-1 rounded-full bg-gray-400"}></div> */}
+          <div className={'ml-3 hover:text-primary cursor-pointer flex items-center'}>
+            <Image src={likegray} alt={''} className={'w-6 h-6'}/>
+            Hữu ích (69)
+          </div>
+          <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
+          <div className={'ml-3 hover:text-[#E44D04] cursor-pointer flex items-center'}>
+            {/*<Image src={dislike} alt={''} className={'w-6 h-6'}/>*/}
+            <Image src={likegray} alt={''} className={'w-6 h-6 rotate-180'}/>
+            Không hữu ích (12)
+          </div>
+          <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
           <div className={"cursor-pointer"} onClick={toggleShowCommentInput}>
             {showCommentInput ? (
               <div>
@@ -438,47 +429,49 @@ export default function CommentItem({
         </div>
       )}
       {showCommentInput && (
-        <div className={"ml-14 mt-3 w-full"}>
-          <CommentBoxReply
-            // profile={profile}
-            // comment={newComment}
-            // setComment={setNewComment}
-            handlePostComment={() => postCommentReply(comment.id, newComment)}
-            profile={profile}
-            comment={newComment}
-            setComment={setNewComment}
-            imageURL={imageURL}
-            videoURL={videoURL}
-            setImageURL={setImageURL}
-            setVideoURL={setVideoURL}
-            handleChangeInput={handleChangeInput}
-            handleChangeVideoInput={handleChangeVideoInput}
-            loading={loading}
-          />
+        <div className={"ml-14 mt-3 flex flex-1"}>
+          <div className={'w-full'}>
+            <CommentBoxReply
+              // profile={profile}
+              // comment={newComment}
+              // setComment={setNewComment}
+              handlePostComment={() => postCommentReply(comment.id, newComment)}
+              profile={profile}
+              comment={newComment}
+              setComment={setNewComment}
+              imageURL={imageURL}
+              videoURL={videoURL}
+              setImageURL={setImageURL}
+              setVideoURL={setVideoURL}
+              handleChangeInput={handleChangeInput}
+              handleChangeVideoInput={handleChangeVideoInput}
+              loading={loading}
+            />
+          </div>
         </div>
       )}
-      {comment?.firstChild ? (
-        <Fragment>
-          {comment.firstChild.map((item, index) => (
-            <div className="pl-12" key={index}>
-              <CommentItem
-                comment={item}
-                handleUpdateComment={handleUpdateCommentProp}
-                profile={profile}
-                handleDeleteComment={handleDeleteCommentProp}
-                setComment={setComment}
-                setComments={setComments}
-                totalReplyProp={item.totalReply}
-              />
-            </div>
-          ))}
-        </Fragment>
-      ) : (
-        <></>
-      )}
+      {/*{comment?.firstChild ? (*/}
+      {/*  <Fragment>*/}
+      {/*    {comment.firstChild.map((item, index) => (*/}
+      {/*      <div className="pl-12" key={index}>*/}
+      {/*        <CommentItem*/}
+      {/*          comment={item}*/}
+      {/*          handleUpdateComment={handleUpdateCommentProp}*/}
+      {/*          profile={profile}*/}
+      {/*          handleDeleteComment={handleDeleteCommentProp}*/}
+      {/*          setComment={setComment}*/}
+      {/*          setComments={setComments}*/}
+      {/*          totalReplyProp={item.totalReply}*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*    ))}*/}
+      {/*  </Fragment>*/}
+      {/*) : (*/}
+      {/*  <></>*/}
+      {/*)}*/}
       {loadMoreReply && (
         <div
-          className="pl-12 py-2 text-primary text-sm cursor-pointer"
+          className="pl-12 py-2 text-primary text-sm cursor-pointer ml-5"
           onClick={handleShowMoreReplyComment}
         >
           Xem thêm trả lời
