@@ -171,7 +171,7 @@ function DetailExam({i, isDoExam = false}) {
                 </div>
 
             </div>
-            {!isDoExam && <ButtonPrimary
+            {isDoExam && <ButtonPrimary
                 title="Bắt đầu làm bài"
                 className="w-full mt-3"
                 handleClick={() => startExam()}
