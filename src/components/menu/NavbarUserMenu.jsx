@@ -45,13 +45,6 @@ export default function NavbarUserMenu() {
           <MenuButton>
             {profile.avatar ? (
               <div className="h-[39px] w-[39px] relative">
-                {/*<Image*/}
-                {/*  alt="avatar"*/}
-                {/*  layout="fill"*/}
-                {/*  objectFit="cover"*/}
-                {/*  src={profile.avatar}*/}
-                {/*  className="rounded-full"*/}
-                {/*/>*/}
                 <img src={profile.avatar} alt={''} className={'rounded-full'}/>
               </div>
             ) : (

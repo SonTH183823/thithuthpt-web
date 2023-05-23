@@ -15,6 +15,7 @@ export function* handleLogin({payload: {token, fcmToken}}) {
       });
       try {
         const profile = yield call(userAPI.getProfile);
+        if (profile.name === '') profile.name = profile.phoneNumber
         yield put(authUpdateProfile(profile));
       } catch (e) {
         console.log(e);

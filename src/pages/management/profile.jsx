@@ -12,11 +12,11 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import AvatarWithUpload from "@/components/user/AvatarWithUpload";
 import {useDispatch, useSelector} from "react-redux";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
-import { async } from "@firebase/util";
-import { userAPI } from "apis/user";
+import {async} from "@firebase/util";
+import {userAPI} from "apis/user";
 import {toast} from "react-toastify";
 import {CharacteristicsItem, CharacteristicsItemIcon} from "@/components/characteristics/CharacteristicsItem";
-import { authUpdateProfile } from "store/auth/auth-slice";
+import {authUpdateProfile} from "store/auth/auth-slice";
 import phone from '@/assets/images/svg/telephone.svg'
 import mail from '@/assets/images/svg/mail.svg'
 
@@ -25,64 +25,59 @@ const schema = yup.object({
 });
 export default function MyProfile() {
   const profile = useSelector((state) => state.auth.profile);
-  const [address, setAddress] = useState(profile?.address || "");
-  const [name, setName] = useState(profile?.displayName || "");
+  const [address, setAddress] = useState("");
+  const [name, setName] = useState("");
   const dispatch = useDispatch();
   const {
-    control, handleSubmit, formState: {errors},
+    handleSubmit, formState: {errors},
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  // useEffect(() => {
-  //   if (profile.address) {
-  //     setAddress(profile.address);
-  //   }
-  //   if (profile.displayName) {
-  //     setName(profile.displayName)
-  //   }
-  // }, [profile]);
+  useEffect(() => {
+    if (profile.name) setName(profile.name)
+    if (profile.address) setAddress(profile.address)
+  }, [profile])
 
-  const handleUpdate = async (values) => {
+  const handleUpdate = async () => {
     try {
-      const data = {...values};
+      const data = {...profile, name};
       if (address) {
         data.address = address;
       }
-      // const res = await userAPI.updateAccount({
-      //   id: profile.id,
-      //   data: { ...data },
-      // });
-      // if (res.ok) {
-      //   const profileRes = await userAPI.getProfile();
-      //   dispatch(authUpdateProfile(profileRes));
-      //   toast.success("Cập nhật thông tin thành công!", {
-      //     position: "bottom-right",
-      //     autoClose: 5000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "colored",
-      //   });
-      // } else {
-      //   toast.error("Đã có lỗi xảy ra!", {
-      //     position: "bottom-right",
-      //     autoClose: 5000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "colored",
-      //   });
-      // }
+      const res = await userAPI.updateAccount({
+        data: {...data},
+      });
+      if (res?.ok) {
+        const profileRes = await userAPI.getProfile();
+        dispatch(authUpdateProfile(profileRes));
+        toast.success("Cập nhật thông tin thành công!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        toast.error("Đã có lỗi xảy ra!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     } catch (e) {
       console.log(e);
       toast.error("Đã có lỗi xảy ra!", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -130,29 +125,29 @@ export default function MyProfile() {
               />
             </FormGroup>
 
-            <FormGroup>
-              <div className="font-bold">Số điện thoại</div>
-              <div className={"flex items-center justify-between"}>
-                <CharacteristicsItem icon={phone}>
-                  <span>{profile.phoneNumber}</span>
-                </CharacteristicsItem>
-              </div>
-            </FormGroup>
+            {profile?.phoneNumber ? <FormGroup>
+                <div className="font-bold">Số điện thoại</div>
+                <div className={"flex items-center justify-between"}>
+                  <CharacteristicsItem icon={phone}>
+                    <span>{profile.phoneNumber}</span>
+                  </CharacteristicsItem>
+                </div>
+              </FormGroup> :
 
-            <FormGroup>
-              <div className="font-bold">Email</div>
-              <div className={"flex items-center justify-between"}>
-                <CharacteristicsItem icon={mail}>
-                  <span>{profile.email}</span>
-                </CharacteristicsItem>
-              </div>
-            </FormGroup>
+              <FormGroup>
+                <div className="font-bold">Email</div>
+                <div className={"flex items-center justify-between"}>
+                  <CharacteristicsItem icon={mail}>
+                    <span>{profile.email}</span>
+                  </CharacteristicsItem>
+                </div>
+              </FormGroup>}
           </div>
           <div>
             <ButtonPrimary
               className="w-[200px] float-right"
               title="Cập nhật"
-              type="submit"
+              handleClick={handleUpdate}
             />
           </div>
         </form>

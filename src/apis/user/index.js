@@ -14,8 +14,8 @@ export const userAPI = {
     return await api.get(`/user?${queryString.stringify(query)}`);
   },
 
-  async updateAccount({id, data}) {
-    return await api.put(`/user/${id}`, {...data});
+  async updateAccount({data}) {
+    return await api.put(`/user`, {...data});
   },
 
   async lockAccount({id, data}) {

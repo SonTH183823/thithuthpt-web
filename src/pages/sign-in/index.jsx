@@ -18,6 +18,8 @@ import {
   FacebookAuthProvider, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, signOut,
 } from "@firebase/auth";
 import {authLogin} from "../../store/auth/auth-slice";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
 const schema = yup.object({
@@ -32,8 +34,10 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const [number, setNumber] = useState("");
   const [flag, setFlag] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
   const [code, setCode] = useState("");
+
   const {width} = useWindowSize();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.profile);
@@ -83,12 +87,15 @@ export default function SignIn() {
   }, [user, router]);
 
   const getOtp = async () => {
+    setLoading(true)
     const phoneNumberData = `+84${watcherPhoneNumber.substring(1)}`;
     try {
       const response = await setUpRecaptha(phoneNumberData);
       setResult(response);
       setFlag(true);
+      setLoading(false)
     } catch (err) {
+      setLoading(false)
       console.log(err.message);
       setError(err.message);
     }
@@ -98,10 +105,13 @@ export default function SignIn() {
     (async () => {
       if (code?.length === 6) {
         try {
+          setLoading(true)
           const res = await result.confirm(code);
           const fcmToken = localStorage.getItem("fcmToken");
           dispatch(authLogin({token: res.user.accessToken, fcmToken}));
+          setLoading(false)
         } catch (err) {
+          setLoading(false)
           console.log(err);
           setCode("");
           setError(err.message);
@@ -110,9 +120,6 @@ export default function SignIn() {
     })();
   }, [code]);
 
-  const handleLoginPermission = () => {
-    router.push(`sign-in/permission`);
-  };
   return (<div
     className={"flex items-center justify-end"}
     style={width >= 1024 ? {
@@ -150,9 +157,10 @@ export default function SignIn() {
           <div id="recaptcha-container"></div>
           <button
             type="submit"
-            className="w-full bg-primary p-3 rounded-lg text-white font-bold my-2"
+            className="w-full bg-primary p-3 rounded-lg text-white font-bold my-2 disabled:bg-gray-600"
+            disabled={loading}
           >
-            Đăng nhập
+            {loading ? <FontAwesomeIcon icon={faSpinner} spin={true} className={'text-white'}/> : 'Đăng nhập'}
           </button>
         </form>)}
 
@@ -205,8 +213,9 @@ export default function SignIn() {
               }}
             />
 
-            <button className="w-full bg-gray-300 p-3 rounded-lg text-white font-bold my-0 mt-3">
-              Tiếp tục
+            <button className="w-full bg-gray-300 p-3 rounded-lg text-white font-bold my-0 mt-3 disabled:bg-gray-600"
+                    disabled={loading}>
+              {loading ? <FontAwesomeIcon icon={faSpinner} spin={true} className={'text-white'}/> : 'Tiếp tục'}
             </button>
           </div>)}
         </div>

@@ -20,7 +20,6 @@ export default function AvatarWithUpload({
   const dispatch = useDispatch();
   useEffect(() => {
     if (avatar) {
-      console.log('ava', avatar)
       setAvatarSource(avatar);
     }
   }, [avatar]);
