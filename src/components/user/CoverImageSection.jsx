@@ -4,6 +4,7 @@ import Image from "next/image";
 import {convertBase64} from "utils/uploadImage";
 // import { userAPI } from "apis/user";
 import {toast} from "react-toastify";
+import {userAPI} from "../../apis/user";
 
 const CoverImageSection = ({
                                imgCover,
@@ -23,13 +24,10 @@ const CoverImageSection = ({
             setImageCoverSource(URL.createObjectURL(e.target.files[0]));
             const base64 = await convertBase64(e.target.files[0]);
             try {
-                // const res = await userAPI.updateAccount({
-                //   id: userId,
-                //   data: { base64ImageCover: base64 },
-                // });
-                const res = {
-                    ok: true
-                }
+                const res = await userAPI.updateAccount({
+                  id: userId,
+                  data: { base64ImageCover: base64 },
+                });
                 if (res.ok) {
                     toast.success("Cập nhật thông tin thành công!", {
                         position: "bottom-right",

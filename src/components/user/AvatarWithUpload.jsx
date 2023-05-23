@@ -28,10 +28,7 @@ export default function AvatarWithUpload({
       setAvatarSource(URL.createObjectURL(e.target.files[0]));
       const base64 = await convertBase64(e.target.files[0]);
       try {
-        const res = await userAPI.updateAccount({
-          id: userId,
-          data: {base64},
-        });
+        const res = await userAPI.updateAccount({data: {base64}});
         if (res.ok) {
           const profileRes = await userAPI.getProfile();
           dispatch(authUpdateProfile(profileRes));
@@ -84,7 +81,7 @@ export default function AvatarWithUpload({
               height={height}
             />
           </div>
-        ) : <div className="h-[150px] w-[150px]">
+        ) : <div className="h-[150px] w-[150px] rounded-full bg-white">
           <FontAwesomeIcon icon={faCircleUser} className={'text-primary w-full h-full'}/>
         </div>}
       </div>

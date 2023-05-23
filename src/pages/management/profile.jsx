@@ -19,6 +19,7 @@ import {CharacteristicsItem, CharacteristicsItemIcon} from "@/components/charact
 import {authUpdateProfile} from "store/auth/auth-slice";
 import phone from '@/assets/images/svg/telephone.svg'
 import mail from '@/assets/images/svg/mail.svg'
+import {router} from "next/client";
 
 const schema = yup.object({
   displayName: yup.string().required("Vui lòng nhập họ tên"),
@@ -51,6 +52,7 @@ export default function MyProfile() {
       if (res?.ok) {
         const profileRes = await userAPI.getProfile();
         dispatch(authUpdateProfile(profileRes));
+        router.push('/profile/me')
         toast.success("Cập nhật thông tin thành công!", {
           position: "bottom-right",
           autoClose: 3000,
