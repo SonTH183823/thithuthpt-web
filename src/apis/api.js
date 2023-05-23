@@ -1,8 +1,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { removeToken, saveTokenToCookie } from "utils/auth";
+import {removeToken, saveTokenToCookie} from "utils/auth";
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8006",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8003",
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,7 +12,7 @@ api.interceptors.request.use(
   function (config) {
     const token = Cookies.get(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY);
     if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers['x-access-token'] = `${token}`;
     }
     return config;
   },
@@ -34,8 +35,8 @@ api.interceptors.response.use(
       const refreshToken = await Cookies.get(
         process.env.NEXT_PUBLIC_COOKIE_REFRESH_ACCESS_TOKEN_KEY
       );
-      const { accessToken: accessTokenRes, refreshToken: refreshTokenRes } =
-        await api.post(`/refreshToken`, { refreshToken });
+      const {accessToken: accessTokenRes, refreshToken: refreshTokenRes} =
+        await api.post(`/refreshToken`, {refreshToken});
       saveTokenToCookie({
         accessToken: accessTokenRes,
         refreshToken: refreshTokenRes,

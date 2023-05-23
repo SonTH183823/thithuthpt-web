@@ -12,11 +12,11 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import AvatarWithUpload from "@/components/user/AvatarWithUpload";
 import {useDispatch, useSelector} from "react-redux";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
-// import { async } from "@firebase/util";
-// import { userAPI } from "apis/user";
+import { async } from "@firebase/util";
+import { userAPI } from "apis/user";
 import {toast} from "react-toastify";
 import {CharacteristicsItem, CharacteristicsItemIcon} from "@/components/characteristics/CharacteristicsItem";
-// import { authUpdateProfile } from "store/auth/auth-slice";
+import { authUpdateProfile } from "store/auth/auth-slice";
 import phone from '@/assets/images/svg/telephone.svg'
 import mail from '@/assets/images/svg/mail.svg'
 
@@ -24,14 +24,7 @@ const schema = yup.object({
   displayName: yup.string().required("Vui lòng nhập họ tên"),
 });
 export default function MyProfile() {
-  // const profile = useSelector((state) => state.auth.profile);
-  const profile = {
-    id: 1,
-    avatar: 'https://img.freepik.com/free-photo/cute-ai-generated-cartoon-bunny_23-2150288886.jpg?w=1060&t=st=1682246507~exp=1682247107~hmac=0951d0b31f4818357029f194a8c5e916ff2d7867d5b6d0ed2bd391e65cf1b17b',
-    displayName: 'Nguyễn Ngọc Diệp',
-    phoneNumber: '0388676479',
-    email: 'sonto2k@gmail.com',
-  }
+  const profile = useSelector((state) => state.auth.profile);
   const [address, setAddress] = useState(profile?.address || "");
   const [name, setName] = useState(profile?.displayName || "");
   const dispatch = useDispatch();
@@ -102,7 +95,7 @@ export default function MyProfile() {
   return (<div
     className={"my-4 lg:px-4 px-2 py-8 mx-auto flex items-center flex-col max-w-[700px]"}
   >
-    {profile.id && (<div className={"w-full"}>
+    {profile._id && (<div className={"w-full"}>
       <div className={"text-primary font-semibold text-2xl"}>Thông tin tài khoản</div>
       <div>
         <div className={"flex justify-center mb-4"}>
@@ -110,7 +103,7 @@ export default function MyProfile() {
             width={150}
             height={150}
             avatar={profile.avatar}
-            userId={profile.id}
+            userId={profile._id}
           />
         </div>
         <form onSubmit={handleSubmit(handleUpdate)}>

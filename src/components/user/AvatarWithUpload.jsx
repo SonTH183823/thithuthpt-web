@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import photo_camera from "@/assets//images/camera/photo-camera.svg";
 import Image from "next/image";
-import { convertBase64 } from "utils/uploadImage";
-// import { userAPI } from "apis/user";
-import { toast } from "react-toastify";
-// import { authUpdateProfile } from "store/auth/auth-slice";
-import { useDispatch } from "react-redux";
+import {convertBase64} from "utils/uploadImage";
+import {userAPI} from "apis/user";
+import {toast} from "react-toastify";
+import {authUpdateProfile} from "store/auth/auth-slice";
+import {useDispatch} from "react-redux";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleUser, faUser} from "@fortawesome/free-solid-svg-icons";
+
 export default function AvatarWithUpload({
-  width = 40,
-  height = 40,
-  avatar = "",
-  className = "",
-  userId = "",
-}) {
+                                           width = 40,
+                                           height = 40,
+                                           avatar = "",
+                                           className = "",
+                                           userId = "",
+                                         }) {
   const [avatarSource, setAvatarSource] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
     if (avatar) {
+      console.log('ava', avatar)
       setAvatarSource(avatar);
     }
   }, [avatar]);
@@ -25,35 +29,35 @@ export default function AvatarWithUpload({
       setAvatarSource(URL.createObjectURL(e.target.files[0]));
       const base64 = await convertBase64(e.target.files[0]);
       try {
-        // const res = await userAPI.updateAccount({
-        //   id: userId,
-        //   data: { base64 },
-        // });
-        // if (res.ok) {
-        //   const profileRes = await userAPI.getProfile();
-        //   dispatch(authUpdateProfile(profileRes));
-        //   toast.success("Cập nhật thông tin thành công!", {
-        //     position: "bottom-right",
-        //     autoClose: 5000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "colored",
-        //   });
-        // } else {
-        //   toast.error("Cập nhật thông tin thất bại!", {
-        //     position: "bottom-right",
-        //     autoClose: 5000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "colored",
-        //   });
-        // }
+        const res = await userAPI.updateAccount({
+          id: userId,
+          data: {base64},
+        });
+        if (res.ok) {
+          const profileRes = await userAPI.getProfile();
+          dispatch(authUpdateProfile(profileRes));
+          toast.success("Cập nhật thông tin thành công!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          toast.error("Cập nhật thông tin thất bại!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
       } catch (e) {
         console.log(e);
         toast.error("Cập nhật thông tin thất bại!", {
@@ -72,16 +76,18 @@ export default function AvatarWithUpload({
   return (
     <div className="relative">
       <div className={`avatar ${className} h-[${height}px]`}>
-        {avatarSource && (
+        {avatarSource ? (
           <div className={`rounded-full box-shadow`}>
-            <Image
+            <img
               src={avatarSource}
               alt={"avatar-user"}
               width={width}
               height={height}
             />
           </div>
-        )}
+        ) : <div className="h-[150px] w-[150px]">
+          <FontAwesomeIcon icon={faCircleUser} className={'text-primary w-full h-full'}/>
+        </div>}
       </div>
       <label
         htmlFor={"upload-avatar"}
@@ -90,7 +96,7 @@ export default function AvatarWithUpload({
         }
       >
         <div className={"relative w-[20px] h-[20px]"}>
-          <Image src={photo_camera} alt={"icon upload"} />
+          <Image src={photo_camera} alt={"icon upload"}/>
         </div>
       </label>
       <input

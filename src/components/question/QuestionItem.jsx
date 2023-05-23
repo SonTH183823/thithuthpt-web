@@ -4,14 +4,22 @@ import examImg from "@/assets/images/exam.jpeg";
 import {answerConfig} from "../../configs/configs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
+import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu";
 
 function QuestionItem({item, index}) {
   const answers = ['A', 'B', 'C', 'D']
   return (
-    <div className={'border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
+    <div className={'select-none border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
       <div className={'flex justify-between h-5'}>
-        <div >Câu {index + 1}: Đáp án đúng A</div>
-        <FontAwesomeIcon icon={faChevronDown} className={'text-primar'}/>
+        <div>Câu {index + 1}: Đáp án đúng A</div>
+        <Menu menuButton={
+          <MenuButton className={'hover:bg-base-200'}>
+            <i className="fa-regular fa-ellipsis"></i>
+          </MenuButton>
+        } transition>
+          <MenuItem>Nhận xét</MenuItem>
+          <MenuItem>Xem chi tiết</MenuItem>
+        </Menu>
       </div>
       <Image src={examImg} alt={''} className={''}/>
       <div className={'flex flex-row justify-between'}>

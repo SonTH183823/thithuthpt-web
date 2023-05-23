@@ -1,16 +1,17 @@
 import api from "apis/api";
+
 export const authAPI = {
   async login(data) {
-    return await api.post(`auth/login`, { ...data });
+    return await api.post(`/login`, {...data});
   },
-  async refreshToken({ refreshToken }) {
-    return await api.post(`auth/refreshToken`, { refreshToken });
+  async refreshToken({refreshToken}) {
+    return await api.post(`/refreshToken`, {refreshToken});
   },
-  async logout(sessionId) {
-    return await api.post(`auth/logout`, { sessionId });
+  async logout() {
+    return await api.post(`/logout`,);
   },
 
   async loginWithPassword(data) {
-    return await api.post(`auth/loginWithPassword`, { ...data });
+    return await api.post(`/loginWithPassword`, {...data});
   },
 };
