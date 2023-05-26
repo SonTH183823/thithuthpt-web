@@ -18,8 +18,7 @@ const interactives = [
 ];
 
 export default function InteractiveContainer({examId}) {
-  // const profile = useSelector((state) => state.auth.profile);
-  const profile = {}
+  const profile = useSelector((state) => state.auth.profile);
 
   const [limit, setLimit] = useState(5);
   const [totalComment, setTotalComment] = useState(null);

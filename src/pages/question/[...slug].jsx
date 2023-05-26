@@ -15,15 +15,13 @@ import BXH from "@/components/exam-details/BXH";
 import TableTypeListQues from "@/components/exam-details/TableTypeListQues";
 import RelatedExam from "@/components/exam-details/RelatedExam";
 import RatingComponents from "@/components/rating/RatingComponents";
+import QuestionItem from "@/components/question/QuestionItem";
+import QuestionDetail from "@/components/question/QuestionDetail";
 
-export default function ExamDetail({
-                                     exam = {
-                                       id: 1,
-                                       title: 'Bai thi mau'
-                                     }
-                                   }) {
+export default function Question() {
   const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
+  const [question, setQuestion] = useState({id: 1})
   const [isFavorite, setIsFavorite] = useState(null);
   // const favoritePosts = useSelector((state) => state.post.favoritePosts);
   const favoritePosts = []
@@ -140,22 +138,22 @@ export default function ExamDetail({
       }
     }
   };
+
   return (
     <Fragment>
-      {exam.id ? (
+      {question.id ? (
         <div className={"bg-base-200"}>
           <div className="container mx-auto py-2 sm:py-4 padding-mobile">
             <div className="lg:grid grid-cols-3 lg:space-x-4">
               <div className="col-span-2 relative">
                 <div className={"bg-base-100 rounded-xl "}>
-                  <DetailExam isDoExam={true}/>
+                  <QuestionDetail question={question}/>
+                </div>
+                <div className={"bg-base-100 rounded-xl "}>
+
                 </div>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <TableTypeListQues/>
-                </div>
-                <RatingComponents/>
-                <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={exam.id}/>
+                  <InteractiveContainer postId={question.id}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col">
@@ -169,7 +167,7 @@ export default function ExamDetail({
             </div>
           </div>
           {/*<ModalReportPost id={"modal-report-post"} postId={post.id} />*/}
-          <ModalShare id={"modal-share-post"} title={exam.title}/>
+          <ModalShare id={"modal-share-post"} title={question.id}/>
         </div>
       ) : null}
     </Fragment>

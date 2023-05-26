@@ -9,17 +9,19 @@ import {wrapper} from "../store/configStore";
 import {requestPermission} from "../configs/firebaseConfig";
 import {ToastContainer} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
-import {getToken} from "../utils/auth";
+import {getToken, removeToken} from "../utils/auth";
 import {userAPI} from "../apis/user";
 import {authUpdateProfile} from "../store/auth/auth-slice";
 import {PostAPI} from "../apis/post";
 import {updateFavoritePosts} from "../store/post/post-slice";
 import "react-toastify/dist/ReactToastify.css";
+import {authAPI} from "../apis/auth";
+import { useRouter} from "next/router";
 function App({Component, pageProps}) {
+  const router = useRouter();
   const Layout = Component.Layout ?? MainLayout;
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.profile);
-
   useEffect(() => {
     (async () => {
       const {accessToken} = getToken();
@@ -47,6 +49,24 @@ function App({Component, pageProps}) {
       }
     })();
   }, []);
+  useEffect(() => {
+    (async () => {
+      if (profile._id) {
+        if (profile.isLocked) {
+          const res = await authAPI.logout();
+          if (res.ok) {
+            dispatch(authUpdateProfile({}));
+            removeToken();
+          }
+          const modal = document.getElementById("modal-lock-account");
+          if (modal) {
+            modal.click();
+          }
+          // router.replace("/sign-in");
+        }
+      }
+    })();
+  }, [profile]);
   return (
     <Layout>
       <Fragment>

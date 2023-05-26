@@ -17,6 +17,7 @@ import {Tooltip as ReactTooltip} from "react-tooltip";
 import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
 import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
 import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
 
 function DetailExam({i, isDoExam = false}) {
     const router = useRouter();
@@ -29,8 +30,7 @@ function DetailExam({i, isDoExam = false}) {
         title: 'Đề thi THPT Quốc gia năm 2021 môn Lịch sử Mã đề 301',
         category: 4
     }
-    // const profile = useSelector((state) => state.auth.profile);
-    const profile = {}
+    const profile = useSelector((state) => state.auth.profile);
     const [isFavorite, setIsFavorite] = useState(null);
     const handleFavorite = async (e) => {
         e.stopPropagation();
@@ -143,7 +143,6 @@ function DetailExam({i, isDoExam = false}) {
                         onClick={(e) => handleReport()}
                     ><i className="fa-regular fa-flag text-xl"></i></div>
                 </div>
-
             </div>
 
             <div className={'bg-base-200 rounded-xl p-3'}>

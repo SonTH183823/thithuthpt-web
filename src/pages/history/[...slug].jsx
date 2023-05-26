@@ -46,24 +46,12 @@ HistoryDetail({
                 <ResultComponents/>
                 <RatingComponents/>
                 <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
-                  {listQues.map((item, index) => (
-                    // <div className={'border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
-                    //   <Image src={examImg} alt={''} className={''}/>
-                    //   <div className={'flex flex-row justify-between'}>
-                    //     {answers.map((ans, idx) =>
-                    //       <div
-                    //         key={"ans-" + index + "-" + idx}
-                    //         className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(item === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
-                    //       >{ans}{index + 1}</div>)}
-                    //   </div>
-                    // </div>
-                    <QuestionItem index={index} item={item}/>
-                  ))}
+                  {listQues.map((item, index) => (<QuestionItem index={index} item={item}/>))}
                   <div className={'text-primary text-center font-semibold mt-4'}>- HẾT -</div>
                 </div>
-                <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={exam.id}/>
-                </div>
+                {/*<div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>*/}
+                {/*  <InteractiveContainer postId={exam.id}/>*/}
+                {/*</div>*/}
               </div>
               <div className="block col-span-1 lg:flex flex-col sticky top-20 h-screen lg:h-fit">
                 <div className={"bg-base-100 rounded-xl px-4 pb-4"}>
