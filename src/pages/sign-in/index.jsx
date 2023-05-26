@@ -20,6 +20,7 @@ import {
 import {authLogin} from "../../store/auth/auth-slice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import ModalLockAccount from "@/components/modal/ModalLockAccount";
 
 const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
 const schema = yup.object({
@@ -157,10 +158,10 @@ export default function SignIn() {
           <div id="recaptcha-container"></div>
           <button
             type="submit"
-            className="w-full bg-primary p-3 rounded-lg text-white font-bold my-2 disabled:bg-gray-600"
+            className="w-full bg-primary p-3 rounded-lg text-white font-bold my-2 disabled:bg-gray-600 flex justify-center"
             disabled={loading}
           >
-            {loading ? <FontAwesomeIcon icon={faSpinner} spin={true} className={'text-white'}/> : 'Đăng nhập'}
+            {loading ? <FontAwesomeIcon icon={faSpinner} spin={true} className={'text-white h-[24px]'}/> : 'Đăng nhập'}
           </button>
         </form>)}
 
@@ -213,9 +214,9 @@ export default function SignIn() {
               }}
             />
 
-            <button className="w-full bg-gray-300 p-3 rounded-lg text-white font-bold my-0 mt-3 disabled:bg-gray-600"
+            <button className="w-full bg-gray-300 p-3 rounded-lg text-white font-bold my-0 mt-3 disabled:bg-gray-600 flex justify-center"
                     disabled={loading}>
-              {loading ? <FontAwesomeIcon icon={faSpinner} spin={true} className={'text-white'}/> : 'Tiếp tục'}
+              {loading ? <FontAwesomeIcon icon={faSpinner} spin={true} className={'text-white h-[24px]'}/> : 'Tiếp tục'}
             </button>
           </div>)}
         </div>
@@ -247,7 +248,7 @@ export default function SignIn() {
           <span>Đăng nhập với Google</span>
         </div>
       </div>
-      {/*<ModalLockAccount id={"modal-lock-account"} />*/}
+      <ModalLockAccount id={"modal-lock-account"} />
     </div>
   </div>);
 }

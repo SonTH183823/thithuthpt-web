@@ -25,7 +25,7 @@ api.interceptors.response.use(
     return response.data;
   },
   async function (error) {
-    if (error?.response?.status === 422) {
+    if (error?.response?.status === 412) {
       const modal = document.getElementById("modal-lock-account");
       if (modal) {
         modal.click();
