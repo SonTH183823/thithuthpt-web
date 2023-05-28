@@ -6,6 +6,8 @@ import {Tooltip as ReactTooltip} from "react-tooltip";
 import Cookies from "js-cookie";
 import examImg from "@/assets/images/exam.jpeg";
 import Image from "next/image";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 
 function QuestionDetail({question}) {
   const [showResult, setShow] = useState(false)
@@ -30,14 +32,13 @@ function QuestionDetail({question}) {
       modal.click();
     }
   };
-  return (
-    <div className={"pt-4 px-3"}>
+  return (<div className={"pt-4 px-3"}>
       <Image src={examImg} alt={''} className={''}/>
       <div className="grid grid-cols-3 gap-4 my-2 border-t-2 border-t-primary mx-5 py-2 font-semibold">
         <div
-          className={'col-span-1 hover:bg-base-200 cursor-pointer py-2 flex items-center justify-center rounded-sm space-x-1'}
+          className={'select-none col-span-1 hover:bg-base-200 cursor-pointer py-2 flex items-center justify-center rounded-sm space-x-1 ' + `${showResult ? 'text-primary' : ''}`}
           onClick={() => setShow(!showResult)}>
-          <i className="fa-regular fa-check text-xl"></i>
+          <FontAwesomeIcon icon={faChevronDown} className={`w-4 ${!showResult ? 'rotate-180' : ''}`}/>
           <span>Lời giải</span>
         </div>
         <div
@@ -53,11 +54,14 @@ function QuestionDetail({question}) {
           <span>Báo cáo</span>
         </div>
       </div>
+      {showResult ? <div className={'pb-3'}>
+        <div className={'font-semibold'}>Đáp án đúng A</div>
+        <Image src={examImg} alt={''} className={''}/>
+      </div> : null}
       <ModalReportPost id={"modal-report-post"} postId={question.id}/>
       <ModalShare id={"modal-share-post"} title={question.title}/>
       <ReactTooltip id={'my-tooltip'}/>
-    </div>
-  );
+    </div>);
 }
 
 export default QuestionDetail;

@@ -5,23 +5,14 @@ import {answerConfig} from "../../configs/configs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu";
+import {useRouter} from "next/router";
 
 function QuestionItem({item, index}) {
+  const router = useRouter()
   const answers = ['A', 'B', 'C', 'D']
   const [showResult, setShow] = useState(false)
   return (
     <div className={'select-none border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
-      {/*<div className={'flex justify-between h-5'}>*/}
-
-      {/*  <Menu menuButton={*/}
-      {/*    <MenuButton className={''}>*/}
-      {/*      <i className="fa-regular fa-ellipsis"></i>*/}
-      {/*    </MenuButton>*/}
-      {/*  } transition>*/}
-      {/*    <MenuItem>Nhận xét</MenuItem>*/}
-      {/*    <MenuItem>Xem chi tiết</MenuItem>*/}
-      {/*  </Menu>*/}
-      {/*</div>*/}
       <Image src={examImg} alt={''} className={''}/>
       <div className={'flex flex-row justify-between'}>
         {answers.map((ans, idx) =>
@@ -32,7 +23,9 @@ function QuestionItem({item, index}) {
       </div>
       <div className={'flex justify-between h-5 my-2'}>
         <div className={'hover:text-primary cursor-pointer font-semibold'}>Nhận xét (69)</div>
-        <div className={'hover:text-primary cursor-pointer font-semibold'}>Xem chi tiết</div>
+        <div className={'hover:text-primary cursor-pointer font-semibold'}
+             onClick={() => router.push('/question/aaa')}>Xem chi tiết
+        </div>
         <div
           className={`flex space-x-1 flex-row hover:text-primary cursor-pointer font-semibold ${showResult ? 'text-primary' : ''}`}
           onClick={() => setShow(!showResult)}>

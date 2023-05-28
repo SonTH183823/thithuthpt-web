@@ -15,12 +15,6 @@ import {useSelector} from "react-redux";
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
   const imageCover = 'https://img.freepik.com/free-photo/los-angeles-downtown-buildings-night_649448-298.jpg?w=2000&t=st=1682246479~exp=1682247079~hmac=c47ba41a6a4b0b14185566ea5c180982948e1d72319415edd3f4a36dfd8ec5db'
-  // const user = {
-  //   id: 123,
-  //   imageCover: 'https://img.freepik.com/free-photo/los-angeles-downtown-buildings-night_649448-298.jpg?w=2000&t=st=1682246479~exp=1682247079~hmac=c47ba41a6a4b0b14185566ea5c180982948e1d72319415edd3f4a36dfd8ec5db',
-  //   avatar: 'https://img.freepik.com/free-photo/cute-ai-generated-cartoon-bunny_23-2150288886.jpg?w=1060&t=st=1682246507~exp=1682247107~hmac=0951d0b31f4818357029f194a8c5e916ff2d7867d5b6d0ed2bd391e65cf1b17b',
-  //   displayName: 'Nguyễn Ngọc Diệp'
-  // }
   return (
     <div>
       {user._id ? (
