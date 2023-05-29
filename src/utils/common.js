@@ -56,3 +56,17 @@ export function kFormatter(num) {
   return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
+export const formatNumberView = (viewCount) => {
+  if (viewCount / 1000 >= 1 && viewCount / 1000 < 1000) {
+    let num = viewCount / 1000
+    num = num.toFixed(2)
+    return `${num}K`
+  } else if (viewCount / 1000000 >= 1) {
+    let num = viewCount / 1000000
+    num = num.toFixed(2)
+    return `${num}M`
+  } else {
+    return viewCount
+  }
+}
+

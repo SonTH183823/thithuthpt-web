@@ -10,6 +10,7 @@ import DetailInfoItem from "./DetailUserInfoItem";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {userAPI} from "../../apis/user";
 import {authUpdateProfile} from "../../store/auth/auth-slice";
+import PointComponent from "@/components/points/PointComponent";
 
 export default function DetailUserInfoContainer({
                                                   profile: user,

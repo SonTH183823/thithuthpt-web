@@ -13,6 +13,8 @@ import PostsSection from "@/components/user/PostsSection";
 import {useSelector} from "react-redux";
 import Select from "react-select";
 import {sortHistoryConfig} from "../../configs/configs";
+import PointComponent from "@/components/points/PointComponent";
+import Award from "@/components/points/Award";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
@@ -28,7 +30,7 @@ export default function ProfileUser() {
       return (
         <>
           <div
-            className={'shadow-xl px-3 flex justify-between bg-white rounded-lg items-center text-sm md:text-base mb-4'}>
+            className={'shadow-md px-3 flex justify-between bg-white rounded-lg items-center text-sm md:text-base mb-4'}>
             <div>Tìm thấy <span className={'font-bold'}>69</span> kết quả</div>
             <div className={'flex items-center space-x-2'}>
               <div className={'font-semibold'}>Sắp xếp</div>
@@ -85,11 +87,13 @@ export default function ProfileUser() {
                   />
                 </div>
               </div>
-              <div className="lg:mt-5 md:mt-24 mt-20 lg:ml-[230px] lg:w-fit w-full flex items-center justify-center">
+              <div
+                className={`lg:mt-5 md:mt-24 mt-20 lg:ml-[210px] lg:w-fit w-full flex items-center lg:items-start justify-center flex-col`}>
                 <FullName
                   fullName={user.name}
                   className={"lg:text-3xl text-2xl block"}
                 ></FullName>
+                <PointComponent/>
               </div>
               <div className="bg-base-100 pb-4 relative hidden md:block">
                 <div className="divider"></div>
@@ -100,6 +104,9 @@ export default function ProfileUser() {
             <div className="grid-cols-3 lg:grid lg:space-x-5 lg:p-4 lg:px-0 container mx-auto">
               <div className="col-span-1 h-fit">
                 <DetailUserInfoContainer profile={user} userId={user._id}/>
+                <div className={'my-3 hidden lg:block p-4 bg-base-100 rounded-lg'}>
+                  <Award userInfo={user}/>
+                </div>
               </div>
               <div className="col-span-2 lg:px-0 px-2 pb-2">
                 <div className="custom-tab">
