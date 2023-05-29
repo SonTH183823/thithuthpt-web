@@ -17,6 +17,7 @@ import RelatedExam from "@/components/exam-details/RelatedExam";
 import RatingComponents from "@/components/rating/RatingComponents";
 import QuestionItem from "@/components/question/QuestionItem";
 import QuestionDetail from "@/components/question/QuestionDetail";
+import ModalReportPost from "@/components/modal/ModalReportPost";
 
 export default function Question() {
   const profile = useSelector((state) => state.auth.profile);
@@ -54,36 +55,19 @@ export default function Question() {
   //         }
   //     })();
   // }, []);
-  const handleFilterProvince = () => {
-    // router.push(`/filter?address=${post.province}`);
-  };
-
-  const handleFilterDistrict = () => {
-    // router.push(`/filter?address=${post.province},${post.district}`);
-  };
-
-  const handleFilterWard = () => {
-    // router.push(
-    //     `/filter?address=${post.province},${post.district},${post.ward}`
-    // );
-  };
-
-  const handleFilterCategory = () => {
-    // router.push(`/filter?category=${post.category}`);
-  };
 
   const handleReport = () => {
-    // if (profile.id) {
-    //     const modal = document.getElementById("modal-report-post-id");
-    //     if (modal) {
-    //         modal.click();
-    //     }
-    // } else {
-    //     const modal = document.getElementById("modal-require-login-id");
-    //     if (modal) {
-    //         modal.click();
-    //     }
-    // }
+    if (profile.id) {
+      const modal = document.getElementById("modal-report-post-id");
+      if (modal) {
+        modal.click();
+      }
+    } else {
+      const modal = document.getElementById("modal-require-login-id");
+      if (modal) {
+        modal.click();
+      }
+    }
   };
 
   const handleShare = () => {
@@ -166,7 +150,7 @@ export default function Question() {
               </div>
             </div>
           </div>
-          {/*<ModalReportPost id={"modal-report-post"} postId={post.id} />*/}
+          {/*<ModalReportPost id={"modal-report-question"} objectId={question.id} isQuestion={true}/>*/}
           <ModalShare id={"modal-share-post"} title={question.id}/>
         </div>
       ) : null}

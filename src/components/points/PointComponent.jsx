@@ -3,7 +3,7 @@ import {formatNumberView} from "../../utils/common";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
 
-function PointComponent(props) {
+function PointComponent() {
   const userInfo = {
     userTitle: 'Tân binh',
     pointCredits: 234
@@ -16,9 +16,8 @@ function PointComponent(props) {
       </div>
       <div className={'h-[4px] w-[4px] rounded-full bg-gray-400'}></div>
       <div className={'flex items-center space-x-1 text-sm'}>
-                 <span
-                   className={'text-[#F96767]'}>{formatNumberView(Math.floor(userInfo.pointCredits))}</span>
-        <span className={'text-info'}>Points </span>
+        <span className={'text-[#F96767]'}>{formatNumberView(Math.floor(userInfo.pointCredits))}</span>
+        <span className={'text-info font-semibold'}>Points </span>
       </div>
     </div>
   );

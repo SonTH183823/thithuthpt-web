@@ -182,7 +182,7 @@ function DetailExam({i, isDoExam = false}) {
         className="w-full mt-3"
         handleClick={() => startExam()}
       />}
-      <ModalReportPost id={"modal-report-post"} postId={item.id}/>
+      <ModalReportPost id={"modal-report-post"} objectId={item.id}/>
       <ModalShare id={"modal-share-post"} title={item.title}/>
       <ReactTooltip id={'my-tooltip'}/>
       <ModalConfirmStartExam id={"modal-confirm-start-exam-id"} handleClick={() => enterExam()}/>

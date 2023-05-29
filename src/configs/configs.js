@@ -954,3 +954,49 @@ export const awardsConfig = [
     title: "Captain"
   }
 ]
+
+export const reasonReportExamOptions = [
+  {
+    id: 1,
+    title: "Nội dung đề thi có vấn đề",
+    isChecked: false,
+  },
+  {
+    id: 2,
+    title: "Vi phạm bản quyền",
+    isChecked: false,
+  },
+  {
+    id: 3,
+    title: "Lừa đảo",
+    isChecked: false,
+  },
+  {
+    id: 4,
+    title: "Cấu trúc đề thi chưa chuẩn",
+    isChecked: false,
+  },
+  {
+    id: 5,
+    title: "Khác",
+    isChecked: false,
+  },
+]
+
+export const reasonReportQuestionOptions = [
+  {
+    id: 1,
+    title: "Nội dung câu hỏi có vấn đề",
+    isChecked: false,
+  },
+  {
+    id: 2,
+    title: "Đáp án câu hỏi chưa đúng",
+    isChecked: false,
+  },
+  {
+    id: 5,
+    title: "Khác",
+    isChecked: false,
+  },
+]

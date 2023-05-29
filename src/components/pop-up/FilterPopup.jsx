@@ -55,8 +55,8 @@ const FilterPopup = ({show, setShow}) => {
     const deleteFilter = () => {
         setSubject(null)
         setLevel(null)
-        setMaxNumQuestion(0)
-        setTimeToDo(0)
+        setMaxNumQuestion(1)
+        setTimeToDo(1)
         setRate(null)
         eventEmitter.emit('clearInputSearch')
     }

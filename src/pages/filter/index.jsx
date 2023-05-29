@@ -111,7 +111,7 @@ const FilterPage = () => {
     setMaxNumQuestion(0)
     setTimeToDo(0)
     setRate(null)
-    eventEmitter.emit('clearInputSearch')
+    // eventEmitter.emit('clearInputSearch')
     router.push("/filter")
   }
   const handleApply = () => {
