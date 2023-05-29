@@ -3,8 +3,8 @@ import Avatar from "@/components/user/Avatar";
 import DetailUserInfoContainer from "@/components/user/DetailUserInfoContainer";
 import FullName from "@/components/user/FullName";
 import React, {useState, useEffect, Fragment} from "react";
+import Tabs, {Tab} from "react-best-tabs";
 // import { PostAPI } from "apis/post";
-// import { useSelector } from "react-redux";
 import Link from "next/link";
 import ProfileSekeleton from "@/components/Sekeleton/ProfileSekeleton";
 import CoverImageSection from "@/components/user/CoverImageSection";
@@ -15,6 +15,11 @@ import {useSelector} from "react-redux";
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
   const imageCover = 'https://img.freepik.com/free-photo/los-angeles-downtown-buildings-night_649448-298.jpg?w=2000&t=st=1682246479~exp=1682247079~hmac=c47ba41a6a4b0b14185566ea5c180982948e1d72319415edd3f4a36dfd8ec5db'
+  const [isClient, setIsClient] = useState(true);
+  const [tabActive, setTabActive] = useState(1);
+  const handleSelectTab = (event, tab) => {
+    setTabActive(tab)
+  }
   return (
     <div>
       {user._id ? (
@@ -57,15 +62,23 @@ export default function ProfileUser() {
                 <DetailUserInfoContainer profile={user} userId={user._id}/>
               </div>
               <div className="col-span-2 lg:px-0 px-2 pb-2">
-                <div
-                  className="p-2 rounded-lg box-shadow items-center flex justify-between bg-base-100 lg:mt-0 lg:my-4 my-2">
-                  <span className="text-xl font-bold">Tổng quan</span>
-                  {/* <div className="py-1 px-4 bg-gray-200 flex items-center space-x-2 rounded-lg">
-                <Image src={filter} width={15} height={15} alt="icon-filter" />
-                <span>Bộ lọc</span>
-              </div> */}
+                <div className="custom-tab">
+                  {isClient && (
+                    <Tabs
+                      activeTab={tabActive}
+                      className="mt-5 p-2 rounded-lg box-shadow bg-base-100 lg:mt-0 lg:my-4 my-2"
+                      ulClassName=""
+                      onClick={(e, tab) => handleSelectTab(e, tab)}
+                    >
+                      <Tab title="Tổng quan"
+                           className={`mr-10 text-lg font-bold ${tabActive === 1 ? 'text-primary' : ''}`}></Tab>
+                      <Tab title="Lịch sử làm bài"
+                           className={`mr-10 text-lg font-bold ${tabActive === 2 ? 'text-primary' : ''}`}></Tab>
+
+                    </Tabs>
+                  )}
                 </div>
-                <PostsSection userId={user.id}/>
+                {/*<PostsSection userId={user.id}/>*/}
               </div>
             </div>
           </div>
