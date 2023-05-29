@@ -11,14 +11,54 @@ import CoverImageSection from "@/components/user/CoverImageSection";
 import AvatarWithUpload from "@/components/user/AvatarWithUpload";
 import PostsSection from "@/components/user/PostsSection";
 import {useSelector} from "react-redux";
+import Select from "react-select";
+import {sortHistoryConfig} from "../../configs/configs";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
   const imageCover = 'https://img.freepik.com/free-photo/los-angeles-downtown-buildings-night_649448-298.jpg?w=2000&t=st=1682246479~exp=1682247079~hmac=c47ba41a6a4b0b14185566ea5c180982948e1d72319415edd3f4a36dfd8ec5db'
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(1);
+  const [sort, setSort] = useState(sortHistoryConfig[0]);
   const handleSelectTab = (event, tab) => {
     setTabActive(tab)
+  }
+  const genUITab = () => {
+    if (tabActive === 2) {
+      return (
+        <>
+          <div
+            className={'shadow-xl px-3 flex justify-between bg-white rounded-lg items-center text-sm md:text-base mb-4'}>
+            <div>Tìm thấy <span className={'font-bold'}>69</span> kết quả</div>
+            <div className={'flex items-center space-x-2'}>
+              <div className={'font-semibold'}>Sắp xếp</div>
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderRadius: "5px",
+                    borderColor: "#e5e7eb",
+                    margin: "8px 0",
+                    width: "170px",
+                  }),
+                }}
+                options={sortHistoryConfig}
+                onChange={(option) => {
+                  setSort(option)
+                }}
+                value={sort}
+              />
+            </div>
+          </div>
+          <PostsSection userId={user.id}/>
+        </>
+      )
+    }
+    return (
+      <>
+
+      </>
+    )
   }
   return (
     <div>
@@ -66,7 +106,7 @@ export default function ProfileUser() {
                   {isClient && (
                     <Tabs
                       activeTab={tabActive}
-                      className="mt-5 p-2 rounded-lg box-shadow bg-base-100 lg:mt-0 lg:my-4 my-2"
+                      className="mt-5 py-3 px-3 rounded-lg box-shadow bg-base-100 lg:mt-0 lg:my-4 my-2"
                       ulClassName=""
                       onClick={(e, tab) => handleSelectTab(e, tab)}
                     >
@@ -74,11 +114,10 @@ export default function ProfileUser() {
                            className={`mr-10 text-lg font-bold ${tabActive === 1 ? 'text-primary' : ''}`}></Tab>
                       <Tab title="Lịch sử làm bài"
                            className={`mr-10 text-lg font-bold ${tabActive === 2 ? 'text-primary' : ''}`}></Tab>
-
                     </Tabs>
                   )}
                 </div>
-                {/*<PostsSection userId={user.id}/>*/}
+                {genUITab()}
               </div>
             </div>
           </div>

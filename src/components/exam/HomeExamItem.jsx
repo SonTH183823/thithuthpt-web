@@ -10,8 +10,7 @@ import ExamInfo from "./ExamInfo"
 function HomeExamItem({item, user = {}, isSearch = false}) {
     // const favoritePosts = useSelector((state) => state.post.favoritePosts);
     const favoritePosts = true
-    // const profile = useSelector((state) => state.auth.profile);
-    const profile = {}
+    const profile = useSelector((state) => state.auth.profile);
     const [isFavorite, setIsFavorite] = useState(null);
     const [showHeart, setShowHeart] = useState(true);
     const dispatch = useDispatch();

@@ -1,21 +1,19 @@
 import * as React from "react";
 import UserInfo from "../user/UserInfo";
-import CharacteristicsItem from "../characteristics/CharacteristicsItem";
+import {CharacteristicsItemIcon} from "../characteristics/CharacteristicsItem";
 import TitlePostItem from "./TitleExamItem";
+import math from "../../assets/images/test/math.jpg"
 import Image from "next/image";
 import Dot from "../common/Dot";
-import { formatPrice, getTradingForm, strToSlug } from "utils/common";
-import {
-  categoryTitleConfig,
-  districtsConfig,
-  provincesConfig,
-} from "configs/configs";
-import { formatDate } from "utils/moment";
-import { useRouter } from "next/router";
+import {strToSlug} from "utils/common";
+import {useRouter} from "next/router";
 import ExamTag from "./ExamTag";
-// import PostInfo from "./detail-post/PostInfo";
+import ExamInfoHistory from "@/components/exam/ExamInfoHistory";
 
-export default function PrimaryExamItem({ post }) {
+export default function PrimaryExamItem({post1}) {
+  const post = {
+    title: 'Đề thi thử môn Lý trường THPT Phạm Văn Đồng - Gia Lai - 2019'
+  }
   const router = useRouter();
   const handleClick = () => {
     router.push(`/post/${strToSlug(post.title)}-${post.id}`);
@@ -27,7 +25,8 @@ export default function PrimaryExamItem({ post }) {
     >
       <div className="w-full h-[200px] md:h-auto md:w-[60%] relative">
         <Image
-          src={post?.images[0]}
+          // src={post?.images}
+          src={math}
           layout={"fill"}
           alt={"thumb-nail"}
           className={
@@ -35,26 +34,14 @@ export default function PrimaryExamItem({ post }) {
           }
         />
         <ExamTag
-          tag={categoryTitleConfig[post.category]}
-          category={post.category}
+          tag={'Tag ne'}
+          category={1}
         />
       </div>
       <div className="w-full p-2">
-        <div className="flex items-center space-x-1 text-primary">
-          <span className="font-bold">
-            {formatPrice(post.price)}
-            <span> &#8363;</span>
-          </span>
-          <span className={"text-sm"}>/ tháng</span>
-        </div>
-        <TitlePostItem className={"font-bold"}>{post.title}</TitlePostItem>
-        {/*<CharacteristicsItem icon="fa-regular fa-location-dot">*/}
-        {/*  <p className={"text-sm my-2 text-info line-clamp-1"}>*/}
-        {/*    {districtsConfig[post.district]}, {provincesConfig[post.province]}*/}
-        {/*  </p>*/}
-        {/*</CharacteristicsItem>*/}
-        {/*<PostInfo item={post} showTitle={false} />*/}
+        <ExamInfoHistory item={post} showTitle={false}/>
       </div>
+
     </div>
   );
 }

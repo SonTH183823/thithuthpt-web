@@ -1,14 +1,16 @@
 // import { PostAPI } from "apis/post";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PrimaryPostItem from "../exam/PrimaryExamItem";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
-const PostsSection = ({ userId }) => {
+const PostsSection = ({userId}) => {
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(20);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([1, 2, 3, 4, 5]);
 
   useEffect(() => {
     // (async () => {
@@ -57,13 +59,17 @@ const PostsSection = ({ userId }) => {
       hasMore={hasMore}
       endMessage={
         <div className="text-sm font-normal text-center mt-4">
-          Đã tải hết tin đăng.
+          Đã tải hết.
         </div>
       }
-      loader={<span>Đang tải...</span>}
+      loader={
+        <div className={'text-center flex items-center space-x-2 justify-center'}>
+          <FontAwesomeIcon icon={faSpinner} spin={true} className={'w-5'}/>
+          <span>Đang tải...</span>
+        </div>}
     >
       {posts.length > 0 &&
-        posts.map((item) => <PrimaryPostItem post={item} key={item.id} />)}
+        posts.map((item) => <PrimaryPostItem post={item} key={item.id}/>)}
     </InfiniteScroll>
   );
 };
