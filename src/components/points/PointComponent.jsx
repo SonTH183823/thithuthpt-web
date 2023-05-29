@@ -11,7 +11,7 @@ function PointComponent(props) {
   return (
     <div className={`justify-center flex items-center space-x-2`}>
       <div className={'flex items-center space-x-1 text-sm'}>
-        <FontAwesomeIcon icon={faAward} className={'text-primary w-5'}/>
+        <FontAwesomeIcon icon={faAward} className={'text-primary w-4'}/>
         <span className={'text-primary font-bold'}>{userInfo.userTitle}</span>
       </div>
       <div className={'h-[4px] w-[4px] rounded-full bg-gray-400'}></div>
