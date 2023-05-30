@@ -1,16 +1,9 @@
 import InteractiveContainer from "@/components/interactive/InteractiveContainer";
-import TitleSection from "@/components/common/TitleSection";
 import React, {Fragment, useEffect, useState} from "react";
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay, Navigation} from "swiper";
-import ModalShare from "@/components/modal/ModalShare";
 import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {useRouter} from "next/router";
-import HomeExamItem from "@/components/exam/HomeExamItem";
 import DetailExam from "@/components/exam/DetailExam";
-import StarRating from "@/components/feedback/StarRating";
-import ButtonPrimary from "@/components/button/ButtonPrimary";
 import BXH from "@/components/exam-details/BXH";
 import TableTypeListQues from "@/components/exam-details/TableTypeListQues";
 import RelatedExam from "@/components/exam-details/RelatedExam";
@@ -56,90 +49,6 @@ export default function ExamDetail({
   //         }
   //     })();
   // }, []);
-  const handleFilterProvince = () => {
-    // router.push(`/filter?address=${post.province}`);
-  };
-
-  const handleFilterDistrict = () => {
-    // router.push(`/filter?address=${post.province},${post.district}`);
-  };
-
-  const handleFilterWard = () => {
-    // router.push(
-    //     `/filter?address=${post.province},${post.district},${post.ward}`
-    // );
-  };
-
-  const handleFilterCategory = () => {
-    // router.push(`/filter?category=${post.category}`);
-  };
-
-  const handleReport = () => {
-    // if (profile.id) {
-    //     const modal = document.getElementById("modal-report-post-id");
-    //     if (modal) {
-    //         modal.click();
-    //     }
-    // } else {
-    //     const modal = document.getElementById("modal-require-login-id");
-    //     if (modal) {
-    //         modal.click();
-    //     }
-    // }
-  };
-
-  const handleShare = () => {
-    const modal = document.getElementById("modal-share-id");
-    if (modal) {
-      modal.click();
-    }
-  };
-
-  const handleFavorite = async () => {
-    if (profile.id) {
-      const res = await PostAPI.toggleFavorite({
-        userId: profile.id,
-        postId: post.id,
-      });
-      setIsFavorite(!isFavorite);
-      if (isFavorite) {
-        const array = favoritePosts.filter((i) => i.post.id !== post.id);
-        dispatch(updateFavoritePosts(array));
-      } else {
-        let temp = [...favoritePosts];
-        temp.push({post: post, userFavorite: profile});
-        dispatch(updateFavoritePosts(temp));
-      }
-      if (res.ok) {
-        toast.success("Cập nhật thông tin thành công!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      } else {
-        toast.error("Đã có lỗi xảy ra!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-    } else {
-      const modal = document.getElementById("modal-require-login");
-      if (modal) {
-        modal.click();
-      }
-    }
-  };
   return (
     <Fragment>
       {exam.id ? (
@@ -168,8 +77,6 @@ export default function ExamDetail({
               </div>
             </div>
           </div>
-          {/*<ModalReportPost id={"modal-report-post"} postId={post.id} />*/}
-          <ModalShare id={"modal-share-post"} title={exam.title}/>
         </div>
       ) : null}
     </Fragment>

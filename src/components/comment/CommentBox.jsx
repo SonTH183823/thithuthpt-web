@@ -28,11 +28,7 @@ export default function CommentBox({
         <div className={"p-3"}>
           <CommentInput comment={comment} setComment={setComment}/>
           <div className="flex items-center justify-end">
-            <div
-              className={
-                "flex justify-end pt-3 cursor-pointer items-center space-x-2"
-              }
-            >
+            <div className={"flex justify-end pt-3 cursor-pointer items-center space-x-2"}>
               <label className={'cursor-pointer h-full w-5'}>
                 <FontAwesomeIcon icon={faImage} className={'text-primary'}/>
                 <input type="file" accept="image/png, image/jpeg" className="hidden cursor-pointer"

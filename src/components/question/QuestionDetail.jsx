@@ -58,9 +58,9 @@ function QuestionDetail({question}) {
       <div className={'font-semibold'}>Đáp án đúng A</div>
       <Image src={examImg} alt={''} className={''}/>
     </div> : null}
-    <ModalReportPost id={"modal-report-question-id"} objectId={question.id} isQuestion={true}/>
-    <ModalShare id={"modal-share-post"} title={question.title}/>
-    <ReactTooltip id={'my-tooltip'}/>
+    <ModalReportPost id="modal-report-question-id" objectId={question.id} isQuestion={true}/>
+    <ModalShare id="modal-share-post" title={question.title}/>
+    <ReactTooltip id='my-tooltip'/>
   </div>);
 }
 

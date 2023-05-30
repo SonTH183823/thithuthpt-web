@@ -18,13 +18,12 @@ import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
 import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
 import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
+import Link from "next/link";
 
-function DetailExam({i, isDoExam = false}) {
+function DocDetail({i, isDoExam = false}) {
   const router = useRouter();
   const item = {
-    showTitle: true,
-    title: 'Đề thi THPT Quốc gia năm 2021 môn Lịch sử Mã đề 301',
-    category: 4
+    title: 'Hệ thống bài tập trắc nghiệm phần "Tích phân" được phân dạng và có lời giải chi tiết',
   }
   const profile = useSelector((state) => state.auth.profile);
   const [isFavorite, setIsFavorite] = useState(null);
@@ -112,13 +111,22 @@ function DetailExam({i, isDoExam = false}) {
     router.replace('/do-exam/a');
   }
   return (
-    <div className={"sm:p-4 p-3"}>
+    <div>
       <div className={"flex justify-between mb-2"}>
         <TitleExamItem
-          className={"font-bold text-info text-2xl flex items-center mb-2 cursor-pointer !m-0 !mr-4 hover:!text-black "}>
+          className={"font-bold text-info text-2xl flex items-center mb-2 cursor-pointer !m-0 !mr-2 hover:!text-black "}>
           {item.title}
         </TitleExamItem>
         <div className={"flex flex-col sm:flex-row sm:space-x-1"}>
+          <Link
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content={'Tải xuống'}
+            className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
+            href={'https://drive.google.com/file/d/1cMU7TMTzFFEZXWSRPvqSEK-qy2VrY4bV/view'}
+            target={'_blank'}
+          >
+            <i className="fa-regular fa-download text-xl"></i>
+          </Link>
           <div
             data-tooltip-id="my-tooltip"
             data-tooltip-content={'Yêu thích'}
@@ -149,20 +157,9 @@ function DetailExam({i, isDoExam = false}) {
       </div>
 
       <div className={'bg-base-200 rounded-xl p-3'}>
-        <div className={'flex flex-row justify-between space-x-6 mb-3'}>
+        <div className={'flex justify-between space-x-6'}>
           <CharacteristicsItem icon={star}>
             5.0
-          </CharacteristicsItem>
-          <CharacteristicsItem icon={time}>
-            60 phút
-          </CharacteristicsItem>
-          <CharacteristicsItem icon={question}>
-            50 câu
-          </CharacteristicsItem>
-        </div>
-        <div className={'flex justify-between space-x-6'}>
-          <CharacteristicsItem icon={list_check}>
-            {kFormatter(1234)} lượt thi
           </CharacteristicsItem>
           <CharacteristicsItem icon={list_view}>
             {kFormatter(12345)} lượt xem
@@ -171,19 +168,17 @@ function DetailExam({i, isDoExam = false}) {
             {formatDate(new Date())}
           </CharacteristicsItem>
         </div>
-
       </div>
-      {isDoExam && <ButtonPrimary
-        title="Bắt đầu làm bài"
-        className="w-full mt-3"
-        handleClick={() => startExam()}
-      />}
-      <ModalReportPost id="modal-report-post" objectId={item.id}/>
-      <ModalShare id="modal-share-post" title={item.title}/>
-      <ReactTooltip id='my-tooltip'/>
-      <ModalConfirmStartExam id={"modal-confirm-start-exam-id"} handleClick={() => enterExam()}/>
+      <div className={'bg-base-200 rounded-xl p-3 mt-3'}>
+        <div>Tài liệu gồm có 23 trang Word đẹp và chuẩn. Kèm file PDF để các em có thể lưu
+          nhanh về điện thoại để làm tư liệu học tập.
+        </div>
+      </div>
+      <ModalReportPost id="modal-report-document" objectId={item.id}/>
+      <ModalShare id="modal-share-document" title={item.title}/>
+      <ReactTooltip id={'my-tooltip'}/>
     </div>
   )
 }
 
-export default DetailExam;
+export default DocDetail;

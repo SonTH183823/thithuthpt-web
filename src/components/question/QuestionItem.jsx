@@ -21,7 +21,7 @@ function QuestionItem({item, index}) {
             className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(item === answerConfig[ans].value) ? 'active-ques' : ''}`}
           >{ans}{index + 1}</div>)}
       </div>
-      <div className={'flex justify-between h-5 my-2'}>
+      <div className={'flex justify-between md:my-2 my-1 md:text-base text-sm'}>
         <div className={'hover:text-primary cursor-pointer font-semibold'}>Nhận xét (69)</div>
         <div className={'hover:text-primary cursor-pointer font-semibold'}
              onClick={() => router.push('/question/aaa')}>Xem chi tiết

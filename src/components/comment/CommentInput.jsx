@@ -17,7 +17,7 @@ export default function CommentInput({ comment, setComment }) {
   return (
     <textarea
       ref={refTextArea}
-      className={"w-full outline-none resize-none p-4 rounded-lg bg-base-100"}
+      className={"w-full outline-none resize-none sm:p-4 p-2 rounded-lg bg-base-100"}
       placeholder={"Viết bình luận..."}
       value={comment}
       onChange={handleChangeInput}

@@ -3,6 +3,7 @@ import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu";
 // import { userAPI } from "apis/user";
 import moment from "moment";
 import "moment/locale/vi";
+
 moment.locale("vi");
 import Image from "next/image";
 import React, {Fragment, useEffect, useState} from "react";
@@ -19,10 +20,11 @@ import {faImage, faVideo} from "@fortawesome/free-solid-svg-icons";
 import like from "@/assets/images/svg/like.svg"
 import likegray from "@/assets/images/svg/likegray.svg"
 import dislike from "@/assets/images/svg/dislike.svg"
+import useWindowSize from "../../hooks/useWindowSize";
 
 export default function CommentItem({
                                       comments,
-                                      profiles,
+                                      profile,
                                       setComment,
                                       setComments,
                                       handleDeleteComment: handleDeleteCommentProp,
@@ -31,9 +33,6 @@ export default function CommentItem({
                                       handlePostCommentReply,
                                       totalReplyProp,
                                     }) {
-  const profile = {
-    displayName: 'Tô Hoài Sơn'
-  }
   const comment = {
     isEdit: true,
     content: 'Đay là bình luận mẫu Đay là bình luận mẫu Đay là bình luận mẫu Đay là bình luận mẫu',
@@ -50,6 +49,7 @@ export default function CommentItem({
   const [openLightBox, setOpenLightBox] = useState(false);
   const [imageURL, setImageURL] = useState("");
   const [videoURL, setVideoURL] = useState("");
+  const {width} = useWindowSize()
 
   const [loadMoreReply, setLoadMoreReply] = useState(
     comment?.firstChild?.length > 1 ? true : false
@@ -408,13 +408,13 @@ export default function CommentItem({
         <div className={"ml-14 flex items-center space-x-3 text-sm"}>
           <div className={'ml-3 hover:text-primary cursor-pointer flex items-center'}>
             <Image src={likegray} alt={''} className={'w-6 h-6'}/>
-            Hữu ích (69)
+            {width > 600 ? 'Hữu ích' : ''} (69)
           </div>
           <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
           <div className={'ml-3 hover:text-[#E44D04] cursor-pointer flex items-center'}>
             {/*<Image src={dislike} alt={''} className={'w-6 h-6'}/>*/}
             <Image src={likegray} alt={''} className={'w-6 h-6 rotate-180'}/>
-            Không hữu ích (12)
+            {width > 600 ? 'Không hữu ích' : ''} (12)
           </div>
           <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
           <div className={"cursor-pointer"} onClick={toggleShowCommentInput}>

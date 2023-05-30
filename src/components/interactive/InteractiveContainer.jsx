@@ -282,7 +282,7 @@ export default function InteractiveContainer({examId}) {
       ) : (
         <Link href={"/sign-in"}>
           <div className="flex items-center space-x-2 cursor-pointer">
-            <i class="fa-regular fa-circle-user text-3xl"></i>
+            <i className="fa-regular fa-circle-user text-3xl"></i>
             <div>Đăng nhập để bình luận.</div>
           </div>
         </Link>
