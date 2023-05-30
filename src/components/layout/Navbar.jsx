@@ -29,7 +29,7 @@ export default function Navbar() {
         router.push(`/sign-in`);
     };
     const handlePostNew = () => {
-        if (profile.id) {
+        if (profile?._id) {
             router.push('/exam/favorites')
         } else {
             const label = document.getElementById("modal-require-login-id");
