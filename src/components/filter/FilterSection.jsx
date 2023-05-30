@@ -13,7 +13,6 @@ export default function FeatureSection({isSmall = false}) {
 
   useEffect(() => {
     eventEmitter.on('clearInputSearch', () => {
-      console.log('aaaaaa')
       setKeyword('')
     })
   })

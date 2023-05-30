@@ -14,15 +14,15 @@ const DrawerItem = ({ item, setShow }) => {
         const id = i.id;
         switch (item.id) {
           case 1: {
-            router.push(`/filter?tradingForm=1&category=${id}`);
+            router.push(`/filter?subject=${id}`);
             break;
           }
           case 2: {
-            router.push(`/filter?tradingForm=3&category=${i.id}`);
+            router.push(`/filter?subject=${i.id}`);
             break;
           }
           case 3: {
-            router.push(`/filter?tradingForm=2&category=${i.id}`);
+            router.push(`/filter?subject=${i.id}`);
             break;
           }
         }

@@ -45,13 +45,18 @@ export default function Footer() {
     },
     {
       id: 6,
-      title: "Địa Lý",
+      title: "Lịch sử",
       path: "/filter?subject=6",
     },
     {
       id: 7,
-      title: "GDCD",
+      title: "Địa Lý",
       path: "/filter?subject=7",
+    },
+    {
+      id: 8,
+      title: "GDCD",
+      path: "/filter?subject=8",
     },
   ];
 

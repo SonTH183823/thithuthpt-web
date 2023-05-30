@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import HeaderPopupFilter from "./HeaderPopupFilter";
 import Collapse from "../common/Collapse";
 import {levelConfig, subjectConfig,} from "configs/configs";
@@ -15,6 +15,12 @@ const FilterPopup = ({show, setShow}) => {
     const [rate, setRate] = useState(null);
     const [maxNumQuestion, setMaxNumQuestion] = useState(1);
     const [timeToDo, setTimeToDo] = useState(0);
+
+    useEffect(() => {
+        if (Object.keys(router.query).length) {
+            if (router.query?.subject) setSubject(+router.query.subject)
+        }
+    }, [router.query]);
 
     const handleApply = () => {
         let filterParams = {};

@@ -12,8 +12,8 @@ const menu = [
       { id: 2, title: "Vật Lý" },
       { id: 3, title: "Hóa Học" },
       { id: 4, title: "Sinh Học" },
-      { id: 5, title: "Lịch Sử" },
-      { id: 6, title: "Tiếng Anh" },
+      { id: 5, title: "Tiếng Anh" },
+      { id: 6, title: "Lịch Sử" },
       { id: 7, title: "Địa Lý" },
       { id: 8, title: "GDCD" },
     ],
@@ -38,15 +38,15 @@ const menu = [
     title: "Giới thiệu",
     path: "/about",
   },
-  {
-    id: 6,
-    title: "Xem thêm",
-    children: [
-      { id: 1, title: "Về TROTOT", path: "/about" },
-      { id: 2, title: "Bảng giá dịch vụ", path: "/pricing" },
-      { id: 3, title: "FAQ", path: "/faq" },
-    ],
-  },
+  // {
+  //   id: 6,
+  //   title: "Xem thêm",
+  //   children: [
+  //     { id: 1, title: "Về TROTOT", path: "/about" },
+  //     { id: 2, title: "Bảng giá dịch vụ", path: "/pricing" },
+  //     { id: 3, title: "FAQ", path: "/faq" },
+  //   ],
+  // },
 ];
 const Drawer = React.forwardRef(({ show, setShow }, nodeRef) => {
   return (
@@ -67,10 +67,4 @@ const Drawer = React.forwardRef(({ show, setShow }, nodeRef) => {
     </div>
   );
 });
-
-Drawer.displayName = "Drawer";
-Drawer.propTypes = {
-  show: PropTypes.bool,
-  nodeRef: PropTypes.element,
-};
 export default Drawer;

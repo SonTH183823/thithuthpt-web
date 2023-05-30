@@ -68,6 +68,9 @@ const FilterPage = () => {
     (async () => {
       await getExams(0);
     })();
+    if (Object.keys(router.query).length) {
+      if (router.query?.subject) setSubject(+router.query.subject)
+    }
   }, [router.query]);
 
   useEffect(() => {
@@ -108,10 +111,10 @@ const FilterPage = () => {
   const deleteFilter = () => {
     setSubject(null)
     setLevel(null)
-    setMaxNumQuestion(0)
+    setMaxNumQuestion(1)
     setTimeToDo(0)
     setRate(null)
-    // eventEmitter.emit('clearInputSearch')
+    eventEmitter.emit('clearInputSearch')
     router.push("/filter")
   }
   const handleApply = () => {
