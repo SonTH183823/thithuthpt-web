@@ -1,20 +1,15 @@
-import Image from "next/image";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 
 const DrawerHeader = () => {
-  // const profile = useSelector((state) => state.auth.profile);
-  const profile = {
-
-  }
-
+  const profile = useSelector((state) => state.auth.profile);
   return (
     <div className="bg-primary p-2">
       <div className="flex items-center space-x-3">
         {profile?.avatar ? (
           <Fragment>
             <div className="h-[40px] w-[40px] relative cursor-pointer">
-              <Image
+              <img
                 alt="avatar"
                 layout="fill"
                 objectFit="cover"

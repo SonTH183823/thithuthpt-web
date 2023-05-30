@@ -22,10 +22,7 @@ import DrawerRight from "@/components/layout/DrawerRight";
 
 export default function Navbar() {
     const router = useRouter();
-    // const profile = useSelector((state) => state.auth.profile);
-    const profile = {
-        id: 1
-    }
+    const profile = useSelector((state) => state.auth.profile);
     const handleLogin = () => {
         const label = document.getElementById("modal-require-login-id");
         label.click();
@@ -77,7 +74,7 @@ export default function Navbar() {
                                 className="h-[32px] w-[32px] relative cursor-pointer "
                                 onClick={openDrawerRight}
                             >
-                                <Image
+                                <img
                                     alt="avatar"
                                     layout="fill"
                                     objectFit="cover"
@@ -150,7 +147,7 @@ export default function Navbar() {
                                 </li>
                             </Fragment>
 
-                            {profile.id && (
+                            {profile?._id && (
                                 <Fragment>
                                     <li className="h-[39px] w-[39px] flex items-center justify-center rounded-full bg-backgroundGray nav-item font-bold cursor-pointer user-menu">
                                         <Notification/>

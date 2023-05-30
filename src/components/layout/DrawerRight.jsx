@@ -2,20 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import DrawerHeader from "../drawer-menu/drawer-menu-left/DrawerHeader";
 import RightMenuItemDrawer from "../drawer-menu/drawer-menu-right/RightMenuItemDrawer";
-import {
-  menuGuest,
-  menuUser,
-} from "../../configs/configs";
-// import { useSelector } from "react-redux";
+import {menuGuest, menuUser} from "../../configs/configs";
+import {useSelector} from "react-redux";
 
 const DrawerRight = React.forwardRef(({ show, setShow }, nodeRef) => {
-  // const profile = useSelector((state) => state.auth.profile);
-  const profile = {
-    role: 1
-  }
+  const profile = useSelector((state) => state.auth.profile);
 
   const getMenu = () => {
-    if (profile.role === 0) {
+    if (profile?._id) {
       return menuUser;
     }  else {
       return menuGuest;

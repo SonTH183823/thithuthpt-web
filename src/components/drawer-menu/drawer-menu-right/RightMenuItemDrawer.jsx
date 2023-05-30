@@ -1,27 +1,26 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { useRouter } from "next/router";
-// import { authUpdateProfile } from "store/auth/auth-slice";
-// import { authAPI } from "apis/auth";
-// import Cookies from "js-cookie";
-// import { useDispatch } from "react-redux";
+import {useRouter} from "next/router";
+import {useDispatch} from "react-redux";
+import {authAPI} from "../../../apis/auth";
+import {authUpdateProfile} from "../../../store/auth/auth-slice";
+import {removeToken} from "../../../utils/auth";
 
-const RightMenuItemDrawer = ({ item, showDrawerRight }) => {
+const RightMenuItemDrawer = ({item, showDrawerRight}) => {
   const router = useRouter();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const handleClick = async () => {
     if (item.id === 115) {
-      // const sessionId = Cookies.get(process.env.NEXT_PUBLIC_SESSION_ID);
-      // try {
-      //   const res = await authAPI.logout(sessionId);
-      //   if (res.ok) {
-      //     dispatch(authUpdateProfile({}));
-      //     removeToken();
-      //     router.replace(`/`);
-      //   }
-      // } catch (e) {
-      //   console.log(e);
-      // }
+      try {
+        const res = await authAPI.logout();
+        if (res.ok) {
+          dispatch(authUpdateProfile({}));
+          removeToken();
+          router.replace(`/`);
+          showDrawerRight(false);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     } else if (item.path) {
       router.push(item.path);
       showDrawerRight(false);
@@ -42,8 +41,4 @@ const RightMenuItemDrawer = ({ item, showDrawerRight }) => {
   );
 };
 
-RightMenuItemDrawer.propTypes = {
-  item: PropTypes.object,
-  showDrawerRight: PropTypes.func,
-};
 export default RightMenuItemDrawer;
