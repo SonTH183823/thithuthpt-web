@@ -15,6 +15,8 @@ import Select from "react-select";
 import {sortHistoryConfig} from "../../configs/configs";
 import PointComponent from "@/components/points/PointComponent";
 import Award from "@/components/points/Award";
+import ResultComponents from "@/components/result/ResultComponents";
+import ResultProfile from "@/components/result/ResultProfile";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
@@ -58,7 +60,7 @@ export default function ProfileUser() {
     }
     return (
       <>
-
+        <ResultProfile/>
       </>
     )
   }
@@ -109,21 +111,21 @@ export default function ProfileUser() {
                 </div>
               </div>
               <div className="col-span-2 lg:px-0 px-2 pb-2">
-                {/*<div className="custom-tab">*/}
-                {/*  {isClient && (*/}
-                {/*    <Tabs*/}
-                {/*      activeTab={tabActive}*/}
-                {/*      className="mt-5 py-3 px-3 rounded-lg box-shadow bg-base-100 lg:mt-0 lg:my-4 my-2"*/}
-                {/*      ulClassName=""*/}
-                {/*      onClick={(e, tab) => handleSelectTab(e, tab)}*/}
-                {/*    >*/}
-                {/*      <Tab title="Tổng quan"*/}
-                {/*           className={`mr-10 text-lg font-bold ${tabActive === 1 ? 'text-primary' : ''}`}></Tab>*/}
-                {/*      <Tab title="Lịch sử làm bài"*/}
-                {/*           className={`mr-10 text-lg font-bold ${tabActive === 2 ? 'text-primary' : ''}`}></Tab>*/}
-                {/*    </Tabs>*/}
-                {/*  )}*/}
-                {/*</div>*/}
+                <div className="custom-tab">
+                  {isClient && (
+                    <Tabs
+                      activeTab={tabActive}
+                      className="mt-5 py-3 px-3 rounded-lg box-shadow bg-base-100 lg:mt-0 lg:my-4 my-2"
+                      ulClassName=""
+                      onClick={(e, tab) => handleSelectTab(e, tab)}
+                    >
+                      <Tab title="Tổng quan"
+                           className={`mr-10 text-lg font-bold ${tabActive === 1 ? 'text-primary' : ''}`}></Tab>
+                      <Tab title="Lịch sử làm bài"
+                           className={`mr-10 text-lg font-bold ${tabActive === 2 ? 'text-primary' : ''}`}></Tab>
+                    </Tabs>
+                  )}
+                </div>
                 {genUITab()}
               </div>
             </div>
