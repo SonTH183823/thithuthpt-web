@@ -17,6 +17,7 @@ import PointComponent from "@/components/points/PointComponent";
 import Award from "@/components/points/Award";
 import ResultComponents from "@/components/result/ResultComponents";
 import ResultProfile from "@/components/result/ResultProfile";
+import DocumentsSection from "@/components/documents/DocumentsSection";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
@@ -25,10 +26,40 @@ export default function ProfileUser() {
   const [tabActive, setTabActive] = useState(2);
   const [sort, setSort] = useState(sortHistoryConfig[0]);
   const handleSelectTab = (event, tab) => {
+    setSort(sortHistoryConfig[0])
     setTabActive(tab)
   }
   const genUITab = () => {
     if (tabActive === 2) {
+      return (
+        <>
+          <div
+            className={'shadow-md px-3 flex justify-between bg-white rounded-lg items-center text-sm md:text-base mb-4'}>
+            <div>Lịch sử làm bài <span className={'font-bold'}>69</span> kết quả</div>
+            <div className={'flex items-center space-x-2'}>
+              <div className={'font-semibold'}>Sắp xếp</div>
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderRadius: "5px",
+                    borderColor: "#e5e7eb",
+                    margin: "8px 0",
+                    width: "170px",
+                  }),
+                }}
+                options={sortHistoryConfig}
+                onChange={(option) => {
+                  setSort(option)
+                }}
+                value={sort}
+              />
+            </div>
+          </div>
+          <PostsSection userId={user.id}/>
+        </>
+      )
+    } else if (tabActive === 3) {
       return (
         <>
           <div
@@ -106,7 +137,7 @@ export default function ProfileUser() {
             <div className="grid-cols-3 lg:grid lg:space-x-5 lg:p-4 lg:px-0 container mx-auto">
               <div className="col-span-1 h-fit">
                 <DetailUserInfoContainer profile={user} userId={user._id}/>
-                <div className={'my-3 block p-4 bg-base-100 rounded-lg'}>
+                <div className={'my-3 block p-4 bg-base-100 rounded-lg shadow-md'}>
                   <Award userInfo={user}/>
                 </div>
               </div>
@@ -123,6 +154,8 @@ export default function ProfileUser() {
                            className={`mr-10 text-lg font-bold ${tabActive === 1 ? 'text-primary' : ''}`}></Tab>
                       <Tab title="Lịch sử làm bài"
                            className={`mr-10 text-lg font-bold ${tabActive === 2 ? 'text-primary' : ''}`}></Tab>
+                      <Tab title="Toeic"
+                           className={`mr-10 text-lg font-bold ${tabActive === 3 ? 'text-primary' : ''}`}></Tab>
                     </Tabs>
                   )}
                 </div>

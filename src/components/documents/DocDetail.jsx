@@ -20,7 +20,7 @@ import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import Link from "next/link";
 
-function DocDetail({i, isDoExam = false}) {
+function DocDetail({i, notShowBtn = true}) {
   const router = useRouter();
   const item = {
     title: 'Hệ thống bài tập trắc nghiệm phần "Tích phân" được phân dạng và có lời giải chi tiết',
@@ -117,7 +117,7 @@ function DocDetail({i, isDoExam = false}) {
           className={"font-bold text-info text-2xl flex items-center mb-2 cursor-pointer !m-0 !mr-2 hover:!text-black "}>
           {item.title}
         </TitleExamItem>
-        <div className={"flex flex-col sm:flex-row sm:space-x-1"}>
+        {notShowBtn ? <div className={"flex flex-col sm:flex-row sm:space-x-1"}>
           <Link
             data-tooltip-id="my-tooltip"
             data-tooltip-content={'Tải xuống'}
@@ -153,7 +153,7 @@ function DocDetail({i, isDoExam = false}) {
             className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
             onClick={(e) => handleReport()}
           ><i className="fa-regular fa-flag text-lg"></i></div>
-        </div>
+        </div> : null}
       </div>
 
       <div className={'bg-base-200 rounded-xl p-3'}>
