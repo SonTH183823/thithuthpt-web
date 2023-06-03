@@ -5,7 +5,7 @@ function ItemSelect({checked, handleSelect, label, hasIcon = true, mobile = fals
     return (
       <div className={`flex items-center p-2 hover:text-primary ${checked ? 'bg-primary rounded-md' : ''}`}
            onClick={() => handleSelect()}>
-        <label className={`flex-1 cursor-pointer select-none ${checked ? 'text-white font-semibold' : ''}`}>
+        <label className={`flex-1 cursor-pointer select-none ${checked ? 'text-white' : ''}`}>
           {label}
         </label>
       </div>

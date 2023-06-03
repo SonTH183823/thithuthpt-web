@@ -19,7 +19,6 @@ export default function DetailUserInfoContainer({
   const [bio, setBio] = useState("");
   const [showEditBio, setShowEditBio] = useState(false);
   const profile = useSelector((state) => state.auth.profile);
-  console.log(user)
   const dispatch = useDispatch();
   const handleChangeInput = (e) => {
     setBio(e.target.value);
@@ -66,7 +65,7 @@ export default function DetailUserInfoContainer({
     }
   };
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-4 ">
       {/*{showBanlance && (*/}
       {/*  <div className="lg:px-4 px-2 lg:py-6 py-2 lg:rounded-lg box-shadow bg-base-100 text-sm">*/}
       {/*    <h3 className={"m-0"}>Số dư tài khoản</h3>*/}
@@ -83,7 +82,7 @@ export default function DetailUserInfoContainer({
       <div className="lg:px-4 px-2 lg:py-6 py-2 lg:rounded-lg box-shadow bg-base-100 text-sm">
         <div>
           <h3 className={"m-0"}>Giới thiệu</h3>
-          {profile.id === user.id ? (
+          {profile._id === user._id ? (
             <div>
               {user.bio && !showEditBio ? (
                 <div>

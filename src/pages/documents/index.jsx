@@ -98,6 +98,15 @@ function Documents(props) {
         queryTemp.push(`${key}=${router.query[key]}`);
       }
       router.push(`/documents?${queryTemp.join("&")}&outstanding=1`);
+    }else {
+      if ("outstanding" in router.query) {
+        delete router.query.outstanding;
+      }
+      let queryTemp = [];
+      for (const key in router.query) {
+        queryTemp.push(`${key}=${router.query[key]}`);
+      }
+      router.push(`/documents?${queryTemp.join("&")}`);
     }
   }, [sort.value]);
 
@@ -128,7 +137,6 @@ function Documents(props) {
                 setCateChoose(item)
               }}/>)
           }
-
         </div>
       )
     }
@@ -152,41 +160,34 @@ function Documents(props) {
             </div>
             {genCate()}
           </div>
-          <div className={'col-span-9'}>
+          <div className={'lg:col-span-9 col-span-1 w-full'}>
             <div
-              className={'shadow-xl mx-3 flex justify-between bg-white px-3 py-4 rounded-md items-center text-sm md:text-base mb-4'}>
-              <div className={'flex items-center space-x-2'}>
-                <div className={'font-semibold'}>Môn học</div>
-                {subjectList.map(item =>
-                  <ItemSelect
-                    checked={subject === item.value}
-                    label={item.label}
-                    mobile={true}
-                    hasIcon={false}
-                    handleSelect={() => {
-                      setSubject(item.value)
-                    }}/>
-                )}
-              </div>
-              {/*<div className={'flex items-center space-x-2'}>*/}
-              {/*  <div className={'font-semibold'}>Chuyên đề</div>*/}
-              {/*  <Select*/}
-              {/*    styles={{*/}
-              {/*      control: (baseStyles, state) => ({*/}
-              {/*        ...baseStyles,*/}
-              {/*        borderRadius: "5px",*/}
-              {/*        borderColor: "#e5e7eb",*/}
-              {/*        margin: "8px 0",*/}
-              {/*        width: "130px",*/}
-              {/*      }),*/}
-              {/*    }}*/}
-              {/*    options={xapSepConfig}*/}
-              {/*    onChange={(option) => {*/}
-              {/*      setSort(option)*/}
-              {/*    }}*/}
-              {/*    value={sort}*/}
-              {/*  />*/}
-              {/*</div>*/}
+              className={'space-x-2 shadow-xl mx-3 sm:w-[97%] w-[93%] lg:hidden flex justify-start bg-white px-3 py-3 rounded-md items-center text-sm md:text-base mb-4 flex-wrap overflow-x-auto'}>
+              <div className={'font-semibold'}>Môn học</div>
+              {subjectList.map(item =>
+                <ItemSelect
+                  checked={subject === item.value}
+                  label={item.label}
+                  mobile={true}
+                  hasIcon={false}
+                  handleSelect={() => {
+                    setSubject(item.value)
+                  }}/>
+              )}
+            </div>
+            <div
+              className={'space-x-2 shadow-xl mx-3 sm:w-[97%] w-[93%] lg:hidden flex justify-start bg-white px-3 py-3 rounded-md items-center text-sm md:text-base mb-4 flex-wrap overflow-x-auto'}>
+              <div className={'font-semibold'}>Chuyên đề</div>
+              {cate.map(item =>
+                <ItemSelect
+                  checked={cateChoose === item}
+                  label={item}
+                  mobile={true}
+                  hasIcon={false}
+                  handleSelect={() => {
+                    setCateChoose(item)
+                  }}/>
+              )}
             </div>
             <div
               className={'shadow-xl mx-3 flex justify-between bg-white px-3 rounded-md items-center text-sm md:text-base'}>

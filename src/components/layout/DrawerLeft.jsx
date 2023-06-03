@@ -26,7 +26,7 @@ const menu = [
   {
     id: 3,
     title: "Tài liệu ôn tập",
-    path: '/document'
+    path: '/documents'
   },
   {
     id: 5,

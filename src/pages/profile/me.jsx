@@ -121,7 +121,7 @@ export default function ProfileUser() {
                 </div>
               </div>
               <div
-                className={`lg:mt-5 md:mt-24 mt-20 lg:ml-[210px] lg:w-fit w-full flex items-center lg:items-start justify-center flex-col`}>
+                className={`lg:mt-5 md:mt-24 mt-20 lg:ml-[210px] lg:w-fit w-full flex items-center lg:items-start justify-center flex-col md:pb-0 pb-4`}>
                 <FullName
                   fullName={user.name}
                   className={"lg:text-3xl text-2xl block"}
@@ -133,7 +133,7 @@ export default function ProfileUser() {
               </div>
             </div>
           </div>
-          <div className="bg-base-200">
+          <div className="bg-base-200 md:pt-0 pt-4">
             <div className="grid-cols-3 lg:grid lg:space-x-5 lg:p-4 lg:px-0 container mx-auto">
               <div className="col-span-1 h-fit">
                 <DetailUserInfoContainer profile={user} userId={user._id}/>
