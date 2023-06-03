@@ -7,7 +7,7 @@ export default function NavbarSubjectMenu() {
     const router = useRouter();
     const [checkURL, setCheckURL] = useState(false);
     useEffect(() => {
-        if (router && router.asPath.includes("subject=")) {
+        if (router && router.asPath.includes("filter")) {
             setCheckURL(true);
         } else {
             setCheckURL(false);

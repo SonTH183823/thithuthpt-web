@@ -18,6 +18,41 @@ export const xapSepConfig = [
   }
 ]
 
+export const subjectArrConfig = [
+  {
+    value: 1,
+    label: 'Toán Học'
+  },
+  {
+    value: 2,
+    label: 'Vật Lý'
+  },
+  {
+    value: 3,
+    label: 'Hóa Học'
+  },
+  {
+    value: 4,
+    label: 'Sinh Học'
+  },
+  {
+    value: 5,
+    label: 'Tiếng Anh'
+  },
+  {
+    value: 6,
+    label: 'Lịch Sử'
+  },
+  {
+    value: 7,
+    label: 'Địa Lý'
+  },
+  {
+    value: 8,
+    label: 'GDCD'
+  }
+]
+
 export const sortHistoryConfig = [
   {
     value: 1,

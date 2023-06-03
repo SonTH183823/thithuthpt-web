@@ -114,7 +114,7 @@ function DocDetail({i, notShowBtn = true}) {
     <div>
       <div className={"flex justify-between mb-2"}>
         <TitleExamItem
-          className={"font-bold text-info text-2xl flex items-center mb-2 cursor-pointer !m-0 !mr-2 hover:!text-black "}>
+          className={"font-bold text-info text-xl flex items-center mb-2 cursor-pointer !m-0 !mr-2 hover:!text-black "}>
           {item.title}
         </TitleExamItem>
         {notShowBtn ? <div className={"flex flex-col sm:flex-row sm:space-x-1"}>

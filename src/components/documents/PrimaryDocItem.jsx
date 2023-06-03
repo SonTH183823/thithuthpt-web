@@ -10,13 +10,13 @@ import ExamInfoHistory from "@/components/exam/ExamInfoHistory";
 import ExamTag from "@/components/exam/ExamTag";
 import DocDetail from "@/components/documents/DocDetail";
 
-export default function PrimaryDocItem({post1}) {
+export default function PrimaryDocItem({item}) {
   const post = {
     title: 'Đề thi thử môn Lý trường THPT Phạm Văn Đồng - Gia Lai - 2019'
   }
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/history/${strToSlug(post.title)}-${post.id}`);
+    router.push(`/documents/${strToSlug(post.title)}-${post.id}`);
   };
   return (
     <div
