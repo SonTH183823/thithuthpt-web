@@ -15,9 +15,8 @@ import Select from "react-select";
 import {sortHistoryConfig} from "../../configs/configs";
 import PointComponent from "@/components/points/PointComponent";
 import Award from "@/components/points/Award";
-import ResultComponents from "@/components/result/ResultComponents";
 import ResultProfile from "@/components/result/ResultProfile";
-import DocumentsSection from "@/components/documents/DocumentsSection";
+import {useRouter} from "next/router";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
@@ -25,10 +24,16 @@ export default function ProfileUser() {
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(2);
   const [sort, setSort] = useState(sortHistoryConfig[0]);
+  const router = useRouter()
   const handleSelectTab = (event, tab) => {
     setSort(sortHistoryConfig[0])
     setTabActive(tab)
   }
+  useEffect(() => {
+    if (!user?._id) {
+      router.push('/sign-in')
+    }
+  }, [user])
   const genUITab = () => {
     if (tabActive === 2) {
       return (

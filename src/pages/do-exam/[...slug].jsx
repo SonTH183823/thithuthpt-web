@@ -56,7 +56,7 @@ export default function DoExam() {
         <div className="lg:grid grid-cols-3 lg:space-x-4">
           <div className="col-span-2 relative">
             <div className={"bg-base-100 rounded-xl "}>
-              <DetailExam isDoExam={true}/>
+              <DetailExam/>
             </div>
             <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
               {listQues.map((item, index) => (
