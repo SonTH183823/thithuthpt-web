@@ -14,7 +14,7 @@ export default function ButtonSecondary({
         isPrimary
           ? `bg-backgroundPrimary text-primary hover:bg-primary hover:text-white`
           : `border-primary border text-primary `
-      } py-1 px-2 rounded-lg w-fit cursor-pointer`}
+      } py-1 px-2 rounded-lg w-fit cursor-pointer flex justify-center items-center`}
     >
       <div className={styles}>
         {iconName && <i className={`${iconName}`} />}

@@ -18,13 +18,14 @@ import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
 import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
 import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
+import ButtonSecondary from "@/components/button/ButtonSecondary";
 
 function DetailExam({i, isDoExam = false}) {
   const router = useRouter();
   const item = {
     showTitle: true,
-    title: 'Đề thi THPT Quốc gia năm 2021 môn Lịch sử Mã đề 301',
-    category: 4
+    title: 'ETS TOEIC 2022 Test 1',
+    subject: 9
   }
   const profile = useSelector((state) => state.auth.profile);
   const [isFavorite, setIsFavorite] = useState(null);
@@ -109,7 +110,11 @@ function DetailExam({i, isDoExam = false}) {
     }
   };
   const enterExam = () => {
-    router.replace('/do-exam/a');
+    if (item.subject === 9) {
+      router.replace('/toeic/do-exam/a');
+    } else {
+      router.replace('/do-exam/a');
+    }
   }
   return (
     <div className={"sm:p-4 p-3"}>
@@ -173,11 +178,19 @@ function DetailExam({i, isDoExam = false}) {
         </div>
 
       </div>
-      {isDoExam && <ButtonPrimary
-        title="Bắt đầu làm bài"
-        className="w-full mt-3"
-        handleClick={() => startExam()}
-      />}
+      <div className={'flex justify-between space-x-2'}>
+        {isDoExam && <ButtonPrimary
+          title="Bắt đầu làm bài"
+          className="w-full mt-3"
+          handleClick={() => startExam()}
+        />}
+        <ButtonSecondary
+          title="Giải chi tiết"
+          className="w-full mt-3 text-sm font-semibold"
+          handleClick={() => startExam()}
+        />
+      </div>
+
       <ModalReportPost id="modal-report-post" objectId={item.id}/>
       <ModalShare id="modal-share-post" title={item.title}/>
       <ReactTooltip id='my-tooltip'/>

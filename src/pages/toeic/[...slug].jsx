@@ -9,12 +9,12 @@ import TableTypeListQues from "@/components/exam-details/TableTypeListQues";
 import RelatedExam from "@/components/exam-details/RelatedExam";
 import RatingComponents from "@/components/rating/RatingComponents";
 
-export default function ExamDetail({
-                                     exam = {
-                                       id: 1,
-                                       title: 'Bai thi mau'
-                                     }
-                                   }) {
+export default function ToeicDetail({
+                                      exam = {
+                                        id: 1,
+                                        title: 'Bai thi mau'
+                                      }
+                                    }) {
   const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(null);
@@ -60,7 +60,7 @@ export default function ExamDetail({
                   <DetailExam isDoExam={true}/>
                 </div>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <TableTypeListQues/>
+                  <TableTypeListQues item={{subject: 9}}/>
                 </div>
                 <RatingComponents/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
