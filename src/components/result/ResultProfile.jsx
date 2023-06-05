@@ -4,7 +4,7 @@ function ResultProfile(props) {
   return (
     <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4 shadow-md"}>
       <h3 className="text-lg font-bold">
-        Kết quả
+        Kết quả trung bình
       </h3>
       <div className="grid grid-cols-3 md:gap-8 gap-4 mb-4">
         <div className="flex items-center text-primary flex-col border border-primary rounded-lg h-[150px]">

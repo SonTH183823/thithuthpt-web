@@ -72,7 +72,7 @@ export default function ToeicDetail({
                   <BXH idExam={12}/>
                 </div>
                 <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
-                  <RelatedExam idExam={12}/>
+                  <RelatedExam idExam={12} title={'Đề thi tương tự'}/>
                 </div>
               </div>
             </div>
