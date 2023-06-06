@@ -20,7 +20,7 @@ import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import ButtonSecondary from "@/components/button/ButtonSecondary";
 
-function DetailExam({i, isDoExam = false}) {
+function DetailExam({i, isDoExam = false, isShowRs = true}) {
   const router = useRouter();
   const item = {
     showTitle: true,
@@ -178,18 +178,18 @@ function DetailExam({i, isDoExam = false}) {
         </div>
 
       </div>
-      <div className={'flex justify-between space-x-2'}>
+      {(isDoExam || isShowRs) ? <div className={'flex justify-between space-x-2 h-14'}>
         {isDoExam && <ButtonPrimary
           title="Bắt đầu làm bài"
           className="w-full mt-3"
           handleClick={() => startExam()}
         />}
-        <ButtonSecondary
+        {isShowRs && <ButtonSecondary
           title="Giải chi tiết"
           className="w-full mt-3 text-sm font-semibold"
           handleClick={() => startExam()}
-        />
-      </div>
+        />}
+      </div> : null}
 
       <ModalReportPost id="modal-report-post" objectId={item.id}/>
       <ModalShare id="modal-share-post" title={item.title}/>
