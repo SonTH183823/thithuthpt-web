@@ -7,7 +7,7 @@ import math from "../../assets/images/test/math.jpg"
 import Image from "next/image";
 import ExamInfo from "./ExamInfo"
 
-function HomeExamItem({item, user = {}, isSearch = false}) {
+function  HomeExamItem({item, user = {}, isSearch = false}) {
     // const favoritePosts = useSelector((state) => state.post.favoritePosts);
     const favoritePosts = true
     const profile = useSelector((state) => state.auth.profile);

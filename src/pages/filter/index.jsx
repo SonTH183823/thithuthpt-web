@@ -143,6 +143,9 @@ const FilterPage = () => {
     filterParams.level = level;
     if (maxNumQuestion > 1) filterParams.maxques = maxNumQuestion;
     if (timeToDo) filterParams.time = timeToDo;
+    if ("outstanding" in router.query) {
+      filterParams.outstanding = 1
+    }
     const q = Object.fromEntries(
       Object.entries(filterParams).filter(([_, v]) => v)
     );

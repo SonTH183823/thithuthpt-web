@@ -69,6 +69,9 @@ function Documents(props) {
         delete router.query.subject;
       }
       filterParams.subject = subject;
+      if ("outstanding" in router.query) {
+        filterParams.outstanding = 1
+      }
       const q = Object.fromEntries(
         Object.entries(filterParams).filter(([_, v]) => v)
       );
