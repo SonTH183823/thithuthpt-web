@@ -7,6 +7,8 @@ export const menuGuest = [
   },
 ];
 
+export const domainUpload = process.env.NEXT_PUBLIC_API_UPLOAD || "http://localhost:8003" + "/uploads";
+
 export const xapSepConfig = [
   {
     value: 1,

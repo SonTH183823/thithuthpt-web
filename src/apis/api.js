@@ -3,11 +3,12 @@ import Cookies from "js-cookie";
 import {removeToken, saveTokenToCookie} from "utils/auth";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8003",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8003" + "/web",
   headers: {
     "Content-Type": "application/json",
   },
 });
+
 api.interceptors.request.use(
   function (config) {
     const token = Cookies.get(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY);

@@ -20,7 +20,6 @@ import {useRouter} from "next/router";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
-  const imageCover = 'https://img.freepik.com/free-photo/los-angeles-downtown-buildings-night_649448-298.jpg?w=2000&t=st=1682246479~exp=1682247079~hmac=c47ba41a6a4b0b14185566ea5c180982948e1d72319415edd3f4a36dfd8ec5db'
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(1);
   const [sort, setSort] = useState(sortHistoryConfig[0]);
@@ -107,7 +106,7 @@ export default function ProfileUser() {
           <div className="bg-base-100">
             <div className="container mx-auto bg-base-100">
               <CoverImageSection
-                imgCover={user?.imageCover || imageCover}
+                imgCover={user?.imageCover}
                 userId={user._id}
                 avatar={user.avatar}
               />

@@ -13,6 +13,7 @@ import {
 import {authAPI} from "apis/auth";
 import {async} from "@firebase/util";
 import Cookies from "js-cookie";
+import {genURLImage} from "../../utils/common";
 
 export default function NavbarUserMenu() {
   const profile = useSelector((state) => state.auth.profile);
@@ -45,7 +46,7 @@ export default function NavbarUserMenu() {
           <MenuButton>
             {profile.avatar ? (
               <div className="h-[39px] w-[39px] relative">
-                <img src={profile.avatar} alt={''} className={'rounded-full'}/>
+                <img src={genURLImage(profile.avatar)} alt={''} className={'rounded-full h-full w-full'}/>
               </div>
             ) : (
               <i className="fa-sharp fa-regular fa-circle-user text-4xl text-primary"></i>

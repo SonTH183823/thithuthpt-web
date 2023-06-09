@@ -16,6 +16,7 @@ import Image from "next/image";
 import NavbarSubjectMenu from "@/components/menu/NavbarSubjectMenu";
 import Drawer from "@/components/layout/DrawerLeft";
 import DrawerRight from "@/components/layout/DrawerRight";
+import {genURLImage} from "../../utils/common";
 // import NavbarChat from "../menu/NavbarChat";
 // import NavbarRentalMenu from "../menu/NavbarRentalMenu";
 // import NavbarBuyMenu from "../menu/NavbarBuyMenu";
@@ -78,8 +79,8 @@ export default function Navbar() {
                                     alt="avatar"
                                     layout="fill"
                                     objectFit="cover"
-                                    src={profile.avatar}
-                                    className="rounded-full"
+                                    src={genURLImage(profile.avatar)}
+                                    className="rounded-full h-full w-full"
                                 />
                             </div>
                         ) : (

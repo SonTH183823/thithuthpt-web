@@ -8,6 +8,9 @@ import {authUpdateProfile} from "store/auth/auth-slice";
 import {useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleUser, faUser} from "@fortawesome/free-solid-svg-icons";
+import {uploadAPI} from "../../apis/upload";
+import {domainUpload} from "../../configs/configs";
+import {genURLImage} from "../../utils/common";
 
 export default function AvatarWithUpload({
                                            width = 40,
@@ -26,33 +29,38 @@ export default function AvatarWithUpload({
   const handleUploadAvatar = async (e) => {
     if (e.target.files[0]) {
       setAvatarSource(URL.createObjectURL(e.target.files[0]));
-      const base64 = await convertBase64(e.target.files[0]);
       try {
-        const res = await userAPI.updateAccount({data: {base64}});
-        if (res.ok) {
-          const profileRes = await userAPI.getProfile();
-          dispatch(authUpdateProfile(profileRes));
-          toast.success("Cập nhật thông tin thành công!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
+        const res = await uploadAPI.uploadFile(e.target.files[0])
+        if (res?.filename) {
+          const res2 = await userAPI.updateAccount({
+            id: userId,
+            data: {avatar: res.filename},
           });
-        } else {
-          toast.error("Cập nhật thông tin thất bại!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          if (res2.ok) {
+            const profileRes = await userAPI.getProfile();
+            dispatch(authUpdateProfile(profileRes));
+            toast.success("Cập nhật thông tin thành công!", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          } else {
+            toast.error("Cập nhật thông tin thất bại!", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
         }
       } catch (e) {
         console.log(e);
@@ -75,7 +83,7 @@ export default function AvatarWithUpload({
         {avatarSource ? (
           <div className={`rounded-full box-shadow`}>
             <img
-              src={avatarSource}
+              src={genURLImage(avatarSource)}
               alt={"avatar-user"}
               width={width}
               height={height}

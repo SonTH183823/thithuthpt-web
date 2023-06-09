@@ -1,5 +1,6 @@
 import slugify from "slugify";
-import { formatDate } from "./moment";
+import {formatDate} from "./moment";
+import {domainUpload} from "../configs/configs";
 
 export const checkPhone = (phone) => {
   return /(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(phone);
@@ -32,6 +33,18 @@ export const generateSpecificAdress = (
   }${ward}, ${district}, ${province}.`;
 };
 
+export const genURLImage = (image) => {
+  if (image.includes('blob:')) {
+    return image
+  } else {
+    if (image.includes('http')) {
+      return image
+    } else {
+      return `${domainUpload}/${image}`
+    }
+  }
+}
+
 export const generateDate = (date) => {
   const dateFormatArray = formatDate(date).split("/");
   if (dateFormatArray[1].charAt(0) === "0") {
@@ -53,7 +66,7 @@ export const formatPhoneNumerDisplay = (phoneNumber) => {
 };
 
 export function kFormatter(num) {
-  return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+  return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
 }
 
 export const formatNumberView = (viewCount) => {
