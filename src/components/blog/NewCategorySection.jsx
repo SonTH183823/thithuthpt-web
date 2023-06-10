@@ -2,7 +2,7 @@ import {useRouter} from "next/router";
 import React from "react";
 import {strToSlug} from "utils/common";
 
-const NewCategorySection = ({categories}) => {
+const NewCategorySection = ({categories, idActive}) => {
   const router = useRouter();
   const handleClickCategory = (item) => {
     const slug = strToSlug(item.name);
@@ -13,7 +13,7 @@ const NewCategorySection = ({categories}) => {
       {categories &&
         categories.map((item, index) => (
           <span
-            className="font-bold cursor-pointer hover:text-primary"
+            className={`font-bold cursor-pointer hover:text-primary ${idActive === item._id ? 'text-primary' : ''}`}
             key={index}
             onClick={() => handleClickCategory(item)}
           >
