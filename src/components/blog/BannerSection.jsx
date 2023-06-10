@@ -1,15 +1,15 @@
 // import { bannerAPI } from "apis/banner";
 import useWindowSize from "hooks/useWindowSize";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
 const BannerSection = () => {
   const [banners, setBanners] = useState([{
-    url: 'https://img.freepik.com/photos-gratuite/plantes-romarin-dans-nature_1150-35514.jpg?w=1480&t=st=1682144634~exp=1682145234~hmac=0cd8a09ff0701bf4ea075e1509326dd77e8b8f460006473e002d8b678310375d',
-    urlMobile: 'https://img.freepik.com/photos-gratuite/plantes-romarin-dans-nature_1150-35514.jpg?w=1480&t=st=1682144634~exp=1682145234~hmac=0cd8a09ff0701bf4ea075e1509326dd77e8b8f460006473e002d8b678310375d',
-    urlTablet: 'https://img.freepik.com/photos-gratuite/plantes-romarin-dans-nature_1150-35514.jpg?w=1480&t=st=1682144634~exp=1682145234~hmac=0cd8a09ff0701bf4ea075e1509326dd77e8b8f460006473e002d8b678310375d',
+    url: 'https://img.freepik.com/free-psd/earth-day-template-design_23-2150192868.jpg?w=1800&t=st=1686393133~exp=1686393733~hmac=92cddf2cb027d6a47c0350d7f8b247abbada02086f9531e88725a3824d72a72a',
+    urlMobile: 'https://img.freepik.com/free-psd/earth-day-template-design_23-2150192868.jpg?w=1800&t=st=1686393133~exp=1686393733~hmac=92cddf2cb027d6a47c0350d7f8b247abbada02086f9531e88725a3824d72a72a',
+    urlTablet: 'https://img.freepik.com/free-psd/earth-day-template-design_23-2150192868.jpg?w=1800&t=st=1686393133~exp=1686393733~hmac=92cddf2cb027d6a47c0350d7f8b247abbada02086f9531e88725a3824d72a72a',
   }]);
-  const { width } = useWindowSize();
+  const {width} = useWindowSize();
   useEffect(() => {
     (async () => {
       try {

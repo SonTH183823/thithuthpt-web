@@ -7,11 +7,14 @@ export const NewAPI = {
   },
 
   async getNews(query) {
-    return await api.get(`/new?${queryString.stringify(query)}`);
+    return await api.get(`/news?${queryString.stringify(query)}`);
+  },
+  async getAllCategories(query) {
+    return await api.get(`/cateNews?${queryString.stringify(query)}`);
   },
 
   async getNewById(id) {
-    return await api.get(`/new/${id}`);
+    return await api.get(`/news/${id}`);
   },
 
   async getLatestNews(newId) {

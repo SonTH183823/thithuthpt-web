@@ -34,15 +34,18 @@ export const generateSpecificAdress = (
 };
 
 export const genURLImage = (image) => {
-  if (image.includes('blob:')) {
-    return image
-  } else {
-    if (image.includes('http')) {
+  if (image) {
+    if (image.includes('blob:')) {
       return image
     } else {
-      return `${domainUpload}/${image}`
+      if (image.includes('http')) {
+        return image
+      } else {
+        return `${domainUpload}/${image}`
+      }
     }
   }
+  return ''
 }
 
 export const generateDate = (date) => {
