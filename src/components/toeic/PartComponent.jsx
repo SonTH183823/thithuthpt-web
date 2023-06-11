@@ -67,6 +67,12 @@ function PartComponent({part, setTabActive}) {
       })
     }
   }
+  const finishExam = () => {
+    const modal = document.getElementById("modal-confirm-finish-exam-id");
+    if (modal) {
+      modal.click();
+    }
+  }
 
   return (
     <div className="lg:grid grid-cols-3 lg:space-x-4">
@@ -115,6 +121,8 @@ function PartComponent({part, setTabActive}) {
               key={index}>{index + 1}</div>)}
           </div>
         </div>
+        <ButtonPrimary title={'Nộp bài'} className={'w-full mt-4'}
+                       handleClick={finishExam}/>
       </div>
     </div>
   );

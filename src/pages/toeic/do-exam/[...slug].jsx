@@ -54,32 +54,6 @@ export default function DoToeic() {
     }
   }
 
-  const listQ = () => {
-    return
-
-  }
-
-  const genTabUI = () => {
-    switch (tabActive) {
-      case 1:
-        return <PartComponent part={1}/>
-      case 2:
-        return (<></>)
-      case 3:
-        return (<></>)
-      case 4:
-        return (<></>)
-      case 5:
-        return (<></>)
-      case 6:
-        return (<></>)
-      case 7:
-        return (<></>)
-      default:
-        return
-    }
-  }
-
   return (<Fragment>
     {exam.id ? (<div className={"bg-base-200"}>
         <div className="container mx-auto py-4 padding-mobile relative">
