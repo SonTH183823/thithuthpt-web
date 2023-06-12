@@ -1,16 +1,11 @@
 import React, {Fragment, useEffect, useState} from "react";
-// import banner from "@/assets/images/banners/1.png";
-import Image from "next/image";
 import PrimayNewItem from "@/components/new/PrimayNewItem";
 import NewCategorySection from "@/components/blog/NewCategorySection";
-// import { NewAPI } from "apis/new";
 import NewHomeItem from "@/components/home/news/NewHomeItem";
-// import { NewCategoryAPI } from "apis/new-category";
 import {strToSlug} from "utils/common";
 import {useRouter} from "next/router";
 // import { bannerAPI } from "apis/banner";
 import BannerSection from "@/components/blog/BannerSection";
-import {NewCategoryAPI} from "../../apis/new-category";
 import {NewAPI} from "../../apis/new";
 
 const Blog = () => {
@@ -76,7 +71,7 @@ const Blog = () => {
 
   const handleClickCategory = (item) => {
     const slug = strToSlug(item.name);
-    router.replace(`/blog/${slug}-${item.id}`);
+    router.replace(`/blog/${slug}-${item._id}`);
   };
 
   const handleLoadMore = async () => {

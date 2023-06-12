@@ -1,24 +1,21 @@
-import React, {Fragment, useEffect, useState} from "react";
-// import banner from "@/assets/images/banners/1.png";
-import Image from "next/image";
-import PrimayNewItem from "@/components/new/PrimayNewItem";
+import React, {useEffect, useState} from "react";
 import NewCategorySection from "@/components/blog/NewCategorySection";
 import {NewAPI} from "apis/new";
 import NewHomeItem from "@/components/home/news/NewHomeItem";
-// import { NewCategoryAPI } from "apis/new-category";
 import {strToSlug} from "utils/common";
 import {useRouter} from "next/router";
 import BannerSection from "@/components/blog/BannerSection";
+import NewSekeleton from "@/components/Sekeleton/NewSekeleton";
 
 const PostByCategory = () => {
   const [newsByCategory, setNewsByCategory] = useState([]);
   const [categories, setCategories] = useState([]);
   const router = useRouter();
-  const [category, setCategory] = useState(null);
   const [showLoadMore, setShowLoadMore] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [categoryId, setCategoryId] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     (async () => {
       try {
@@ -28,10 +25,6 @@ const PostByCategory = () => {
         });
         if (categoriesRes.data) {
           setCategories(categoriesRes.data);
-          const cate = categoriesRes.data.find((item) => (item._id === +categoryId));
-          if (cate) {
-            setCategory(cate);
-          }
         }
       } catch (e) {
         console.log(e);
@@ -41,22 +34,30 @@ const PostByCategory = () => {
 
   const getNews = async ({cateId, page}) => {
     try {
+      setLoading(true)
       const res = await NewAPI.getNews({
         active: 1,
         page,
         perPage: limit,
-        categoryId: +cateId,
+        category: cateId,
       });
       if (res.data) {
-        setNewsByCategory((news) => [...news, ...res.data]);
-        setPage(page + limit);
+        if (page === 1) {
+          setNewsByCategory((news) => [...res.data]);
+        } else {
+          setNewsByCategory((news) => [...news, ...res.data]);
+
+        }
+        setPage(page + 1);
         if (res.data.length + newsByCategory.length < res.total) {
           setShowLoadMore(true);
         } else {
           setShowLoadMore(false);
         }
       }
+      setLoading(false)
     } catch (e) {
+      setLoading(false)
       console.log(e);
     }
   };
@@ -67,7 +68,7 @@ const PostByCategory = () => {
         const id = router.asPath.split("-").slice(-1);
         if (id && id.length) {
           setCategoryId(id[0]);
-          await getNews({cateId: id, page: 1});
+          await getNews({cateId: id[0], page: 1});
         }
       }
     })();
@@ -91,10 +92,17 @@ const PostByCategory = () => {
         <div>
           <div className="md:grid grid-cols-3 md:space-x-8 my-8">
             <div className="col-span-2">
-              {newsByCategory?.length > 0 &&
+              {newsByCategory?.length > 0 ?
                 newsByCategory.map((item, index) => (
                   <NewHomeItem key={index} item={item}/>
-                ))}
+                )) : <>
+                  <NewSekeleton/>
+                  <NewSekeleton/>
+                </>}
+              {loading && <>
+                <NewSekeleton/>
+                <NewSekeleton/>
+              </>}
               {showLoadMore && (
                 <div className="flex justify-center pb-4">
                   <div
