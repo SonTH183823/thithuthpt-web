@@ -83,12 +83,12 @@ export const menuUser = [
     icon: "fa-regular fa-pen-to-square",
     path: "/management/profile",
   },
-  {
-    id: 4,
-    title: "Nạp tiền vào tài khoản",
-    icon: "fa-duotone fa-money-check",
-    path: "/deposit",
-  },
+  // {
+  //   id: 4,
+  //   title: "Nạp tiền vào tài khoản",
+  //   icon: "fa-duotone fa-money-check",
+  //   path: "/deposit",
+  // },
   {
     id: 115,
     title: "Đăng xuất",
@@ -101,7 +101,6 @@ export const categoryTitleConfig = {
   1: "Mới nhất",
   2: "Nổi bật",
   3: "Nâng cao",
-  4: "Phòng trọ",
 };
 
 export const categoryConfig = [
