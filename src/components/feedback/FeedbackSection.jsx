@@ -2,12 +2,9 @@ import React, {useEffect, useState} from "react";
 import TitleSection from "../common/TitleSection";
 import FeedbackItem from "./FeedbackItem";
 import {feedbackAPI} from "apis/feedback";
-import Image from "next/image";
-import feedback_image from "@/assets/images/feedback/feedback.png";
 import ModalFeedback from "../modal/ModalFeedback";
-// import HorizontalList from "../common/HorizontalList";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation, Autoplay, Pagination} from "swiper";
+import {Navigation} from "swiper";
 import ModalRequireLogin from "../modal/ModalRequireLogin";
 import {useSelector} from "react-redux";
 import useWindowSize from "hooks/useWindowSize";
@@ -28,7 +25,7 @@ export default function FeedbackSection() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await feedbackAPI.getFeedbacks({active: 1});
+        const res = await feedbackAPI.getFeedbacks({active: 1, perPage: 5});
         if (res) {
           setFeedbacks(res.data);
         }
@@ -120,7 +117,7 @@ export default function FeedbackSection() {
           )}
         </div>
       </div>
-      <ModalFeedback id={"modal-feedback"}/>
+      <ModalFeedback id={"modal-feedback"} profile={profile}/>
       <ModalRequireLogin handleClick={handleLogin} id={"modal-require-login"}/>
     </div>
   );

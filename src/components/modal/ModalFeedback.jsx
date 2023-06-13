@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { feedbackAPI } from "apis/feedback";
 import { toast } from "react-toastify";
 
-const ModalFeedback = ({ id }) => {
+const ModalFeedback = ({ id, profile }) => {
   const [rating, setRating] = useState(0);
   const schema = yup.object({
     feedback: yup.string().required("Vui lòng nhập nhận xét"),
@@ -30,7 +30,9 @@ const ModalFeedback = ({ id }) => {
     try {
       const res = await feedbackAPI.createFeedback({
         star: rating,
-        feedback: values.feedback,
+        comment: values.feedback,
+        name: profile.name,
+        avatar: profile.avatar
       });
       const modal = document.getElementById("modal-feedback");
       if (modal) {
