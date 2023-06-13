@@ -137,10 +137,19 @@ export default function DetailUserInfoContainer({
           <DetailInfoItem icon={"fa-solid fa-award text-[16px]"}>
             <span className={"font-bold text-primary"}>Thành viên</span>
           </DetailInfoItem>
+          {user?.school && <DetailInfoItem icon={"fa-solid fa-school-flag"}>
+            <div>
+              Học tại
+              <span className="font-semibold text-justify">
+                  {" "}
+                {user.school}
+                </span>
+            </div>
+          </DetailInfoItem>}
           {user?.address && (
             <DetailInfoItem icon={"fa-solid fa-location-dot"}>
               <div>
-                Học tại
+                Sống tại
                 <span className="font-semibold text-justify">
                   {" "}
                   {user.address}
@@ -153,7 +162,7 @@ export default function DetailUserInfoContainer({
               Đã tham gia vào
               <span className="font-semibold">
                 {" "}
-                {generateDate(user.createdAt * 1000)}
+                {generateDate(user.createdAt)}
               </span>
             </span>
           </DetailInfoItem>

@@ -1,18 +1,22 @@
-import React from 'react';
-import {formatNumberView} from "../../utils/common";
+import React, {useEffect, useState} from 'react';
+import {checkPoint, formatNumberView} from "../../utils/common";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
+import {awardsConfig} from "../../configs/configs";
 
-function PointComponent() {
-  const userInfo = {
-    userTitle: 'Tân binh',
-    pointCredits: 234
-  }
+function PointComponent({userInfo}) {
+  const [awardPresent, setAwardPresent] = useState({})
+  useEffect(() => {
+    const index = checkPoint(awardsConfig, userInfo.pointCredits)
+    if (index > 0) {
+      setAwardPresent(awardsConfig[index - 1])
+    }
+  }, [])
   return (
     <div className={`justify-center flex items-center space-x-2`}>
       <div className={'flex items-center space-x-1 text-sm'}>
         <FontAwesomeIcon icon={faAward} className={'text-primary w-4'}/>
-        <span className={'text-primary font-bold'}>{userInfo.userTitle}</span>
+        <span className={'text-primary font-bold'}>{awardPresent.title}</span>
       </div>
       <div className={'h-[4px] w-[4px] rounded-full bg-gray-400'}></div>
       <div className={'flex items-center space-x-1 text-sm'}>

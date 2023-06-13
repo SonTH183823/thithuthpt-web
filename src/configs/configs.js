@@ -974,19 +974,19 @@ export const awardsConfig = [
     title: "Dự bị"
   },
   {
-    minimumLevel: 500,
+    minimumLevel: 100,
     title: "Đội 1"
   },
   {
-    minimumLevel: 1000,
+    minimumLevel: 200,
     title: "Lão tướng"
   },
   {
-    minimumLevel: 1500,
+    minimumLevel: 300,
     title: "Huấn luyện viên"
   },
   {
-    minimumLevel: 2000,
+    minimumLevel: 500,
     title: "Captain"
   }
 ]

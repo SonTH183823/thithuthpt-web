@@ -5,34 +5,21 @@ import Image from "next/image";
 // import {membersAPI} from "@apis";
 import awardIcon from "../../assets/images/award/badge_full.png"
 import {awardsConfig} from "../../configs/configs";
+import {checkPoint} from "../../utils/common";
 
-const Award = ({userInfo1}) => {
-  const userInfo = {
-    pointCredits: 234,
-    userTitle: 'Admin'
-  }
-  const [award, setAward] = useState([])
+const Award = ({userInfo}) => {
   const [nextAward, setNextAward] = useState({})
+  const [awardPresent, setAwardPresent] = useState({})
   const [indexAward, setIndexAward] = useState(-1)
   const [progressBar, setProgressBar] = useState(0)
-  const [pointTarget, setPointTarget] = useState(null)
   const [isShowLevel, setIsShowLevel] = useState(null)
 
-  function checkPoint(awards, point) {
-    for (let i = 0; i < awards.length; i++) {
-      if (point < awards[i].minimumLevel) {
-        return i
-      }
-    }
-    return awards.length - 1
-  }
 
   useEffect(() => {
     (async () => {
       try {
-        // const res = await membersAPI.getAward()
-        // setAward(res)
         const index = checkPoint(awardsConfig, userInfo.pointCredits)
+        setAwardPresent(awardsConfig[index - 1])
         setIndexAward(index)
         setNextAward(awardsConfig[index])
         if (index < awardsConfig.length - 1) {
@@ -52,9 +39,6 @@ const Award = ({userInfo1}) => {
       }
     })()
   }, [userInfo])
-  useEffect(() => {
-    setPointTarget(Math.floor((award[indexAward + 1])?.minimumLevel - (+Math.floor(userInfo.pointCredits))))
-  }, [nextAward])
 
   const getLeft = () => {
     if (progressBar >= 100) {
@@ -81,7 +65,7 @@ const Award = ({userInfo1}) => {
           <FontAwesomeIcon icon={faAward} className={'text-primary text-xl w-4'}/>
         </div>
         <div className={'flex-1'}>
-          <div className={'text-primary font-bold'}>{userInfo.userTitle}</div>
+          <div className={'text-primary font-bold'}>{awardPresent.title}</div>
           <div className={'flex items-center'}>
             {isShowLevel ? <span className={'text-info'}><span
                 className={'font-bold'}>{nextAward.minimumLevel - Math.floor(userInfo.pointCredits)} Points</span> để đạt cấp độ <span

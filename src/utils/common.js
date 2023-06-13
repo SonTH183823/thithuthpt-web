@@ -20,6 +20,15 @@ export const strToSlug = (str) => {
   return slugify(str, "-");
 };
 
+export function checkPoint(awards, point) {
+  for (let i = 0; i < awards.length; i++) {
+    if (point < awards[i].minimumLevel) {
+      return i
+    }
+  }
+  return awards.length - 1
+}
+
 export const generateSpecificAdress = (
   houseNumber,
   lane,

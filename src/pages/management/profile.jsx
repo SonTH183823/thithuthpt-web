@@ -27,6 +27,7 @@ const schema = yup.object({
 export default function MyProfile() {
   const profile = useSelector((state) => state.auth.profile);
   const [address, setAddress] = useState("");
+  const [school, setSchool] = useState("");
   const [name, setName] = useState("");
   const dispatch = useDispatch();
   const {
@@ -38,6 +39,7 @@ export default function MyProfile() {
   useEffect(() => {
     if (profile.name) setName(profile.name)
     if (profile.address) setAddress(profile.address)
+    if (profile.school) setSchool(profile.school)
   }, [profile])
 
   const handleUpdate = async () => {
@@ -45,6 +47,9 @@ export default function MyProfile() {
       const data = {...profile, name};
       if (address) {
         data.address = address;
+      }
+      if (school) {
+        data.school = school;
       }
       const res = await userAPI.updateAccount({
         data: {...data},
@@ -117,13 +122,28 @@ export default function MyProfile() {
             </FormGroup>
 
             <FormGroup>
+              <div className="font-bold w-[120px]">Địa chỉ</div>
+              <input
+                type={"text"}
+                className={
+                  "px-2 py-3 rounded-lg border border-gray-200 flex-1 outline-none focus:border-primary"
+                }
+                placeholder={
+                  "VD: 40, ngõ 562 Trần Cung, Cổ Nhuế 1, Bắc Từ Liêm, Hà Nội."
+                }
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </FormGroup>
+
+            <FormGroup>
               <div className="font-bold w-[120px]">Trường THPT</div>
               <input
                 type={"text"}
                 className={"px-2 py-3 rounded-lg border border-gray-200 flex-1 outline-none focus:border-primary"}
                 placeholder={"VD: THPT Thường Tín"}
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                value={school}
+                onChange={(e) => setSchool(e.target.value)}
               />
             </FormGroup>
 
