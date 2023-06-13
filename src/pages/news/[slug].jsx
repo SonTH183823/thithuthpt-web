@@ -1,8 +1,7 @@
 import {NewAPI} from "apis/new";
-import Image from "next/image";
 import React, {Fragment, useEffect, useState} from "react";
 import LatestNew from "@/components/blog/LatestNew";
-import {formatDate} from "utils/moment";
+import {formatDateTime} from "utils/moment";
 import {strToSlug} from "../../utils/common";
 import {useRouter} from "next/router";
 
@@ -22,7 +21,8 @@ export async function getServerSideProps({params}) {
 }
 
 const DetailNew = ({newData}) => {
-  const [latestNews, setLatestNews] = useState([1, 2, 3, 4, 5]);
+  console.log(newData)
+  const [latestNews, setLatestNews] = useState([]);
   const router = useRouter()
   useEffect(() => {
     (async () => {
@@ -47,16 +47,18 @@ const DetailNew = ({newData}) => {
           <div className="md:grid grid-cols-12 md:space-x-5">
             <div className="col-span-8">
               <h1 className="my-2 lg:text-4xl text-2xl">{newData.title}</h1>
-              <div className="flex space-x-1">
+              <div className="flex space-x-1 items-center">
                 <i className="fa-regular fa-clock"></i>
-                <span className="text-sm">{formatDate(newData.createdAt)}</span>
+                <span className="text-sm">{formatDateTime(newData.createdAt)}</span>
+                <div className={'h-2 w-2 rounded-full bg-gray-400'}></div>
+                <span className="text-sm">{newData.createdBy}</span>
               </div>
               <div
                 dangerouslySetInnerHTML={{__html: newData.content}}
                 className={"my-4"}
               ></div>
-              <div className={'text-center font-semibold my-4'}>- HẾT -</div>
-              <div className={'flex space-x-2 text-sm items-center'}>
+              <div className={'flex space-x-3 text-sm items-center'}>
+                <div className={'font-bold text-base'}>Danh mục</div>
                 {newData.category.map((i) => (
                   <div className={'px-3 py-2 bg-primary rounded-md text-white cursor-pointer hover:opacity-80'}
                        onClick={() => handleClickCategory(i)}>{i.name}</div>))}
