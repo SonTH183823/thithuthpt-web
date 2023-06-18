@@ -21,14 +21,13 @@ import eventEmitter from "../../utils/eventEmitter";
 
 const FilterPage = () => {
   const router = useRouter();
-  const [exams, setExams] = useState([1, 2, 3, 4, 5, 6]);
+  const [exams, setExams] = useState([]);
   const [total, setTotal] = useState(null);
   const [showButtonLoadMore, setShowButtonLoadMore] = useState(null);
-  const [limit, setLimit] = useState(6);
-  const [offset, setOffset] = useState(0);
+  const [perPage, setPerPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
-
   const [maxNumQuestion, setMaxNumQuestion] = useState(1);
   const [timeToDo, setTimeToDo] = useState(0);
   const [subject, setSubject] = useState(null);
@@ -37,21 +36,22 @@ const FilterPage = () => {
   const [sort, setSort] = useState(xapSepConfig[0]);
 
 
-  const getExams = async (offsetProp) => {
+  const getExams = async (p) => {
     try {
       setLoading(true);
       const res = await ExamAPI.filterExam({
         ...router.query,
-        offset: offsetProp,
-        limit,
+        page: p,
+        perPage,
         active: 1,
       });
       if (res) {
-        if (offsetProp === 0) {
+        if (p === 1) {
+          setPage(1)
           setTotal(res.total);
-          setExams([...res.exams]);
+          setExams([...res.data]);
         } else {
-          setExams((exams) => [...exams, ...res.exams]);
+          setExams((exams) => [...exams, ...res.data]);
         }
       } else {
         setExams([]);
@@ -66,7 +66,7 @@ const FilterPage = () => {
 
   useEffect(() => {
     (async () => {
-      await getExams(0);
+      await getExams(1);
     })();
     if (Object.keys(router.query).length) {
       if (router.query?.subject) setSubject(+router.query.subject)
@@ -102,13 +102,15 @@ const FilterPage = () => {
     }
   }, [exams.length]);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     setLoadMore(true);
-    getExams(offset + limit);
-    setOffset(offset + limit);
+    const p = page
+    setPage(p + 1);
+    await getExams(p + 1);
     setLoadMore(false);
   };
   const deleteFilter = () => {
+    setPage(1)
     setSubject(null)
     setLevel(null)
     setMaxNumQuestion(1)
@@ -269,7 +271,7 @@ const FilterPage = () => {
             </div>
             <div
               className={'shadow-xl mx-3 flex justify-between bg-white px-3 rounded-md items-center text-sm md:text-base'}>
-              <div>Tìm thấy <span className={'font-bold'}>69</span> kết quả</div>
+              <div>Tìm thấy <span className={'font-bold'}>{total}</span> kết quả</div>
               <div className={'flex items-center space-x-2'}>
                 <div className={'font-semibold'}>Sắp xếp</div>
                 <Select
@@ -302,11 +304,11 @@ const FilterPage = () => {
                     </Fragment>
                   ) : (
                     <Fragment>
-                      {exams.map((post) => (
-                        <HomeExamItem key={post.id} item={post} isSearch={true}/>
+                      {exams.map((item) => (
+                        <HomeExamItem key={item.id} item={item} isSearch={true}/>
                       ))}
 
-                      {!loadMore && (
+                      {loadMore && (
                         <Fragment>
                           <PostSekeleton isSearch={true}/>
                           <PostSekeleton isSearch={true}/>

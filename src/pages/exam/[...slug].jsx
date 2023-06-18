@@ -8,13 +8,23 @@ import BXH from "@/components/exam-details/BXH";
 import TableTypeListQues from "@/components/exam-details/TableTypeListQues";
 import RelatedExam from "@/components/exam-details/RelatedExam";
 import RatingComponents from "@/components/rating/RatingComponents";
+import {ExamAPI} from "../../apis/exam";
+export async function getServerSideProps({ params }) {
+  let exam = {};
+  try {
+    const id = params.slug[0].split("-").slice(-1);
+    exam = await ExamAPI.getExam(id);
+  } catch (e) {
+    console.log(e);
+  }
 
-export default function ExamDetail({
-                                     exam = {
-                                       id: 1,
-                                       title: 'Bai thi mau'
-                                     }
-                                   }) {
+  return {
+    props: {
+      exam,
+    },
+  };
+}
+export default function ExamDetail({exam}) {
   const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(null);
@@ -51,20 +61,20 @@ export default function ExamDetail({
   // }, []);
   return (
     <Fragment>
-      {exam.id ? (
+      {exam._id ? (
         <div className={"bg-base-200"}>
           <div className="container mx-auto py-2 sm:py-4 padding-mobile">
             <div className="lg:grid grid-cols-3 lg:space-x-4">
               <div className="col-span-2 relative">
                 <div className={"bg-base-100 rounded-xl "}>
-                  <DetailExam isDoExam={true}/>
+                  <DetailExam isDoExam={true} item={exam}/>
                 </div>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <TableTypeListQues/>
+                  <TableTypeListQues listTypeQuestion={exam.listTypeQuestion} total={exam.questionIds.length}/>
                 </div>
                 <RatingComponents/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={exam.id}/>
+                  <InteractiveContainer postId={exam._id}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col">

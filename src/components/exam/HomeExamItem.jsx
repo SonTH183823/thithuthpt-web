@@ -6,6 +6,7 @@ import {categoryTitleConfig} from "../../configs/configs";
 import math from "../../assets/images/test/math.jpg"
 import Image from "next/image";
 import ExamInfo from "./ExamInfo"
+import {genURLImage, strToSlug} from "../../utils/common";
 
 function  HomeExamItem({item, user = {}, isSearch = false}) {
     // const favoritePosts = useSelector((state) => state.post.favoritePosts);
@@ -18,7 +19,7 @@ function  HomeExamItem({item, user = {}, isSearch = false}) {
 
     const handleFavorite = async (e) => {
         e.stopPropagation();
-        if (profile.id) {
+        if (profile._id) {
             setIsFavorite(!isFavorite)
             //     const res = await PostAPI.toggleFavorite({
             //         userId: profile.id,
@@ -64,8 +65,7 @@ function  HomeExamItem({item, user = {}, isSearch = false}) {
         }
     };
     const handleClick = () => {
-        // router.push(`/post/${strToSlug(item.title)}-${item.id}`);
-        router.push(`/exam/aaa`);
+        router.push(`/exam/${strToSlug(item.title)}-${item._id}`);
     };
     return (
         <div
@@ -74,12 +74,12 @@ function  HomeExamItem({item, user = {}, isSearch = false}) {
         >
             <div className="relative w-full h-[300px]">
                 <Image
-                    // src={item.images[0]}
-                    src={math}
+                    src={genURLImage(item.thumbnail)}
                     alt="thumbnail image"
                     placeholder={"blur"}
-                    // blurDataURL={item.images[0]}
-                    blurDataURL={"https://ngocmeow.github.io/ava1.jpg"}
+                    width={500}
+                    height={300}
+                    blurDataURL={genURLImage(item.thumbnail)}
                     className={"rounded-tl-xl rounded-tr-xl !h-full object-cover"}
                 />
                 <ExamTag

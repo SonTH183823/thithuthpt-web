@@ -20,13 +20,8 @@ import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import ButtonSecondary from "@/components/button/ButtonSecondary";
 
-function DetailExam({i, isDoExam = false, isShowRs = true}) {
+function DetailExam({i, isDoExam = false, isShowRs = true, item}) {
   const router = useRouter();
-  const item = {
-    showTitle: true,
-    title: 'ETS TOEIC 2022 Test 1',
-    subject: 9
-  }
   const profile = useSelector((state) => state.auth.profile);
   const [isFavorite, setIsFavorite] = useState(null);
   const handleFavorite = async (e) => {
@@ -156,24 +151,24 @@ function DetailExam({i, isDoExam = false, isShowRs = true}) {
       <div className={'bg-base-200 rounded-xl p-3'}>
         <div className={'flex flex-row justify-between space-x-6 mb-3'}>
           <CharacteristicsItem icon={star}>
-            5.0
+            {item.rate}
           </CharacteristicsItem>
           <CharacteristicsItem icon={time}>
-            60 phút
+            {item.time} phút
           </CharacteristicsItem>
           <CharacteristicsItem icon={question}>
-            50 câu
+            {item.questionIds.length} câu
           </CharacteristicsItem>
         </div>
         <div className={'flex justify-between space-x-6'}>
           <CharacteristicsItem icon={list_check}>
-            {kFormatter(1234)} lượt thi
+            {kFormatter(item.numberTest)} lượt thi
           </CharacteristicsItem>
           <CharacteristicsItem icon={list_view}>
-            {kFormatter(12345)} lượt xem
+            {kFormatter(item.numberView)} lượt xem
           </CharacteristicsItem>
           <CharacteristicsItem icon={date}>
-            {formatDate(new Date())}
+            {formatDate(item.createdAt)}
           </CharacteristicsItem>
         </div>
 
@@ -191,7 +186,7 @@ function DetailExam({i, isDoExam = false, isShowRs = true}) {
         />}
       </div> : null}
 
-      <ModalReportPost id="modal-report-post" objectId={item.id}/>
+      <ModalReportPost id="modal-report-post" objectId={item._id}/>
       <ModalShare id="modal-share-post" title={item.title}/>
       <ReactTooltip id='my-tooltip'/>
       <ModalConfirmStartExam id={"modal-confirm-start-exam-id"} handleClick={() => enterExam()}/>

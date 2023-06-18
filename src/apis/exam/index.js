@@ -22,14 +22,11 @@ export const ExamAPI = {
   },
 
   async filterExam(data) {
-    return await api.post(
-      `exam/filterExam?${queryString.stringify({ ...data })}`
+    return await api.get(
+      `exam?${queryString.stringify({ ...data })}`
     );
   },
 
-  async approveExam(postId, data) {
-    return await api.post(`exam/approveExam/${postId}}`, { ...data });
-  },
 
   async toggleFavorite(data) {
     return await api.post(`favorite`, { ...data });
@@ -38,7 +35,6 @@ export const ExamAPI = {
   async getFavoriteExams() {
     return await api.get(`favorite`);
   },
-
 
   async getRelatedExam({ id, data }) {
     return await api.get(`exam/related/${id}?${queryString.stringify(data)}`);
