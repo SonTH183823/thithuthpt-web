@@ -9,7 +9,8 @@ import TableTypeListQues from "@/components/exam-details/TableTypeListQues";
 import RelatedExam from "@/components/exam-details/RelatedExam";
 import RatingComponents from "@/components/rating/RatingComponents";
 import {ExamAPI} from "../../apis/exam";
-export async function getServerSideProps({ params }) {
+
+export async function getServerSideProps({params}) {
   let exam = {};
   try {
     const id = params.slug[0].split("-").slice(-1);
@@ -24,10 +25,12 @@ export async function getServerSideProps({ params }) {
     },
   };
 }
+
 export default function ExamDetail({exam}) {
   const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(null);
+  const [relatedExam, setRelatedExam] = useState([]);
   // const favoritePosts = useSelector((state) => state.post.favoritePosts);
   const favoritePosts = []
   const dispatch = useDispatch();
@@ -41,24 +44,26 @@ export default function ExamDetail({exam}) {
   //     }
   // }, [favoritePosts]);
 
-  // useEffect(() => {
-  //     (async () => {
-  //         try {
-  //             if (post.id) {
-  //                 const { province, district, ward, category, tradingForm } = post;
-  //                 const res = await PostAPI.getRelatedPost({
-  //                     id: post.id,
-  //                     data: { province, district, category, tradingForm },
-  //                 });
-  //                 if (res) {
-  //                     setRelatedPosts(res.relatedPosts);
-  //                 }
-  //             }
-  //         } catch (e) {
-  //             console.log(e);
-  //         }
-  //     })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        if (exam._id) {
+          const {subject} = exam; //add filter in here
+          const res = await ExamAPI.getRelatedExam({
+            id: exam._id,
+            data: {subject}
+          });
+          if (res) {
+            const ftdt = res.data.filter(item => item._id !== exam._id)
+            setRelatedExam(ftdt);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
+
   return (
     <Fragment>
       {exam._id ? (
@@ -82,7 +87,7 @@ export default function ExamDetail({exam}) {
                   <BXH idExam={12}/>
                 </div>
                 <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
-                  <RelatedExam idExam={12}/>
+                  <RelatedExam relatedExam={relatedExam}/>
                 </div>
               </div>
             </div>
