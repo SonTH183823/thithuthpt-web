@@ -13,11 +13,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {getToken, removeToken} from "../utils/auth";
 import {userAPI} from "../apis/user";
 import {authUpdateProfile} from "../store/auth/auth-slice";
-import {PostAPI} from "../apis/post";
 import {updateFavoritePosts} from "../store/post/post-slice";
 import "react-toastify/dist/ReactToastify.css";
 import {authAPI} from "../apis/auth";
 import { useRouter} from "next/router";
+import {ExamAPI} from "../apis/exam/index";
+import {updateFavoriteExams} from "../store/exam/exam-slice";
 function App({Component, pageProps}) {
   const router = useRouter();
   const Layout = Component.Layout ?? MainLayout;
@@ -32,9 +33,9 @@ function App({Component, pageProps}) {
           if (profileData) {
             dispatch(authUpdateProfile({...profileData}));
           }
-          const res = await PostAPI.getFavoritePosts();
+          const res = await ExamAPI.getFavoriteExams();
           if (res) {
-            dispatch(updateFavoritePosts(res.favoritePosts));
+            dispatch(updateFavoriteExams(res.data));
           }
         } catch (e) {
           console.log(e);

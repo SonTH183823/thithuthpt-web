@@ -29,7 +29,7 @@ export default function Navbar() {
     label.click();
     router.push(`/sign-in`);
   };
-  const handlePostNew = () => {
+  const handleFavorite = () => {
     if (profile?._id) {
       router.push('/exam/favorites')
     } else {
@@ -156,9 +156,9 @@ export default function Navbar() {
               <Fragment>
                 <li
                   className="h-[39px] w-[39px] flex items-center justify-center rounded-full bg-backgroundGray font-bold cursor-pointer"
-                  onClick={handlePostNew}>
+                  onClick={handleFavorite}>
                   <i
-                    className={`fa-sharp fa-solid fa-heart text-lg ${router.pathname === "/exam/favorites" ? 'text-primary' : 'text-colorIconMenu'}`}></i>
+                    className={`fa-sharp fa-solid fa-heart text-lg ${router.pathname === "/exam/favorites" ? 'text-[#f9595f]' : 'text-colorIconMenu'}`}></i>
                 </li>
               </Fragment>
 
@@ -179,7 +179,7 @@ export default function Navbar() {
               {/*{profile?.id ? (*/}
               {/*    <li*/}
               {/*        className="nav-item font-bold cursor-pointer flex items-center space-x-2 bg-primary px-3 py-1 rounded-full"*/}
-              {/*        onClick={handlePostNew}*/}
+              {/*        onClick={handleFavorite}*/}
               {/*    >*/}
               {/*        <i className="fa-regular fa-heart text-lg text-white"></i>*/}
               {/*        <span className="text-white">Đề thi yêu thích</span>*/}

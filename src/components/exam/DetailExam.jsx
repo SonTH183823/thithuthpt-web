@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleExamItem from "@/components/exam/TitleExamItem";
 import {CharacteristicsItem} from "@/components/characteristics/CharacteristicsItem";
 import star from "@/assets/images/svg/star.svg";
@@ -14,56 +14,69 @@ import ModalReportPost from "@/components/modal/ModalReportPost";
 import ModalShare from "@/components/modal/ModalShare";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip as ReactTooltip} from "react-tooltip";
-import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
 import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
 import {useRouter} from "next/router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ButtonSecondary from "@/components/button/ButtonSecondary";
+import {ExamAPI} from "../../apis/exam";
+import {updateFavoriteExams} from "../../store/exam/exam-slice";
+import {toast} from "react-toastify";
 
 function DetailExam({isDoExam = false, isShowRs = true, item}) {
   const router = useRouter();
   const profile = useSelector((state) => state.auth.profile);
   const [isFavorite, setIsFavorite] = useState(null);
+  const favoriteExams = useSelector((state) => state.exam.favoriteExams);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (favoriteExams) {
+      const exam = favoriteExams.find((i) => i.examId._id === item._id);
+      if (exam) {
+        setIsFavorite(true);
+      }
+    }
+  }, []);
   const handleFavorite = async (e) => {
     e.stopPropagation();
     if (profile?._id) {
       setIsFavorite(!isFavorite)
-      //     const res = await PostAPI.toggleFavorite({
-      //         userId: profile.id,
-      //         postId: item.id,
-      //     });
-      //     setIsFavorite(!isFavorite);
-      //     if (isFavorite) {
-      //         const array = favoritePosts.filter((i) => i.post.id !== item.id);
-      //         dispatch(updateFavoritePosts(array));
-      //     } else {
-      //         let temp = [...favoritePosts];
-      //         temp.push({ post: item, userFavorite: profile });
-      //         dispatch(updateFavoritePosts(temp));
-      //     }
-      //     if (res.ok) {
-      //         toast.success("Cập nhật thông tin thành công!", {
-      //             position: "bottom-right",
-      //             autoClose: 5000,
-      //             hideProgressBar: false,
-      //             closeOnClick: true,
-      //             pauseOnHover: true,
-      //             draggable: true,
-      //             progress: undefined,
-      //             theme: "colored",
-      //         });
-      //     } else {
-      //         toast.error("Đã có lỗi xảy ra!", {
-      //             position: "bottom-right",
-      //             autoClose: 5000,
-      //             hideProgressBar: false,
-      //             closeOnClick: true,
-      //             pauseOnHover: true,
-      //             draggable: true,
-      //             progress: undefined,
-      //             theme: "colored",
-      //         });
-      //     }
+      const res = await ExamAPI.toggleFavorite({
+        userId: profile._id,
+        examId: item._id,
+      });
+      setIsFavorite(!isFavorite);
+      if (isFavorite) {
+        const array = favoriteExams.filter((i) => i.examId._id !== item._id);
+        dispatch(updateFavoriteExams(array));
+      } else {
+        let temp = [...favoriteExams];
+        temp.push({exam: item, userId: profile._id});
+        dispatch(updateFavoriteExams(temp));
+      }
+      if (res.ok) {
+        toast.success("Cập nhật thông tin thành công!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        toast.error("Đã có lỗi xảy ra!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     } else {
       const modal = document.getElementById("modal-require-login");
       if (modal) {

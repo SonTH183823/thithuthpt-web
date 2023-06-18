@@ -24,7 +24,7 @@ const FilterPage = () => {
   const [exams, setExams] = useState([]);
   const [total, setTotal] = useState(null);
   const [showButtonLoadMore, setShowButtonLoadMore] = useState(null);
-  const [perPage, setPerPage] = useState(2);
+  const [perPage, setPerPage] = useState(6);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
@@ -305,7 +305,7 @@ const FilterPage = () => {
                   ) : (
                     <Fragment>
                       {exams.map((item) => (
-                        <HomeExamItem key={item.id} item={item} isSearch={true}/>
+                        <HomeExamItem key={item._id} item={item} isSearch={true}/>
                       ))}
 
                       {loadMore && (

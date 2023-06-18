@@ -1,8 +1,9 @@
 import api from "apis/api";
 import queryString from "query-string";
+
 export const ExamAPI = {
   async createExam(data) {
-    return await api.post("/exam", { ...data });
+    return await api.post("/exam", {...data});
   },
 
   async getAllExam(query) {
@@ -23,23 +24,23 @@ export const ExamAPI = {
 
   async filterExam(data) {
     return await api.get(
-      `exam?${queryString.stringify({ ...data })}`
+      `exam?${queryString.stringify({...data})}`
     );
   },
 
 
   async toggleFavorite(data) {
-    return await api.post(`favorite`, { ...data });
+    return await api.post(`/favoriteExam`, {...data});
   },
 
   async getFavoriteExams() {
-    return await api.get(`favorite`);
+    return await api.get(`/favoriteExam`);
   },
 
-  async getRelatedExam({ id, data }) {
+  async getRelatedExam({id, data}) {
     return await api.get(`exam/related/${id}?${queryString.stringify(data)}`);
   },
-  async getListQuestionExam({ id }) {
+  async getListQuestionExam({id}) {
     return await api.get(`exam/question/${id}`);
   },
 };
