@@ -62,7 +62,7 @@ export default function ExamDetail({exam}) {
         console.log(e);
       }
     })();
-  }, []);
+  }, [router.query]);
 
   return (
     <Fragment>

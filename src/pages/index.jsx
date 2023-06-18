@@ -13,14 +13,14 @@ export default function Home() {
                 <PrimaryBanner/>
                 <FeatureSection />
                 <div className="container">
-                    <HomeExamList title={"Những đề thi nổi bật"} category={1}/>
-                    <HomeExamList title={"MÔN TOÁN"} category={2}/>
-                    <HomeExamList title={"MÔN LÝ"} category={3}/>
-                    <HomeExamList title={"HÓA HỌC"} category={4}/>
+                    {/*<HomeExamList title={"Những đề thi nổi bật"} category={1}/>*/}
+                    {/*<HomeExamList title={"MÔN TOÁN"} category={2}/>*/}
+                    {/*<HomeExamList title={"MÔN LÝ"} category={3}/>*/}
+                    {/*<HomeExamList title={"HÓA HỌC"} category={4}/>*/}
                 </div>
                 <div className="bg-white">
                     <div className={'container'}>
-                        <HomeExamList title={"TÀI LIỆU ÔN TẬP"} category={4}/>
+                        {/*<HomeExamList title={"TÀI LIỆU ÔN TẬP"} category={4}/>*/}
                     </div>
                 </div>
                 <NewHomeSection/>

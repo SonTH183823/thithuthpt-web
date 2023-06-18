@@ -39,4 +39,7 @@ export const ExamAPI = {
   async getRelatedExam({ id, data }) {
     return await api.get(`exam/related/${id}?${queryString.stringify(data)}`);
   },
+  async getListQuestionExam({ id }) {
+    return await api.get(`exam/question/${id}`);
+  },
 };

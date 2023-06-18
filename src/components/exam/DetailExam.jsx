@@ -5,7 +5,7 @@ import star from "@/assets/images/svg/star.svg";
 import time from "@/assets/images/svg/time.svg";
 import question from "@/assets/images/svg/question-number.svg";
 import list_check from "@/assets/images/svg/list-check.svg";
-import {kFormatter} from "../../utils/common";
+import {kFormatter, strToSlug} from "../../utils/common";
 import list_view from "@/assets/images/svg/list-view.svg";
 import date from "@/assets/images/svg/calendar.svg";
 import {formatDate} from "../../utils/moment";
@@ -20,7 +20,7 @@ import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import ButtonSecondary from "@/components/button/ButtonSecondary";
 
-function DetailExam({i, isDoExam = false, isShowRs = true, item}) {
+function DetailExam({isDoExam = false, isShowRs = true, item}) {
   const router = useRouter();
   const profile = useSelector((state) => state.auth.profile);
   const [isFavorite, setIsFavorite] = useState(null);
@@ -106,9 +106,9 @@ function DetailExam({i, isDoExam = false, isShowRs = true, item}) {
   };
   const enterExam = () => {
     if (item.subject === 9) {
-      router.replace('/toeic/do-exam/a');
+      router.replace(`/toeic/do-exam/${strToSlug(item.title)}-${item._id}`);
     } else {
-      router.replace('/do-exam/a');
+      router.replace(`/do-exam/${strToSlug(item.title)}-${item._id}`);
     }
   }
   return (
