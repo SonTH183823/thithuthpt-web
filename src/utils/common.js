@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import {formatDate} from "./moment";
-import {domainUpload} from "../configs/configs";
+import {domainUpload, levelConfig, subjectArrConfig} from "../configs/configs";
+import moment from "moment";
 
 export const checkPhone = (phone) => {
   return /(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(phone);
@@ -29,19 +30,6 @@ export function checkPoint(awards, point) {
   return awards.length - 1
 }
 
-export const generateSpecificAdress = (
-  houseNumber,
-  lane,
-  street,
-  ward,
-  district,
-  province
-) => {
-  return `${houseNumber ? houseNumber + ", " : ""}${lane ? lane + ", " : ""}${
-    street ? street + ", " : ""
-  }${ward}, ${district}, ${province}.`;
-};
-
 export const genURLImage = (image) => {
   if (image) {
     if (image.includes('blob:')) {
@@ -55,6 +43,30 @@ export const genURLImage = (image) => {
     }
   }
   return ''
+}
+
+export const genTagExam = (item) => {
+  const date = new Date()
+  let data = {}
+  if (item?.outstanding) {
+    data = {
+      label: 'Nổi bật',
+      value: 4
+    }
+    return data
+  } else if (date.getTime() - (item.createdAt * 1000) <= 259200000) {
+    data = {
+      label: 'Mới nhất',
+      value: 2
+    }
+    return data
+  } else {
+    data = {
+      label: subjectArrConfig[item.subject - 1].label + "  - " + levelConfig[item.level - 1].label,
+      value: item.level
+    }
+    return data
+  }
 }
 
 export const generateDate = (date) => {

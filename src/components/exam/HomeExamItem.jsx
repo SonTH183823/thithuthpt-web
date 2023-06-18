@@ -9,6 +9,7 @@ import {genURLImage, strToSlug} from "../../utils/common";
 import {toast} from "react-toastify";
 import {updateFavoriteExams} from "../../store/exam/exam-slice";
 import {ExamAPI} from "../../apis/exam";
+import moment from "moment/moment";
 
 function HomeExamItem({item, isSearch = false}) {
   const favoriteExams = useSelector((state) => state.exam.favoriteExams);
@@ -92,10 +93,7 @@ function HomeExamItem({item, isSearch = false}) {
           blurDataURL={genURLImage(item.thumbnail)}
           className={"rounded-tl-xl rounded-tr-xl !h-full object-cover"}
         />
-        <ExamTag
-          tag={categoryTitleConfig[item.category || 1]}
-          category={item.category}
-        />
+        <ExamTag item={item}/>
         {showHeart && (
           <div
             className="cursor-pointer absolute top-2 right-1 p-2 rounded-full bg-slate-700 bg-opacity-50 h-[36px] w-[36px] flex items-center justify-center"
