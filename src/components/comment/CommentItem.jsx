@@ -23,7 +23,7 @@ import dislike from "@/assets/images/svg/dislike.svg"
 import useWindowSize from "../../hooks/useWindowSize";
 
 export default function CommentItem({
-                                      comments,
+                                      comment,
                                       profile,
                                       setComment,
                                       setComments,
@@ -33,11 +33,6 @@ export default function CommentItem({
                                       handlePostCommentReply,
                                       totalReplyProp,
                                     }) {
-  const comment = {
-    isEdit: true,
-    content: 'Đay là bình luận mẫu Đay là bình luận mẫu Đay là bình luận mẫu Đay là bình luận mẫu',
-    firstChild: [1]
-  }
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentEditInput, setCommentEditInput] = useState();
   const [newComment, setNewComment] = useState("");
@@ -227,7 +222,7 @@ export default function CommentItem({
         <Avatar
           sizeAvatar="w-12"
           avatar={
-            comment.userId === profile?.id
+            comment.userId === profile?._id
               ? profile.avatar
               : comment?.userComment?.avatar
           }
@@ -240,12 +235,12 @@ export default function CommentItem({
           <div className={"flex items-center space-x-2 justify-between"}>
             <div className="flex items-center space-x-1">
               <span className={"font-bold text-primary"}>
-                {comment.userId === profile?.id
-                  ? profile.displayName
+                {comment.userId === profile?._id
+                  ? profile.name
                   : comment?.userComment?.displayName}
               </span>
               <span className={"text-xs text-gray-400"}>
-                {moment(comment.createdAt).fromNow()}
+                {moment(comment.createdAt * 1000).fromNow()}
               </span>
             </div>
 
@@ -408,13 +403,13 @@ export default function CommentItem({
         <div className={"ml-14 flex items-center space-x-3 text-sm"}>
           <div className={'ml-3 hover:text-primary cursor-pointer flex items-center'}>
             <Image src={likegray} alt={''} className={'w-6 h-6'}/>
-            {width > 600 ? 'Hữu ích' : ''} (69)
+            {width > 600 ? 'Hữu ích' : ''} ({comment.like})
           </div>
           <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
           <div className={'ml-3 hover:text-[#E44D04] cursor-pointer flex items-center'}>
             {/*<Image src={dislike} alt={''} className={'w-6 h-6'}/>*/}
             <Image src={likegray} alt={''} className={'w-6 h-6 rotate-180'}/>
-            {width > 600 ? 'Không hữu ích' : ''} (12)
+            {width > 600 ? 'Không hữu ích' : ''} ({comment.dislike})
           </div>
           <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
           <div className={"cursor-pointer"} onClick={toggleShowCommentInput}>

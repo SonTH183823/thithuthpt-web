@@ -10,17 +10,12 @@ import {convertBase64} from "utils/uploadImage";
 import CommentItem from "../comment/CommentItem";
 import Link from "next/link";
 import {toast} from "react-toastify";
+import {commentAPI} from "../../apis/comment";
 
-const interactives = [
-  {id: 1, title: "Thích", icon: like},
-  {id: 2, title: "Bình luận", icon: commentImg},
-  {id: 3, title: "Chia sẻ", icon: share},
-];
-
-export default function InteractiveContainer({examId}) {
+export default function InteractiveContainer({postId}) {
   const profile = useSelector((state) => state.auth.profile);
 
-  const [limit, setLimit] = useState(5);
+  const [perPage, setLimit] = useState(5);
   const [totalComment, setTotalComment] = useState(null);
   const [page, setPage] = useState(1);
 
@@ -35,29 +30,29 @@ export default function InteractiveContainer({examId}) {
 
   const [loading, setLoading] = useState(false);
   const handlePostComment = async () => {
-    // try {
-    //   setLoading(true);
-    //   const res = await commentAPI.postComment({
-    //     examId,
-    //     userId: profile.id,
-    //     content: comment,
-    //     base64Image,
-    //     base64Video,
-    //   });
-    //   setLoading(false);
-    //   if (res) {
-    //     setComment("");
-    //     setImageURL("");
-    //     setVideoURL("");
-    //     setBase64Image(null);
-    //     setBase64Video(null);
-    //     setTotalComment(totalComment + 1);
-    //     setComments([{ ...res, isEdit: true, isDelete: true }, ...comments]);
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    //   setLoading(false);
-    // }
+    try {
+      setLoading(true);
+      const res = await commentAPI.postComment({
+        postId,
+        userId: profile._id,
+        content: comment,
+        base64Image,
+        base64Video,
+      });
+      setLoading(false);
+      if (res) {
+        setComment("");
+        setImageURL("");
+        setVideoURL("");
+        setBase64Image(null);
+        setBase64Video(null);
+        setTotalComment(totalComment + 1);
+        setComments([{ ...res, isEdit: true, isDelete: true }, ...comments]);
+      }
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   };
 
   const handlePostCommentReply = async (
@@ -95,7 +90,7 @@ export default function InteractiveContainer({examId}) {
       //   videoBase64,
       //   imageBase64,
       //   owner,
-      //   examId,
+      //   postId,
       // });
     } catch (e) {
       console.log(e);
@@ -166,19 +161,19 @@ export default function InteractiveContainer({examId}) {
   };
 
   const handleShowMoreComment = async () => {
-    // try {
-    //   const res = await commentAPI.getComments({
-    //     examId,
-    //     offset: page * limit,
-    //     limit,
-    //   });
-    //   if (res.comments) {
-    //     setComments([...comments, ...res.comments]);
-    //     setPage(page + 1);
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      const res = await commentAPI.getComments({
+        postId,
+        page,
+        perPage,
+      });
+      if (res.comments) {
+        setComments([...comments, ...res.comments]);
+        setPage(page + 1);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleDeleteComment = (cmt) => {
@@ -203,23 +198,23 @@ export default function InteractiveContainer({examId}) {
     setComments([...temps]);
   };
   useEffect(() => {
-    // (async () => {
-    //   try {
-    //     const res = await commentAPI.getComments({
-    //       examId,
-    //       offset: 0,
-    //       limit,
-    //     });
-    //     if (res.comments) {
-    //       setPage(1);
-    //       setComments(res.comments);
-    //       setTotalComment(res.total);
-    //     }
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // })();
-  }, [examId]);
+    (async () => {
+      try {
+        const res = await commentAPI.getComments({
+          postId,
+          page,
+          perPage,
+        });
+        if (res.data) {
+          setPage(2);
+          setComments(res.data);
+          setTotalComment(res.total);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, [postId]);
 
   const handleChangeInputUploadImage = async (e) => {
     if (e.target && e.target.files && e.target.files.length) {
@@ -266,7 +261,7 @@ export default function InteractiveContainer({examId}) {
       <h3>Bình luận</h3>
       {profile._id ? (
         <CommentBox
-          examId={examId}
+          postId={postId}
           profile={profile}
           comment={comment}
           setComment={setComment}
@@ -287,22 +282,25 @@ export default function InteractiveContainer({examId}) {
           </div>
         </Link>
       )}
+
       <div>
-        {comments?.map((comment) => (
-          <CommentItem
-            comment={comment}
-            key={comment.id}
-            profile={profile}
-            handleDeleteComment={handleDeleteComment}
-            handlePostCommentReply={handlePostCommentReply}
-            handlePostComment={handlePostComment}
-            handleShowMoreReplyComment={handleShowMoreReplyComment}
-            handleUpdateComment={handleUpdateComment}
-            setComments={setComments}
-            setComment={setComment}
-            totalReplyProp={comment.totalReply || 3}
-          />
-        ))}
+        {comments.length === 0 ? <div className={'my-5 text-center'}>Chưa có bình luận!</div> : <>
+          {comments?.map((comment) => (
+            <CommentItem
+              comment={comment}
+              key={comment._id}
+              profile={profile}
+              handleDeleteComment={handleDeleteComment}
+              handlePostCommentReply={handlePostCommentReply}
+              handlePostComment={handlePostComment}
+              handleShowMoreReplyComment={handleShowMoreReplyComment}
+              handleUpdateComment={handleUpdateComment}
+              setComments={setComments}
+              setComment={setComment}
+              totalReplyProp={comment.total || 3}
+            />
+          ))}
+        </>}
         {totalComment > comments.length && (
           <div
             className="pl-12 py-2 text-primary text-sm  text-center cursor-pointer"

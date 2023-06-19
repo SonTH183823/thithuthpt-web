@@ -1,9 +1,10 @@
 import * as React from "react";
 import photo_camera from "@/assets//images/svg/photo-camera.svg";
 import Image from "next/image";
+import {genURLImage} from "../../utils/common";
 export default function Avatar({
   sizeAvatar = "",
-  avatar = "https://placeimg.com/192/192/people",
+  avatar,
   className = "",
   isShowUploadIcon = false,
 }) {
@@ -12,7 +13,7 @@ export default function Avatar({
       className={`avatar ${className} relative border border-gray-100 rounded-full`}
     >
       <div className={`${sizeAvatar} rounded-full`}>
-        <img src={avatar} alt={"avatar-user"} />
+        <img src={genURLImage(avatar)} alt={"avatar-user"} />
       </div>
       {isShowUploadIcon && (
         <div

@@ -6,8 +6,8 @@ export const commentAPI = {
     return await api.post("/comment", { ...data });
   },
 
-  async getComments({ postId, offset, limit }) {
-    const query = { offset, limit };
+  async getComments({ postId, page, perPage }) {
+    const query = { page, perPage };
     return await api.get(`/comment/${postId}?${queryString.stringify(query)}`);
   },
 

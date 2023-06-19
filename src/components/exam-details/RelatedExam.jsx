@@ -13,6 +13,9 @@ function RelatedExam({title, relatedExam}) {
   const handleClick = (item) => {
     router.push(`/exam/${strToSlug(item.title)}-${item._id}`);
   }
+  if (relatedExam.length === 0) {
+    return null
+  }
   return (
     <>
       <h3 className="text-lg font-bold !my-2">

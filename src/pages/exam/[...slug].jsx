@@ -31,18 +31,17 @@ export default function ExamDetail({exam}) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(null);
   const [relatedExam, setRelatedExam] = useState([]);
-  // const favoritePosts = useSelector((state) => state.post.favoritePosts);
-  const favoritePosts = []
+  const favoriteExams = useSelector((state) => state.exam.favoriteExams);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //     if (favoritePosts && post.id) {
-  //         const p = favoritePosts.find((i) => i.post.id === post.id);
-  //         if (p) {
-  //             setIsFavorite(true);
-  //         }
-  //     }
-  // }, [favoritePosts]);
+  useEffect(() => {
+      if (favoriteExams && exam._id) {
+          const p = favoriteExams.find((i) => i.examId._id === exam._id);
+          if (p) {
+              setIsFavorite(true);
+          }
+      }
+  }, [favoriteExams]);
 
   useEffect(() => {
     (async () => {

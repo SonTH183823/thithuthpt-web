@@ -68,7 +68,7 @@ export default function CommentBox({
                 height={75}
               />
               <div
-                className="bg-info rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
+                className="bg-primary rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
                 onClick={() => {
                   setImageURL("");
                 }}
@@ -92,7 +92,7 @@ export default function CommentBox({
                 </Player>
               </div>
               <div
-                className="bg-info rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
+                className="bg-primary rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
                 onClick={() => setVideoURL("")}
               >
                 <i className="fa-regular fa-xmark text-white text-sm"></i>
