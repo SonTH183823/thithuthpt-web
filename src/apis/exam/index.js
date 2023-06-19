@@ -27,6 +27,11 @@ export const ExamAPI = {
       `exam?${queryString.stringify({...data})}`
     );
   },
+  async filterToeic(data) {
+    return await api.get(
+      `examToeic?${queryString.stringify({...data})}`
+    );
+  },
 
 
   async toggleFavorite(data) {

@@ -8,7 +8,7 @@ import ButtonSeeMore from "@/components/button/ButtonSeeMore";
 import PostSekeleton from "@/components/Sekeleton/PostSekeleton";
 import HomeExamItem from "@/components/exam/HomeExamItem";
 
-const typeCateList = [
+const cateToeicList = [
   {
     value: null,
     label: 'Tất cả'
@@ -25,31 +25,33 @@ const typeCateList = [
 
 function Toeic(props) {
   const router = useRouter();
-  const [exams, setExams] = useState([1, 2, 3, 4, 5, 6]);
+  const [exams, setExams] = useState([]);
   const [total, setTotal] = useState(null);
   const [showButtonLoadMore, setShowButtonLoadMore] = useState(null);
-  const [limit, setLimit] = useState(6);
-  const [offset, setOffset] = useState(0);
+  const [perPage, setPerPage] = useState(6);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
-  const [typeCate, setTypeCate] = useState(null);
+  const [cateToeic, setTypeCate] = useState(null);
   const [sort, setSort] = useState(xapSepConfig[0]);
   const [rate, setRate] = useState(null);
-  const getToeic = async (offsetProp) => {
+  const getToeic = async (p) => {
     try {
       setLoading(true);
-      const res = await ExamAPI.filterExam({
+      const res = await ExamAPI.filterToeic({
         ...router.query,
-        offset: offsetProp,
-        limit,
+        page: p,
+        perPage,
         active: 1,
+        subject: 9
       });
       if (res) {
-        if (offsetProp === 0) {
+        if (p === 1) {
+          setPage(1)
           setTotal(res.total);
-          setExams([...res.exams]);
+          setExams([...res.data]);
         } else {
-          setExams((exams) => [...exams, ...res.exams]);
+          setExams((exams) => [...exams, ...res.data]);
         }
       } else {
         setExams([]);
@@ -64,11 +66,11 @@ function Toeic(props) {
 
   useEffect(() => {
     let filterParams = {};
-    if (typeCate) {
-      if ("typeCate" in router.query) {
-        delete router.query.typeCate;
+    if (cateToeic) {
+      if ("cateToeic" in router.query) {
+        delete router.query.cateToeic;
       }
-      filterParams.typeCate = typeCate;
+      filterParams.cateToeic = cateToeic;
     }
     if ("rate" in router.query) {
       delete router.query.rate;
@@ -85,7 +87,7 @@ function Toeic(props) {
       queryTemp.push(`${key}=${q[key]}`);
     }
     router.push(`/toeic?${queryTemp.join("&")}`);
-  }, [typeCate])
+  }, [cateToeic])
 
   useEffect(() => {
     let filterParams = {};
@@ -95,10 +97,10 @@ function Toeic(props) {
       }
       filterParams.rate = rate;
     }
-    if ("typeCate" in router.query) {
-      delete router.query.typeCate;
+    if ("cateToeic" in router.query) {
+      delete router.query.cateToeic;
     }
-    filterParams.typeCate = typeCate;
+    filterParams.cateToeic = cateToeic;
     if ("outstanding" in router.query) {
       filterParams.outstanding = 1
     }
@@ -114,10 +116,10 @@ function Toeic(props) {
 
   useEffect(() => {
     (async () => {
-      await getToeic(0);
+      await getToeic(1);
     })();
     if (Object.keys(router.query).length) {
-      if (router.query?.typeCate) setTypeCate(+router.query.typeCate)
+      if (router.query?.cateToeic) setTypeCate(+router.query.cateToeic)
     }
   }, [router.query]);
 
@@ -148,10 +150,11 @@ function Toeic(props) {
     }
   }, [exams.length]);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     setLoadMore(true);
-    getToeic(offset + limit);
-    setOffset(offset + limit);
+    const p = page
+    setPage(p + 1);
+    await getToeic(p + 1);
     setLoadMore(false);
   };
   return (
@@ -161,9 +164,9 @@ function Toeic(props) {
           <div className={'hidden lg:block h-fit col-span-3'}>
             <div className={'bg-white shadow-xl p-3 rounded-lg'}>
               <div className={'font-semibold'}>Phân loại</div>
-              {typeCateList.map(item =>
+              {cateToeicList.map(item =>
                 <ItemSelect
-                  checked={typeCate === item.value}
+                  checked={cateToeic === item.value}
                   label={item.label}
                   handleSelect={() => {
                     setTypeCate(item.value)
@@ -196,9 +199,9 @@ function Toeic(props) {
             <div
               className={'space-x-2 shadow-xl mx-3 sm:w-[97%] w-[93%] lg:hidden flex justify-start bg-white px-3 py-3 rounded-md items-center text-sm md:text-base mb-4 flex-wrap overflow-x-auto'}>
               <div className={'font-semibold'}>Phân loại</div>
-              {typeCateList.map(item =>
+              {cateToeicList.map(item =>
                 <ItemSelect
-                  checked={typeCate === item.value}
+                  checked={cateToeic === item.value}
                   label={item.label}
                   mobile={true}
                   hasIcon={false}
@@ -231,7 +234,7 @@ function Toeic(props) {
             </div>
             <div
               className={'shadow-xl mx-3 flex justify-between bg-white px-3 rounded-md items-center text-sm md:text-base'}>
-              <div>Tìm thấy <span className={'font-bold'}>69</span> kết quả</div>
+              <div>Tìm thấy <span className={'font-bold'}>{total}</span> kết quả</div>
               <div className={'flex items-center space-x-2'}>
                 <div className={'font-semibold'}>Sắp xếp</div>
                 <Select
@@ -264,11 +267,11 @@ function Toeic(props) {
                     </Fragment>
                   ) : (
                     <Fragment>
-                      {exams.map((post) => (
-                        <HomeExamItem key={post.id} item={post} isSearch={true}/>
+                      {exams.map((item) => (
+                        <HomeExamItem key={item._id} item={item} isSearch={true}/>
                       ))}
 
-                      {!loadMore && (
+                      {loadMore && (
                         <Fragment>
                           <PostSekeleton isSearch={true}/>
                           <PostSekeleton isSearch={true}/>

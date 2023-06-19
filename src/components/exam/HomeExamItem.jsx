@@ -84,7 +84,7 @@ function HomeExamItem({item, isSearch = false}) {
       onClick={handleClick}
     >
       <div className="relative w-full h-[300px]">
-        <Image
+        {item?.thumbnail ? <Image
           src={genURLImage(item.thumbnail)}
           alt="thumbnail image"
           placeholder={"blur"}
@@ -92,7 +92,7 @@ function HomeExamItem({item, isSearch = false}) {
           height={300}
           blurDataURL={genURLImage(item.thumbnail)}
           className={"rounded-tl-xl rounded-tr-xl !h-full object-cover"}
-        />
+        /> : null}
         <ExamTag item={item}/>
         {showHeart && (
           <div
