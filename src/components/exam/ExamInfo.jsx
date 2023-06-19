@@ -20,7 +20,7 @@ function ExamInfo({item}) {
       <div className={'bg-base-200 rounded-xl p-3'}>
         <div className={'flex flex-row justify-between space-x-4 mb-3'}>
           <CharacteristicsItem icon={star}>
-            {item.rate.toFixed(1)}
+            {item.rate?.toFixed(1)}
           </CharacteristicsItem>
           <CharacteristicsItem icon={list_check}>
             {kFormatter(item.numberTest)} lượt thi

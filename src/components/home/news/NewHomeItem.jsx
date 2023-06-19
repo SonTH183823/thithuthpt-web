@@ -3,8 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {genURLImage, strToSlug} from "utils/common";
 import {formatDate} from "utils/moment";
-import {categoryTitleConfig} from "../../../configs/configs";
-import ExamTag from "@/components/exam/ExamTag";
+import NewTag from "@/components/new/NewTag";
 
 export default function NewHomeItem({isHome = false, isPrimary = false, item}) {
   const [tag, setTag] = useState('')
@@ -88,7 +87,7 @@ export default function NewHomeItem({isHome = false, isPrimary = false, item}) {
           layout={"fill"}
           objectFit={"cover"}
         />
-        {tag && <ExamTag
+        {tag && <NewTag
           tag={tag}
           category={item.isOutstanding ? 1 : 2}
         />}

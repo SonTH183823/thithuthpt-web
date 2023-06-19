@@ -54,7 +54,7 @@ export const genTagExam = (item) => {
       value: 4
     }
     return data
-  } else if (date.getTime() - (item.createdAt * 1000) <= 259200000) {
+  } else if (date.getTime() - (item?.createdAt * 1000) <= 259200000) {
     data = {
       label: 'Mới nhất',
       value: 2
@@ -62,8 +62,8 @@ export const genTagExam = (item) => {
     return data
   } else {
     data = {
-      label: subjectArrConfig[item.subject - 1].label + "  - " + levelConfig[item.level - 1].label,
-      value: item.level
+      label: subjectArrConfig[(item?.subject - 1) || 0].label + "  - " + levelConfig[(item?.level - 1) || 0].label,
+      value: item?.level || 1
     }
     return data
   }
