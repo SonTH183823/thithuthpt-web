@@ -77,6 +77,7 @@ function PartComponent({part, setTabActive}) {
   return (
     <div className="lg:grid grid-cols-3 lg:space-x-4">
       <div className="col-span-2 relative">
+        {/*<div className={"bg-base-100 rounded-xl mt-4 p-4"}><h2>Listening</h2></div>*/}
         {part <= 4 && <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
           <AudioPlayer/>
         </div>}

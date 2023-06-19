@@ -11,9 +11,29 @@ import LayoutWithoutFooter from "@/components/layout/LayoutWithoutFooter";
 import AudioPlayer from "@/components/audio/AudioPlayer";
 import ModalConfirmFinishExam from "@/components/modal/ModalConfirmFinishExam";
 import PartComponent from "@/components/toeic/PartComponent";
+import {ExamAPI} from "../../../apis/exam";
 
-export default function DoToeic() {
-  const exam = {id: 1}
+export async function getServerSideProps({params}) {
+  let exam = {};
+  let listQuestion = []
+  try {
+    const id = params.slug[0].split("-").slice(-1);
+    exam = await ExamAPI.getExam(id);
+    // const res = await ExamAPI.getListQuestionExam({id: id});
+    // listQuestion = res.questionIds
+  } catch (e) {
+    console.log(e);
+  }
+
+  return {
+    props: {
+      exam,
+      // listQuestion
+    },
+  };
+}
+
+export default function DoToeic({exam}) {
   let oldPosition = null
   const [listQues, setListQues] = useState(Array(200).fill(0))
   const answers = ['A', 'B', 'C', 'D']
@@ -55,12 +75,12 @@ export default function DoToeic() {
   }
 
   return (<Fragment>
-    {exam.id ? (<div className={"bg-base-200"}>
+    {exam._id ? (<div className={"bg-base-200"}>
         <div className="container mx-auto py-4 padding-mobile relative">
           <div className="lg:grid grid-cols-3 lg:space-x-4">
             <div className="col-span-2 relative">
               <div className={"bg-base-100 rounded-xl "}>
-                <DetailExam isDoExam={false} isShowRs={false}/>
+                <DetailExam isDoExam={false} isShowRs={false} item={exam}/>
               </div>
             </div>
             <div className="block col-span-1 lg:flex flex-col sticky top-20 h-fit lg:h-fit ">
@@ -76,7 +96,7 @@ export default function DoToeic() {
             <CountDown/>
           </div>
         </div>
-        <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'}/>
+        <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'} handleClick={finishExam}/>
       </div>
     ) : <FourOhFour/>}
   </Fragment>)
