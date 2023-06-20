@@ -1,16 +1,13 @@
-import like from "@/assets/images/interactive/like.svg";
-import commentImg from "@/assets/images/interactive/comment.svg";
-import share from "@/assets/images/interactive/share.svg";
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from "react";
 import CommentBox from "@/components/comment/CommentBox";
 import {useSelector} from "react-redux";
-// import { commentAPI } from "apis/comment";
 import {convertBase64} from "utils/uploadImage";
 import CommentItem from "../comment/CommentItem";
 import Link from "next/link";
 import {toast} from "react-toastify";
 import {commentAPI} from "../../apis/comment";
+import {uploadAPI} from "../../apis/upload";
 
 export default function InteractiveContainer({postId}) {
   const profile = useSelector((state) => state.auth.profile);
@@ -20,10 +17,8 @@ export default function InteractiveContainer({postId}) {
   const [page, setPage] = useState(1);
 
   //comment
-  const [comments, setComments] = useState([1, 2, 3, 4]);
+  const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-  const [base64Image, setBase64Image] = useState(null);
-  const [base64Video, setBase64Video] = useState(null);
 
   const [imageURL, setImageURL] = useState("");
   const [videoURL, setVideoURL] = useState("");
@@ -36,18 +31,16 @@ export default function InteractiveContainer({postId}) {
         postId,
         userId: profile._id,
         content: comment,
-        base64Image,
-        base64Video,
+        imageAttach: imageURL,
+        videoAttach: videoURL,
       });
       setLoading(false);
       if (res) {
         setComment("");
         setImageURL("");
         setVideoURL("");
-        setBase64Image(null);
-        setBase64Video(null);
         setTotalComment(totalComment + 1);
-        setComments([{ ...res, isEdit: true, isDelete: true }, ...comments]);
+        setComments([{...res, isEdit: true, isDelete: true}, ...comments]);
       }
     } catch (e) {
       console.log(e);
@@ -61,8 +54,7 @@ export default function InteractiveContainer({postId}) {
     imageBase64,
     videoBase64,
     imageURL,
-    videoURL,
-    owner
+    videoURL
   ) => {
     try {
       const temp = comments.map((comment) => {
@@ -107,7 +99,7 @@ export default function InteractiveContainer({postId}) {
   ) => {
     try {
       const temps = comments.map((comment) => {
-        if (comment.id === item.id) {
+        if (comment._id === item._id) {
           return {
             ...comment,
             content: commentEditInput,
@@ -134,12 +126,12 @@ export default function InteractiveContainer({postId}) {
         }
       });
       setComments([...temps]);
-      // const res = await commentAPI.updateComment({
-      //   commentId: item.id,
-      //   contentUpdate: commentEditInput,
-      //   imageBase64,
-      //   videoBase64,
-      // });
+      await commentAPI.updateComment({
+        commentId: item._id,
+        contentUpdate: commentEditInput,
+        imageBase64,
+        videoBase64,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -167,8 +159,8 @@ export default function InteractiveContainer({postId}) {
         page,
         perPage,
       });
-      if (res.comments) {
-        setComments([...comments, ...res.comments]);
+      if (res.data) {
+        setComments([...comments, ...res.data]);
         setPage(page + 1);
       }
     } catch (e) {
@@ -177,18 +169,16 @@ export default function InteractiveContainer({postId}) {
   };
 
   const handleDeleteComment = (cmt) => {
+    let temps = [];
     if (!cmt.parentId) {
       setTotalComment(totalComment - 1);
-    }
-    let temps = [];
-    if (cmt.parentId === 0) {
-      temps = comments.filter((comment) => comment.id !== cmt.id);
+      temps = comments.filter((comment) => comment._id !== cmt._id);
     } else {
       temps = comments.map((comment) => {
         const {firstChild} = comment;
         return {
           ...comment,
-          totalReply: comment.totalReply - 1,
+          total: comment.total - 1,
           firstChild: firstChild
             ? firstChild.filter((item) => item.id !== cmt.id)
             : null,
@@ -216,6 +206,9 @@ export default function InteractiveContainer({postId}) {
     })();
   }, [postId]);
 
+  const uploadAttach = async (file) => {
+    return await uploadAPI.uploadFile(file)
+  }
   const handleChangeInputUploadImage = async (e) => {
     if (e.target && e.target.files && e.target.files.length) {
       if (e.target.files[0].size > 5 * 1048576) {
@@ -230,8 +223,8 @@ export default function InteractiveContainer({postId}) {
           theme: "colored",
         });
       } else {
-        setBase64Image(await convertBase64(e.target.files[0]));
-        setImageURL(URL.createObjectURL(e.target.files[0]));
+        const res = await uploadAttach(e.target.files[0])
+        setImageURL(res.filename);
       }
     }
   };
@@ -250,8 +243,8 @@ export default function InteractiveContainer({postId}) {
           theme: "colored",
         });
       } else {
-        setBase64Video(await convertBase64(e.target.files[0]));
-        setVideoURL(URL.createObjectURL(e.target.files[0]));
+        const res = await uploadAttach(e.target.files[0])
+        setVideoURL(res.filename);
       }
     }
   };
@@ -276,7 +269,7 @@ export default function InteractiveContainer({postId}) {
         />
       ) : (
         <Link href={"/sign-in"}>
-          <div className="flex items-center space-x-2 cursor-pointer">
+          <div className="flex items-center space-x-2 cursor-pointer mb-2">
             <i className="fa-regular fa-circle-user text-3xl"></i>
             <div>Đăng nhập để bình luận.</div>
           </div>

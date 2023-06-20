@@ -1,10 +1,6 @@
 import '../styles/globals.scss'
 import {Fragment, useEffect} from "react";
 import Head from "next/head";
-import "@szhsin/react-menu/dist/index.css";
-import "@szhsin/react-menu/dist/transitions/slide.css";
-import "react-input-range/lib/css/index.css";
-import 'react-best-tabs/dist/index.css';
 import MainLayout from "@/components/layout/MainLayout";
 import {wrapper} from "../store/configStore";
 import {requestPermission} from "../configs/firebaseConfig";
@@ -16,9 +12,16 @@ import {authUpdateProfile} from "../store/auth/auth-slice";
 import {updateFavoritePosts} from "../store/post/post-slice";
 import "react-toastify/dist/ReactToastify.css";
 import {authAPI} from "../apis/auth";
-import { useRouter} from "next/router";
+import {useRouter} from "next/router";
 import {ExamAPI} from "../apis/exam/index";
 import {updateFavoriteExams} from "../store/exam/exam-slice";
+
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import "react-input-range/lib/css/index.css";
+import 'react-best-tabs/dist/index.css';
+import 'react-image-lightbox/style.css';
+
 function App({Component, pageProps}) {
   const router = useRouter();
   const Layout = Component.Layout ?? MainLayout;
@@ -33,16 +36,22 @@ function App({Component, pageProps}) {
           if (profileData) {
             dispatch(authUpdateProfile({...profileData}));
           }
-          const res = await ExamAPI.getFavoriteExams();
-          if (res) {
-            dispatch(updateFavoriteExams(res.data));
-          }
         } catch (e) {
           console.log(e);
         }
       }
     })();
   }, []);
+  useEffect(() => {
+    (async () => {
+      if (profile._id) {
+        const res = await ExamAPI.getFavoriteExams({userId: profile._id});
+        if (res) {
+          dispatch(updateFavoriteExams(res.data));
+        }
+      }
+    })()
+  }, [profile])
   useEffect(() => {
     (async () => {
       const fcmToken = await requestPermission();

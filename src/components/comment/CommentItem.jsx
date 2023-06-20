@@ -12,7 +12,7 @@ import {convertBase64} from "utils/uploadImage";
 import CommentInput from "./CommentInput";
 import ModalComfirmDeleteComment from "../modal/ModalComfirmDeleteComment";
 import Avatar from "../user/Avatar";
-import {BigPlayButton, ControlBar, Player} from "video-react";
+import {BigPlayButton, ControlBar, Player, LoadingSpinner, VolumeMenuButton} from "video-react";
 import CommentBoxReply from "./CommentBoxReply";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -21,6 +21,9 @@ import like from "@/assets/images/svg/like.svg"
 import likegray from "@/assets/images/svg/likegray.svg"
 import dislike from "@/assets/images/svg/dislike.svg"
 import useWindowSize from "../../hooks/useWindowSize";
+import {commentAPI} from "../../apis/comment";
+import {genURLImage} from "../../utils/common";
+
 
 export default function CommentItem({
                                       comment,
@@ -65,6 +68,10 @@ export default function CommentItem({
   //   if (comment.firstChild) {
   //   }
   // }, [comment]);
+
+  const checkCommentUser = (userId) => {
+    return (userId === profile._id || userId?._id === profile._id)
+  }
 
   useEffect(() => {
     if (comment.firstChild) {
@@ -162,19 +169,19 @@ export default function CommentItem({
   };
 
   const handleDeleteComment = async () => {
-    // try {
-    //   const res = await commentAPI.deleteComment(comment.id);
-    //   if (res.ok) {
-    //     handleDeleteCommentProp(comment);
-    //     setOffset(offset - 1);
-    //     const modal = document.getElementById("modal-delete-cmt");
-    //     if (modal) {
-    //       modal.click();
-    //     }
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      const res = await commentAPI.deleteComment(comment._id);
+      if (res.ok) {
+        handleDeleteCommentProp(comment);
+        // setOffset(offset - 1);
+        const modal = document.getElementById("modal-delete-cmt");
+        if (modal) {
+          modal.click();
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleChangeInput = async (e) => {
@@ -221,11 +228,7 @@ export default function CommentItem({
       <div className={"flex items-start space-x-3 py-2"}>
         <Avatar
           sizeAvatar="w-12"
-          avatar={
-            comment.userId === profile?._id
-              ? profile.avatar
-              : comment?.userComment?.avatar
-          }
+          avatar={checkCommentUser(comment.userId) ? profile.avatar : comment?.userId?.avatar}
         />
         <div
           className={`py-3 px-2 bg-base-200 rounded-lg ${
@@ -235,9 +238,7 @@ export default function CommentItem({
           <div className={"flex items-center space-x-2 justify-between"}>
             <div className="flex items-center space-x-1">
               <span className={"font-bold text-primary"}>
-                {comment.userId === profile?._id
-                  ? profile.name
-                  : comment?.userComment?.displayName}
+                {checkCommentUser(comment.userId) ? profile.name : comment?.userId?.name}
               </span>
               <span className={"text-xs text-gray-400"}>
                 {moment(comment.createdAt * 1000).fromNow()}
@@ -245,7 +246,7 @@ export default function CommentItem({
             </div>
 
             <Fragment>
-              {comment.isEdit && (
+              {checkCommentUser(comment.userId) && (
                 <Menu
                   menuButton={
                     <MenuButton>
@@ -257,17 +258,8 @@ export default function CommentItem({
                   <MenuItem onClick={handleShowEdit}>
                     <span>Chỉnh sửa</span>
                   </MenuItem>
-                  <MenuItem
-                    onClick={() =>
-                      setShowModalComfirmDelete(!showModalComfirmDelete)
-                    }
-                  >
-                    <label
-                      htmlFor="modal-comfirm-delete"
-                      className="cursor-pointer w-full"
-                    >
-                      Xóa
-                    </label>
+                  <MenuItem onClick={() => setShowModalComfirmDelete(!showModalComfirmDelete)}>
+                    <label htmlFor="modal-comfirm-delete" className="cursor-pointer w-full">Xóa</label>
                   </MenuItem>
                 </Menu>
               )}
@@ -280,12 +272,12 @@ export default function CommentItem({
                 {comment.imageAttach && (
                   <Fragment>
                     <div
-                      className="relative w-[120px] h-[120px] cursor-pointer "
+                      className="relative w-[160px] h-[120px] cursor-pointer "
                       onClick={() => setOpenLightBox(true)}
                     >
                       <Image
                         alt="img"
-                        src={comment.imageAttach}
+                        src={genURLImage(comment.imageAttach)}
                         layout={"fill"}
                         objectFit={"cover"}
                         className={"rounded-lg"}
@@ -293,7 +285,7 @@ export default function CommentItem({
                     </div>
                     {openLightBox && (
                       <Lightbox
-                        mainSrc={comment.imageAttach}
+                        mainSrc={genURLImage(comment.imageAttach)}
                         onCloseRequest={() => setOpenLightBox(false)}
                       />
                     )}
@@ -304,11 +296,10 @@ export default function CommentItem({
                     <div className="overflow-hidden absolute top-0 bottom-0 left-0 right-0">
                       <Player
                         playsInline
-                        src={videoURL}
+                        src={genURLImage(videoURL)}
                         className={"h-[150px]"}
-                        // poster="https://res.cloudinary.com/dqrn1uojt/image/upload/v1675062159/thumbnail-video-no-button_qf1rax.png"
                       >
-                        <ControlBar autoHide={false} className="my-class"/>
+                        <ControlBar autoHide={true} className="my-class"/>
                         <BigPlayButton position="center"/>
                       </Player>
                     </div>
@@ -325,16 +316,16 @@ export default function CommentItem({
               {imageURL && (
                 <div className={"relative w-fit rounded-lg mt-2"}>
                   <Image
-                    src={imageURL}
+                    src={genURLImage(imageURL)}
                     alt="not found"
                     objectFit="cover"
                     width={100}
                     height={75}
                   />
                   <div
-                    className="bg-info rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
+                    className="bg-primary rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
                     onClick={() => {
-                      setImageURL("");
+                      setImageURL("")
                     }}
                   >
                     <i className="fa-regular fa-xmark text-white text-sm"></i>
@@ -347,16 +338,15 @@ export default function CommentItem({
                   <div className="overflow-hidden absolute top-0 bottom-0 left-0 right-0">
                     <Player
                       playsInline
-                      src={videoURL}
+                      src={genURLImage(videoURL)}
                       className={"h-[150px]"}
-                      poster="https://res.cloudinary.com/dqrn1uojt/image/upload/v1675062159/thumbnail-video-no-button_qf1rax.png"
                     >
                       <ControlBar autoHide={false} className="my-class"/>
                       <BigPlayButton position="center"/>
                     </Player>
                   </div>
                   <div
-                    className="bg-info rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
+                    className="bg-primary rounded-full w-5 h-5 flex items-center justify-center absolute -top-2 -right-1 cursor-pointer"
                     onClick={() => setVideoURL("")}
                   >
                     <i className="fa-regular fa-xmark text-white text-sm"></i>
@@ -430,7 +420,7 @@ export default function CommentItem({
               // profile={profile}
               // comment={newComment}
               // setComment={setNewComment}
-              handlePostComment={() => postCommentReply(comment.id, newComment)}
+              handlePostComment={() => postCommentReply(comment._id, newComment)}
               profile={profile}
               comment={newComment}
               setComment={setNewComment}

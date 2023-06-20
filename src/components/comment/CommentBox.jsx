@@ -6,6 +6,7 @@ import Avatar from "../user/Avatar";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {BigPlayButton, ControlBar, Player} from "video-react";
 import {faImage, faPlus, faVideo} from "@fortawesome/free-solid-svg-icons";
+import {genURLImage} from "../../utils/common";
 
 export default function CommentBox({
                                      postId,
@@ -21,6 +22,7 @@ export default function CommentBox({
                                      setVideoURL,
                                      loading,
                                    }) {
+  console.log(imageURL, videoURL)
   return (
     <div className={`flex items-start space-x-3`}>
       <Avatar sizeAvatar="w-12" avatar={profile.avatar}/>
@@ -61,7 +63,7 @@ export default function CommentBox({
           {imageURL && (
             <div className={"relative w-fit"}>
               <Image
-                src={imageURL}
+                src={genURLImage(imageURL)}
                 alt="not fount"
                 objectFit="cover"
                 width={100}
@@ -83,7 +85,7 @@ export default function CommentBox({
               <div className="overflow-hidden absolute top-0 bottom-0 left-0 right-0">
                 <Player
                   playsInline
-                  src={videoURL}
+                  src={genURLImage(videoURL)}
                   className={"h-[150px]"}
                   // poster={'https://global.discourse-cdn.com/business4/uploads/prezi/original/2X/a/aaaff5d5dec03e32799015d424b4a5db51c9eeff.png'}
                 >
