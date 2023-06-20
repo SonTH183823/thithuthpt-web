@@ -23,6 +23,7 @@ import dislike from "@/assets/images/svg/dislike.svg"
 import useWindowSize from "../../hooks/useWindowSize";
 import {commentAPI} from "../../apis/comment";
 import {genURLImage} from "../../utils/common";
+import {uploadAPI} from "../../apis/upload";
 
 
 export default function CommentItem({
@@ -52,16 +53,12 @@ export default function CommentItem({
   const [loadMoreReply, setLoadMoreReply] = useState(
     comment?.firstChild?.length > 1 ? true : false
   );
-  const [imageBase64, setImageBase64] = useState(null);
-  const [videoBase64, setVideoBase64] = useState(null);
   const [isClickShowMore, setIsClickShowMore] = useState(false);
   const [loading, setLoading] = useState(null);
   const toggleShowCommentInput = () => {
     setShowCommentInput(!showCommentInput);
     setImageURL("");
     setVideoURL("");
-    setImageBase64(null);
-    setVideoBase64(null);
   };
 
   // useEffect(() => {
@@ -109,12 +106,10 @@ export default function CommentItem({
   const handleUpdateComment = async () => {
     try {
       setLoading(true);
-      const res = handleUpdateCommentProp(
+      await handleUpdateCommentProp(
         comment,
         commentEditInput,
-        imageBase64,
         imageURL,
-        videoBase64,
         videoURL
       );
       setLoading(false);
@@ -159,8 +154,6 @@ export default function CommentItem({
     handlePostCommentReply(
       parentId,
       content,
-      imageBase64,
-      videoBase64,
       imageURL,
       videoURL,
       comment.userId
@@ -198,12 +191,15 @@ export default function CommentItem({
           theme: "colored",
         });
       } else {
-        setImageBase64(await convertBase64(e.target.files[0]));
-        setImageURL(URL.createObjectURL(e.target.files[0]));
+        const res = await uploadAttach(e.target.files[0])
+        setImageURL(res.filename);
       }
     }
   };
 
+  const uploadAttach = async (file) => {
+    return await uploadAPI.uploadFile(file)
+  }
   const handleChangeVideoInput = async (e) => {
     if (e.target && e.target.files && e.target.files.length) {
       if (e.target.files[0].size > 25 * 1048576) {
@@ -218,8 +214,8 @@ export default function CommentItem({
           theme: "colored",
         });
       } else {
-        setVideoBase64(await convertBase64(e.target.files[0]));
-        setVideoURL(URL.createObjectURL(e.target.files[0]));
+        const res = await uploadAttach(e.target.files[0])
+        setVideoURL(res.filename);
       }
     }
   };

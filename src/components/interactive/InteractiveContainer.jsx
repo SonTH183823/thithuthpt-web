@@ -2,7 +2,6 @@ import Image from "next/image";
 import React, {useEffect, useRef, useState} from "react";
 import CommentBox from "@/components/comment/CommentBox";
 import {useSelector} from "react-redux";
-import {convertBase64} from "utils/uploadImage";
 import CommentItem from "../comment/CommentItem";
 import Link from "next/link";
 import {toast} from "react-toastify";
@@ -92,9 +91,7 @@ export default function InteractiveContainer({postId}) {
   const handleUpdateComment = async (
     item,
     commentEditInput,
-    imageBase64,
     imageURL,
-    videoBase64,
     videoURL
   ) => {
     try {
@@ -127,11 +124,12 @@ export default function InteractiveContainer({postId}) {
       });
       setComments([...temps]);
       await commentAPI.updateComment({
-        commentId: item._id,
-        contentUpdate: commentEditInput,
-        imageBase64,
-        videoBase64,
-      });
+        userId: item.userId._id,
+        postId: item.postId,
+        content: commentEditInput,
+        imageAttach: imageURL,
+        videoAttach: videoURL,
+      }, item._id);
     } catch (e) {
       console.log(e);
     }
