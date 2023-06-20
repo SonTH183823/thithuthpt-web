@@ -10,6 +10,10 @@ export const commentAPI = {
     const query = {page, perPage};
     return await api.get(`/comment/${postId}?${queryString.stringify(query)}`);
   },
+  async getStatusComments({commentIds, userId}) {
+    const query = {commentIds, userId};
+    return await api.get(`/commentStatus?${queryString.stringify(query)}`);
+  },
 
   async updateComment(data, id) {
     return await api.put(`/comment/${id}`, data)

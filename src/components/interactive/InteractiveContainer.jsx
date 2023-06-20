@@ -18,10 +18,8 @@ export default function InteractiveContainer({postId}) {
   //comment
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-
   const [imageURL, setImageURL] = useState("");
   const [videoURL, setVideoURL] = useState("");
-
   const [loading, setLoading] = useState(false);
   const handlePostComment = async () => {
     try {
@@ -171,6 +169,16 @@ export default function InteractiveContainer({postId}) {
     });
     setComments([...temp]);
   };
+
+  const getCommentStatus = async () => {
+    if(profile._id){
+      const res = await commentAPI.getComments({
+        postId,
+        page,
+        perPage,
+      });
+    }
+  }
 
   const handleShowMoreComment = async () => {
     try {
