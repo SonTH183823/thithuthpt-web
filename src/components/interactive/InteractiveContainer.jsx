@@ -123,15 +123,37 @@ export default function InteractiveContainer({postId}) {
         }
       });
       setComments([...temps]);
-      await commentAPI.updateComment({
+      const res = await commentAPI.updateComment({
         userId: item.userId._id,
         postId: item.postId,
         content: commentEditInput,
         imageAttach: imageURL,
         videoAttach: videoURL,
       }, item._id);
+      if (res.ok) {
+        toast.success("Cập nhật thành công!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     } catch (e) {
       console.log(e);
+      toast.error("Đã có lỗi xảy ra!", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
