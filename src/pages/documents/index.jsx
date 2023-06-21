@@ -2,7 +2,6 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import {
   subjectArrConfig,
-  subjectConfig,
   xapSepConfig
 } from "../../configs/configs";
 import {ExamAPI} from "../../apis/exam";
@@ -11,6 +10,7 @@ import Select from "react-select";
 import DocSekeleton from "@/components/Sekeleton/DocSekeleton";
 import ButtonSeeMore from "@/components/button/ButtonSeeMore";
 import PrimaryDocItem from "@/components/documents/PrimaryDocItem";
+import {DocumentAPI} from "../../apis/document";
 
 const subjectList = [
   {
@@ -20,36 +20,37 @@ const subjectList = [
   ...subjectArrConfig
 ]
 
-function Documents(props) {
+function Documents() {
   const router = useRouter();
-  const [exams, setExams] = useState([1, 2, 3, 4, 5, 6]);
+  const [exams, setExams] = useState([]);
   const [total, setTotal] = useState(null);
   const [showButtonLoadMore, setShowButtonLoadMore] = useState(null);
-  const [limit, setLimit] = useState(6);
-  const [offset, setOffset] = useState(0);
+  const [perPage, setLimit] = useState(6);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
   const [subject, setSubject] = useState(null);
-  const [cate, setCate] = useState(['Hàm số', 'Logarit']);
+  const [cate, setCate] = useState([]);
   const [cateChoose, setCateChoose] = useState(null);
   const [sort, setSort] = useState(xapSepConfig[0]);
 
 
-  const getDocs = async (offsetProp) => {
+  const getDocs = async (p) => {
     try {
       setLoading(true);
-      const res = await ExamAPI.filterExam({
+      const res = await DocumentAPI.filterDocument({
         ...router.query,
-        offset: offsetProp,
-        limit,
+        page: p,
+        perPage,
         active: 1,
       });
       if (res) {
-        if (offsetProp === 0) {
+        if (p === 1) {
+          setPage(1)
           setTotal(res.total);
-          setExams([...res.exams]);
+          setExams([...res.data]);
         } else {
-          setExams((exams) => [...exams, ...res.exams]);
+          setExams((exams) => [...exams, ...res.data]);
         }
       } else {
         setExams([]);
@@ -86,6 +87,28 @@ function Documents(props) {
   }, [subject])
 
   useEffect(() => {
+    const getPartSubject = async () => {
+      if (subject) {
+        try {
+          const res = await DocumentAPI.getPartSubject({subject})
+          if (res.data) {
+            setCate(res.data)
+            console.log(res.data)
+          }
+        } catch (e) {
+          console.log(e)
+          setCate([])
+        }
+      } else {
+        setCate([])
+      }
+    }
+    (async () => {
+      await getPartSubject();
+    })();
+  }, [subject])
+
+  useEffect(() => {
     (async () => {
       await getDocs(0);
     })();
@@ -101,7 +124,7 @@ function Documents(props) {
         queryTemp.push(`${key}=${router.query[key]}`);
       }
       router.push(`/documents?${queryTemp.join("&")}&outstanding=1`);
-    }else {
+    } else {
       if ("outstanding" in router.query) {
         delete router.query.outstanding;
       }
@@ -121,10 +144,11 @@ function Documents(props) {
     }
   }, [exams.length]);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     setLoadMore(true);
-    getDocs(offset + limit);
-    setOffset(offset + limit);
+    const p = page
+    setPage(p + 1);
+    await getDocs(p + 1);
     setLoadMore(false);
   };
   const genCate = () => {
@@ -134,10 +158,10 @@ function Documents(props) {
           <div className={'font-semibold'}>Chuyên đề</div>
           {cate.map(item =>
             <ItemSelect
-              checked={cateChoose === item}
-              label={item}
+              checked={cateChoose === item._id}
+              label={item.name}
               handleSelect={() => {
-                setCateChoose(item)
+                setCateChoose(item._id)
               }}/>)
           }
         </div>
@@ -178,20 +202,20 @@ function Documents(props) {
                   }}/>
               )}
             </div>
-            <div
+            {cate.length ? <div
               className={'space-x-2 shadow-xl mx-3 sm:w-[97%] w-[93%] lg:hidden flex justify-start bg-white px-3 py-3 rounded-md items-center text-sm md:text-base mb-4 flex-wrap overflow-x-auto'}>
               <div className={'font-semibold'}>Chuyên đề</div>
               {cate.map(item =>
                 <ItemSelect
-                  checked={cateChoose === item}
-                  label={item}
+                  checked={cateChoose === item._id}
+                  label={item.name}
                   mobile={true}
                   hasIcon={false}
                   handleSelect={() => {
-                    setCateChoose(item)
+                    setCateChoose(item._id)
                   }}/>
               )}
-            </div>
+            </div> : null}
             <div
               className={'shadow-xl mx-3 flex justify-between bg-white px-3 rounded-md items-center text-sm md:text-base'}>
               <div>Tìm thấy <span className={'font-bold'}>69</span> kết quả</div>
