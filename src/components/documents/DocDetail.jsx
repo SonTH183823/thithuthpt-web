@@ -39,7 +39,7 @@ function DocDetail({item, notShowBtn = true}) {
   };
 
   return (
-    <div>
+    <div className={'flex h-full flex-col'}>
       <div className={"flex justify-between mb-2"}>
         <TitleExamItem
           className={"font-bold text-info text-xl flex items-center mb-2 cursor-pointer !m-0 !mr-2 hover:!text-black "}>

@@ -6,18 +6,28 @@ import RatingComponents from "@/components/rating/RatingComponents";
 import RelatedDocuments from "@/components/documents/RelatedDocuments";
 import PDFFile from "@/components/documents/PDFFile";
 import DocDetail from "@/components/documents/DocDetail";
+import {ExamAPI} from "../../apis/exam";
+import {DocumentAPI} from "../../apis/document";
 
-export default function DocumentDetail({
-                                         exam = {
-                                           id: 1,
-                                           title: 'Bai thi mau'
-                                         }
-                                       }) {
+export async function getServerSideProps({params}) {
+  let document = {};
+  try {
+    const id = params.slug[0].split("-").slice(-1);
+    document = await DocumentAPI.getDocument(id);
+  } catch (e) {
+    console.log(e);
+  }
+  return {
+    props: {
+      document,
+    },
+  };
+}
+
+export default function DocumentDetail({document}) {
   const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(null);
-  // const favoritePosts = useSelector((state) => state.post.favoritePosts);
-  const favoritePosts = []
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -50,20 +60,20 @@ export default function DocumentDetail({
 
   return (
     <Fragment>
-      {exam.id ? (
+      {document._id ? (
         <div className={"bg-base-200"}>
           <div className="container mx-auto py-2 sm:py-4 padding-mobile">
             <div className="lg:grid grid-cols-3 lg:space-x-4">
               <div className="col-span-2 relative">
                 <div className={"bg-base-100 rounded-xl md:p-4 p-3"}>
-                  <DocDetail isDoExam={true}/>
+                  <DocDetail item={document}/>
                 </div>
                 <div className={"bg-base-100 md:p-4 p-3 rounded-xl mt-4"}>
-                  <PDFFile/>
+                  <PDFFile fileLink={document.link}/>
                 </div>
                 <RatingComponents/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={exam.id}/>
+                  <InteractiveContainer postId={document._id}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col">

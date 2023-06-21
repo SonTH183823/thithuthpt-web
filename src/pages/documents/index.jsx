@@ -25,12 +25,12 @@ function Documents() {
   const [total, setTotal] = useState(null);
   const [showButtonLoadMore, setShowButtonLoadMore] = useState(null);
   const [perPage, setLimit] = useState(6);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
   const [subject, setSubject] = useState(null);
-  const [cate, setCate] = useState([]);
-  const [cateChoose, setCateChoose] = useState(null);
+  const [listCategory, setListCategory] = useState([]);
+  const [category, setCategory] = useState(null);
   const [sort, setSort] = useState(xapSepConfig[0]);
 
 
@@ -62,46 +62,82 @@ function Documents() {
     }
   };
 
-  // useEffect(() => {
-  //   if (subject) {
-  //     let filterParams = {};
-  //     if ("subject" in router.query) {
-  //       delete router.query.subject;
-  //     }
-  //     filterParams.subject = subject;
-  //     if ("outstanding" in router.query) {
-  //       filterParams.outstanding = 1
-  //     }
-  //     if ("category" in router.query) {
-  //       filterParams.category = router.query.category
-  //     }
-  //     const q = Object.fromEntries(
-  //       Object.entries(filterParams).filter(([_, v]) => v)
-  //     );
-  //     let queryTemp = [];
-  //     for (const key in q) {
-  //       queryTemp.push(`${key}=${q[key]}`);
-  //     }
-  //     router.push(`/documents?${queryTemp.join("&")}`);
-  //   } else {
-  //     router.push(`/documents`);
-  //   }
-  // }, [subject])
+  useEffect(() => {
+    if (subject) {
+      let filterParams = {};
+      if ("subject" in router.query) {
+        delete router.query.subject;
+      }
+      filterParams.subject = subject;
+      if ("outstanding" in router.query) {
+        filterParams.outstanding = 1
+      }
+      if ("category" in router.query) {
+        filterParams.category = router.query.category
+      }
+      const q = Object.fromEntries(
+        Object.entries(filterParams).filter(([_, v]) => v)
+      );
+      let queryTemp = [];
+      for (const key in q) {
+        queryTemp.push(`${key}=${q[key]}`);
+      }
+      router.push(`/documents?${queryTemp.join("&")}`);
+    } else {
+      router.push(`/documents`);
+    }
+  }, [subject])
+
+  useEffect(() => {
+    if (subject) {
+      let filterParams = {};
+      if ("category" in router.query) {
+        delete router.query.category;
+      }
+      filterParams.category = category;
+      if ("outstanding" in router.query) {
+        filterParams.outstanding = 1
+      }
+      const q = Object.fromEntries(
+        Object.entries(filterParams).filter(([_, v]) => v)
+      );
+      let queryTemp = [];
+      for (const key in q) {
+        queryTemp.push(`${key}=${q[key]}`);
+      }
+      router.push(`/documents?${queryTemp.join("&")}`);
+    } else {
+      router.push(`/documents`);
+    }
+  }, [category])
 
   useEffect(() => {
     const getPartSubject = async () => {
       if (subject) {
+        setLoading(true)
         try {
           const res = await DocumentAPI.getPartSubject({subject})
           if (res.data) {
-            setCate(res.data)
+            const tmp = [
+              {
+                name: 'Tất cả',
+                _id: null
+              },
+              ...res.data
+            ]
+            setListCategory(tmp)
+            setLoading(false)
+            setCategory(null)
           }
         } catch (e) {
           console.log(e)
-          setCate([])
+          setLoading(false)
+          setListCategory([])
+          setCategory(null)
         }
       } else {
-        setCate([])
+        setListCategory([])
+        setCategory(null)
       }
     }
     (async () => {
@@ -153,16 +189,16 @@ function Documents() {
     setLoadMore(false);
   };
   const genCate = () => {
-    if (cate.length) {
+    if (listCategory.length) {
       return (
         <div className={'bg-white shadow-xl p-3 rounded-lg mt-4'}>
           <div className={'font-semibold'}>Chuyên đề</div>
-          {cate.map(item =>
+          {listCategory.map(item =>
             <ItemSelect
-              checked={cateChoose === item._id}
+              checked={category === item._id}
               label={item.name}
               handleSelect={() => {
-                setCateChoose(item._id)
+                setCategory(item._id)
               }}/>)
           }
         </div>
@@ -203,17 +239,17 @@ function Documents() {
                   }}/>
               )}
             </div>
-            {cate.length ? <div
+            {listCategory.length ? <div
               className={'space-x-2 shadow-xl mx-3 sm:w-[97%] w-[93%] lg:hidden flex justify-start bg-white px-3 py-3 rounded-md items-center text-sm md:text-base mb-4 flex-wrap overflow-x-auto'}>
               <div className={'font-semibold'}>Chuyên đề</div>
-              {cate.map(item =>
+              {listCategory.map(item =>
                 <ItemSelect
-                  checked={cateChoose === item._id}
+                  checked={category === item._id}
                   label={item.name}
                   mobile={true}
                   hasIcon={false}
                   handleSelect={() => {
-                    setCateChoose(item._id)
+                    setCategory(item._id)
                   }}/>
               )}
             </div> : null}

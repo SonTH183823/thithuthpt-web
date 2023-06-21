@@ -1,16 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-function PDFFile() {
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+function PDFFile({fileLink}) {
+  const [link, setLink] = useState('')
 
-  function onDocumentLoadSuccess({numPages}) {
-    setNumPages(numPages);
-  }
+  useEffect(() => {
+    if (fileLink.includes('/view')) {
+      const string = fileLink.split('/view')[0]
+      setLink(string + '/preview')
+    }
+  }, [fileLink])
 
   return (
-    <div className={''}>
-      <iframe src={'https://drive.google.com/file/d/1cMU7TMTzFFEZXWSRPvqSEK-qy2VrY4bV/preview'} className={'w-full h-[500px] md:h-[800px]'}/>
+    <div className={'text-center'}>
+      {link ? <iframe src={link}
+                      className={'w-full h-[500px] md:h-[800px]'}/> : <span className={'text-red-400'}>Không thể tải tài liệu!</span>}
     </div>
   );
 }
