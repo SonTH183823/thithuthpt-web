@@ -7,7 +7,9 @@ export const DocumentAPI = {
   },
 
   async getAllDocument(query) {
-    return await api.get(`/document/all?${queryString.stringify(query)}`);
+    return await api.get(
+      `document?${queryString.stringify({...query})}`
+    );
   },
 
   async getDocument(id) {
@@ -33,7 +35,7 @@ export const DocumentAPI = {
     );
   },
 
-  async getPartSubject(data){
+  async getPartSubject(data) {
     return await api.get(
       `partSubject?${queryString.stringify({...data})}`
     );
@@ -41,6 +43,9 @@ export const DocumentAPI = {
 
   async getRelatedDocument({id, data}) {
     return await api.get(`document/related/${id}?${queryString.stringify(data)}`);
+  },
+  async getNewestDocument(data) {
+    return await api.get(`newestDocument${queryString.stringify(data)}`);
   },
 
 };

@@ -13,14 +13,24 @@ function RelatedExam({title, relatedExam}) {
   const handleClick = (item) => {
     router.push(`/exam/${strToSlug(item.title)}-${item._id}`);
   }
+
   if (relatedExam.length === 0) {
     return null
   }
+  const showAll = () => {
+    router.push(`/filter?subject=${relatedExam[0].subject}`);
+  }
   return (
     <>
-      <h3 className="text-lg font-bold !my-2">
-        {title ? title : 'Đề thi tương tự'}
-      </h3>
+      <div className={'flex items-center justify-between'}>
+        <h3 className="text-lg font-bold !my-2">
+          {title ? title : 'Đề thi tương tự'}
+        </h3>
+        <div className={'text-sm cursor-pointer select-none hover:underline hover:text-primary'} onClick={showAll}>Xem
+          tất cả
+        </div>
+      </div>
+
       {relatedExam.map(item => (
         <div key={'related-exam-' + item._id} className={'flex items-start mb-3'} onClick={() => handleClick(item)}>
           <div className={'h-[50px] aspect-square mr-2 rounded border-primary border-[1px] mt-1'}>

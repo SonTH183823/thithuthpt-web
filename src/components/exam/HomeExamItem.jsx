@@ -88,8 +88,8 @@ function HomeExamItem({item, isSearch = false}) {
           src={genURLImage(item.thumbnail)}
           alt="thumbnail image"
           placeholder={"blur"}
-          width={500}
-          height={300}
+          width={1000}
+          height={600}
           blurDataURL={genURLImage(item.thumbnail)}
           className={"rounded-tl-xl rounded-tr-xl !h-full object-cover"}
         /> : null}

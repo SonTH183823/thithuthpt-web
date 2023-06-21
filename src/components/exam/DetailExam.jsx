@@ -36,10 +36,10 @@ function DetailExam({isDoExam = false, isShowRs = true, item}) {
         setIsFavorite(true);
       }
     }
-  }, []);
+  }, [favoriteExams]);
   const handleFavorite = async (e) => {
     e.stopPropagation();
-    if (profile?._id) {
+    if (profile._id) {
       setIsFavorite(!isFavorite)
       const res = await ExamAPI.toggleFavorite({
         userId: profile._id,
@@ -51,13 +51,13 @@ function DetailExam({isDoExam = false, isShowRs = true, item}) {
         dispatch(updateFavoriteExams(array));
       } else {
         let temp = [...favoriteExams];
-        temp.push({exam: item, userId: profile._id});
+        temp.push({examId: item, userId: profile._id});
         dispatch(updateFavoriteExams(temp));
       }
       if (res.ok) {
         toast.success("Cập nhật thông tin thành công!", {
           position: "bottom-right",
-          autoClose: 3000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -68,7 +68,7 @@ function DetailExam({isDoExam = false, isShowRs = true, item}) {
       } else {
         toast.error("Đã có lỗi xảy ra!", {
           position: "bottom-right",
-          autoClose: 3000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

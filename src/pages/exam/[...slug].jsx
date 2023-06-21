@@ -1,6 +1,5 @@
 import InteractiveContainer from "@/components/interactive/InteractiveContainer";
 import React, {Fragment, useEffect, useState} from "react";
-import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 import DetailExam from "@/components/exam/DetailExam";
@@ -29,19 +28,7 @@ export async function getServerSideProps({params}) {
 export default function ExamDetail({exam}) {
   const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
-  const [isFavorite, setIsFavorite] = useState(null);
   const [relatedExam, setRelatedExam] = useState([]);
-  const favoriteExams = useSelector((state) => state.exam.favoriteExams);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-      if (favoriteExams && exam._id) {
-          const p = favoriteExams.find((i) => i.examId._id === exam._id);
-          if (p) {
-              setIsFavorite(true);
-          }
-      }
-  }, [favoriteExams]);
 
   useEffect(() => {
     (async () => {
@@ -53,7 +40,7 @@ export default function ExamDetail({exam}) {
             data: {subject}
           });
           if (res) {
-            const ftdt = res.data.filter(item => item._id !== exam._id)
+            const ftdt = res.filter(item => item._id !== exam._id)
             setRelatedExam(ftdt);
           }
         }

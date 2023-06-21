@@ -8,6 +8,8 @@ import PDFFile from "@/components/documents/PDFFile";
 import DocDetail from "@/components/documents/DocDetail";
 import {ExamAPI} from "../../apis/exam";
 import {DocumentAPI} from "../../apis/document";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 export async function getServerSideProps({params}) {
   let document = {};
@@ -28,6 +30,9 @@ export default function DocumentDetail({document}) {
   const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(null);
+  const [relatedDoc, setRelatedDoc] = useState([]);
+  const [newestDoc, setNewestDoc] = useState([]);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -38,25 +43,36 @@ export default function DocumentDetail({document}) {
   //         }
   //     }
   // }, [favoritePosts]);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  }, [])
 
-  // useEffect(() => {
-  //     (async () => {
-  //         try {
-  //             if (post.id) {
-  //                 const { province, district, ward, category, tradingForm } = post;
-  //                 const res = await PostAPI.getRelatedPost({
-  //                     id: post.id,
-  //                     data: { province, district, category, tradingForm },
-  //                 });
-  //                 if (res) {
-  //                     setRelatedPosts(res.relatedPosts);
-  //                 }
-  //             }
-  //         } catch (e) {
-  //             console.log(e);
-  //         }
-  //     })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        if (document._id) {
+          const {subject} = document; //add filter in here
+          const res = await DocumentAPI.getRelatedDocument({
+            id: document._id,
+            data: {subject}
+          });
+          if (res) {
+            const ftdt = res.filter(item => item._id !== document._id)
+            setRelatedDoc(ftdt);
+          }
+          const res1 = await DocumentAPI.getAllDocument();
+          if (res1) {
+            const newest = res1.data.filter(item => item._id !== document._id)
+            setNewestDoc(newest);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, [router.query]);
 
   return (
     <Fragment>
@@ -69,7 +85,11 @@ export default function DocumentDetail({document}) {
                   <DocDetail item={document}/>
                 </div>
                 <div className={"bg-base-100 md:p-4 p-3 rounded-xl mt-4"}>
-                  <PDFFile fileLink={document.link}/>
+                  {loading ? <div className={'text-center flex items-center space-x-2 justify-center'}>
+                      <FontAwesomeIcon icon={faSpinner} spin={true} className={'w-5'}/>
+                      <span>Đang tải tài liệu...</span>
+                    </div> :
+                    <PDFFile fileLink={document.link}/>}
                 </div>
                 <RatingComponents/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
@@ -78,10 +98,11 @@ export default function DocumentDetail({document}) {
               </div>
               <div className="block col-span-1 lg:flex flex-col">
                 <div className={"bg-base-100 rounded-xl px-4 sm:mt-0 mt-4"}>
-                  <RelatedDocuments idDoc={12}/>
+                  <RelatedDocuments type={0} relatedDoc={relatedDoc}/>
                 </div>
                 <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
-                  <RelatedDocuments idDoc={12} type={0}/>
+                  <RelatedDocuments relatedDoc={newestDoc}/>
+
                 </div>
               </div>
             </div>
