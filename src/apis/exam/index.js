@@ -39,7 +39,6 @@ export const ExamAPI = {
   },
 
   async getFavoriteExams(query) {
-    console.log(query)
     return await api.get(`/favoriteExam?${queryString.stringify(query)}`);
   },
 

@@ -78,7 +78,7 @@ export default function ExamDetail({exam}) {
                 </div>
                 <RatingComponents/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={exam._id}/>
+                  <InteractiveContainer postId={exam._id} userId={profile._id}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col">

@@ -1,5 +1,4 @@
-import Image from "next/image";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import CommentBox from "@/components/comment/CommentBox";
 import {useSelector} from "react-redux";
 import CommentItem from "../comment/CommentItem";
@@ -17,6 +16,7 @@ export default function InteractiveContainer({postId}) {
 
   //comment
   const [comments, setComments] = useState([]);
+  const [statusComments, setStatusComments] = useState([]);
   const [comment, setComment] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [videoURL, setVideoURL] = useState("");
@@ -170,14 +170,9 @@ export default function InteractiveContainer({postId}) {
     setComments([...temp]);
   };
 
-  const getCommentStatus = async () => {
-    if(profile._id){
-      const res = await commentAPI.getComments({
-        postId,
-        page,
-        perPage,
-      });
-    }
+  const getCommentStatus = async (listComment) => {
+    const commentId = listComment.map(item => item._id).toString()
+    return await commentAPI.getStatusComments({commentId})
   }
 
   const handleShowMoreComment = async () => {
@@ -189,6 +184,8 @@ export default function InteractiveContainer({postId}) {
       });
       if (res.data) {
         setComments([...comments, ...res.data]);
+        const sttCmt = await getCommentStatus(res.data)
+        setStatusComments(val => [...val, sttCmt])
         setPage(page + 1);
       }
     } catch (e) {
@@ -227,6 +224,10 @@ export default function InteractiveContainer({postId}) {
           setPage(2);
           setComments(res.data);
           setTotalComment(res.total);
+          if (res.data.length) {
+            const statusCmt = await getCommentStatus(res.data)
+            setStatusComments(statusCmt)
+          }
         }
       } catch (e) {
         console.log(e);
@@ -277,6 +278,15 @@ export default function InteractiveContainer({postId}) {
     }
   };
 
+  const filterStatusComment = (idCmt) => {
+    for (const statusCmt of statusComments) {
+      if (statusCmt.commentId === idCmt) {
+        return statusCmt
+      }
+    }
+    return null
+  }
+
   return (
     <div>
       <h3>Bình luận</h3>
@@ -308,6 +318,7 @@ export default function InteractiveContainer({postId}) {
         {comments.length === 0 ? <div className={'my-5 text-center'}>Chưa có bình luận!</div> : <>
           {comments?.map((comment) => (
             <CommentItem
+              statusCmt={filterStatusComment(comment._id)}
               comment={comment}
               key={comment._id}
               profile={profile}

@@ -8,11 +8,10 @@ moment.locale("vi");
 import Image from "next/image";
 import React, {Fragment, useEffect, useState} from "react";
 import Lightbox from "react-image-lightbox";
-import {convertBase64} from "utils/uploadImage";
 import CommentInput from "./CommentInput";
 import ModalComfirmDeleteComment from "../modal/ModalComfirmDeleteComment";
 import Avatar from "../user/Avatar";
-import {BigPlayButton, ControlBar, Player, LoadingSpinner, VolumeMenuButton} from "video-react";
+import {BigPlayButton, ControlBar, Player} from "video-react";
 import CommentBoxReply from "./CommentBoxReply";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -26,17 +25,22 @@ import {genURLImage} from "../../utils/common";
 import {uploadAPI} from "../../apis/upload";
 
 
-export default function CommentItem({
-                                      comment,
-                                      profile,
-                                      setComment,
-                                      setComments,
-                                      handleDeleteComment: handleDeleteCommentProp,
-                                      handleShowMoreReplyComment: showMoreReplyComment,
-                                      handleUpdateComment: handleUpdateCommentProp,
-                                      handlePostCommentReply,
-                                      totalReplyProp,
-                                    }) {
+export default function CommentItem(
+  {
+    statusCmt,
+    comment,
+    profile,
+    setComment,
+    setComments,
+    handleDeleteComment: handleDeleteCommentProp,
+    handleShowMoreReplyComment: showMoreReplyComment,
+    handleUpdateComment: handleUpdateCommentProp,
+    handlePostCommentReply,
+    totalReplyProp,
+  }) {
+  const [numLike, setNumLike] = useState(0)
+  const [numDisLike, setNumDisLike] = useState(0)
+  const [statusComment, setStatusCmt] = useState(statusCmt)
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentEditInput, setCommentEditInput] = useState();
   const [newComment, setNewComment] = useState("");
@@ -61,31 +65,101 @@ export default function CommentItem({
     setVideoURL("");
   };
 
-  // useEffect(() => {
-  //   if (comment.firstChild) {
-  //   }
-  // }, [comment]);
+  useEffect(() => {
+    setStatusCmt(statusCmt)
+  }, [statusCmt]);
+
+  const checkStatusCommentByValue = (val) => {
+    return statusComment?.status === val;
+  }
+
+  const updateStatus = async (like, dislike) => {
+    const data = {
+      ...comment,
+      userId: profile._id,
+      like,
+      dislike
+    }
+    await commentAPI.updateComment(data, comment._id)
+  }
+
+  const toggleStatusCmt = async (val) => {
+    let lc = numLike
+    let dlc = numDisLike
+    if (statusComment) {
+      if (statusComment.status === val) {
+        setStatusCmt(null)
+        if (val === 1) {
+          setNumLike(numLike - 1)
+          lc = lc - 1
+        } else {
+          setNumDisLike(numDisLike - 1)
+          dlc = dlc - 1
+        }
+        if (statusComment._id) {
+          await commentAPI.deleteStatusComment(statusComment._id)
+        } else {
+          await commentAPI.deleteStatusCommentNotId(statusCmt)
+        }
+        await updateStatus(lc, dlc)
+      } else {
+        const newStt = {
+          ...statusComment,
+          status: val
+        }
+        setStatusCmt(newStt)
+        if (val === 1) {
+          setNumLike(numLike + 1)
+          setNumDisLike(numDisLike - 1)
+          lc = lc + 1
+          dlc = dlc - 1
+        } else {
+          setNumDisLike(numDisLike + 1)
+          setNumLike(numLike - 1)
+          lc = lc - 1
+          dlc = dlc + 1
+        }
+        await commentAPI.updateStatusComment(newStt, statusComment._id)
+        await updateStatus(lc, dlc)
+      }
+    } else {
+      setStatusCmt({status: val, commentId: comment._id, userId: profile._id})
+      if (val === 1) {
+        setNumLike(numLike + 1)
+        lc = lc + 1
+      } else {
+        setNumDisLike(numDisLike + 1)
+        dlc = dlc + 1
+      }
+      await commentAPI.createStatusComment({
+        commentId: comment._id,
+        userId: profile._id,
+        status: val
+      })
+      await updateStatus(lc, dlc)
+    }
+  }
 
   const checkCommentUser = (userId) => {
     return (userId === profile._id || userId?._id === profile._id)
   }
 
-  useEffect(() => {
-    if (comment.firstChild) {
-      setTotalReply(totalReplyProp || 3);
-      if (totalReplyProp > 1) {
-        setLoadMoreReply(true);
-      } else if (
-        totalReplyProp === totalReply &&
-        totalReply > 1 &&
-        !isClickShowMore
-      ) {
-        setLoadMoreReply(true);
-      } else {
-        setLoadMoreReply(false);
-      }
-    }
-  }, [comment]);
+  // useEffect(() => {
+  //   if (comment.firstChild) {
+  //     setTotalReply(totalReplyProp || 3);
+  //     if (totalReplyProp > 1) {
+  //       setLoadMoreReply(true);
+  //     } else if (
+  //       totalReplyProp === totalReply &&
+  //       totalReply > 1 &&
+  //       !isClickShowMore
+  //     ) {
+  //       setLoadMoreReply(true);
+  //     } else {
+  //       setLoadMoreReply(false);
+  //     }
+  //   }
+  // }, [comment]);
 
   useEffect(() => {
     (async () => {
@@ -95,6 +169,8 @@ export default function CommentItem({
       if (comment.videoAttach) {
         setVideoURL(comment.videoAttach);
       }
+      setNumLike(comment.like)
+      setNumDisLike(comment.dislike)
     })();
   }, [comment]);
 
@@ -386,27 +462,33 @@ export default function CommentItem({
         </div>
       </div>
       {!showEditCommentInput && !comment.parentId && (
-        <div className={"ml-14 flex items-center space-x-3 text-sm"}>
-          <div className={'ml-3 hover:text-primary cursor-pointer flex items-center'}>
-            <Image src={likegray} alt={''} className={'w-6 h-6'}/>
-            {width > 600 ? 'Hữu ích' : ''} ({comment.like})
+        <div className={"ml-14 flex items-center space-x-3 text-sm select-none"}>
+          <div
+            className={`ml-3 hover:text-primary cursor-pointer flex items-center ${checkStatusCommentByValue(1) ? 'text-primary' : ''}`}
+            onClick={() => toggleStatusCmt(1)}
+          >
+            <Image src={checkStatusCommentByValue(1) ? like : likegray} alt={''} className={'w-6 h-6'}/>
+            {width > 600 ? 'Hữu ích' : ''} ({numLike})
           </div>
           <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
-          <div className={'ml-3 hover:text-[#E44D04] cursor-pointer flex items-center'}>
-            {/*<Image src={dislike} alt={''} className={'w-6 h-6'}/>*/}
-            <Image src={likegray} alt={''} className={'w-6 h-6 rotate-180'}/>
-            {width > 600 ? 'Không hữu ích' : ''} ({comment.dislike})
+          <div
+            className={`ml-3 hover:text-[#E44D04] cursor-pointer flex items-center ${checkStatusCommentByValue(2) ? 'text-[#E44D04]' : ''}`}
+            onClick={() => toggleStatusCmt(2)}
+          >
+            {checkStatusCommentByValue(2) ? <Image src={dislike} alt={''} className={'w-6 h-6 rotate-180'}/> :
+              <Image src={likegray} alt={''} className={'w-6 h-6 rotate-180'}/>}
+            {width > 600 ? 'Không hữu ích' : ''} ({numDisLike})
           </div>
-          <div className={"w-1 h-1 rounded-full bg-gray-400"}></div>
-          <div className={"cursor-pointer"} onClick={toggleShowCommentInput}>
-            {showCommentInput ? (
-              <div>
-                <div className={"px-2 py-1 rounded-md bg-base-200"}>Hủy</div>
-              </div>
-            ) : (
-              <span>Trả lời</span>
-            )}
-          </div>
+          {/*<div className={"w-1 h-1 rounded-full bg-gray-400"}></div>*/}
+          {/*<div className={"cursor-pointer"} onClick={toggleShowCommentInput}>*/}
+          {/*  {showCommentInput ? (*/}
+          {/*    <div>*/}
+          {/*      <div className={"px-2 py-1 rounded-md bg-base-200"}>Hủy</div>*/}
+          {/*    </div>*/}
+          {/*  ) : (*/}
+          {/*    <span>Trả lời</span>*/}
+          {/*  )}*/}
+          {/*</div>*/}
         </div>
       )}
       {showCommentInput && (

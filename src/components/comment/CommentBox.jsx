@@ -22,7 +22,6 @@ export default function CommentBox({
                                      setVideoURL,
                                      loading,
                                    }) {
-  console.log(imageURL, videoURL)
   return (
     <div className={`flex items-start space-x-3`}>
       <Avatar sizeAvatar="w-12" avatar={profile.avatar}/>

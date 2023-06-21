@@ -10,11 +10,6 @@ export const commentAPI = {
     const query = {page, perPage};
     return await api.get(`/comment/${postId}?${queryString.stringify(query)}`);
   },
-  async getStatusComments({commentIds, userId}) {
-    const query = {commentIds, userId};
-    return await api.get(`/commentStatus?${queryString.stringify(query)}`);
-  },
-
   async updateComment(data, id) {
     return await api.put(`/comment/${id}`, data)
   },
@@ -52,5 +47,26 @@ export const commentAPI = {
 
   async deleteComment(commentId) {
     return await api.delete(`/comment/${commentId}`);
+  },
+
+  // status comment user
+  async getStatusComments({commentId, userId}) {
+    const query = {commentId, userId};
+    return await api.get(`/commentStatus?${queryString.stringify(query)}`);
+  },
+
+  async createStatusComment(data) {
+    return await api.post(`/commentStatus`, data);
+  },
+
+  async updateStatusComment(data, id) {
+    return await api.put(`/commentStatus/${id}`, data);
+  },
+
+  async deleteStatusComment(id) {
+    return await api.delete(`/commentStatus/${id}`);
+  },
+  async deleteStatusCommentNotId(data) {
+    return await api.post(`/delCommentStatus?${queryString.stringify(data)}`);
   },
 };
