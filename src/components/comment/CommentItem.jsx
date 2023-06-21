@@ -76,7 +76,7 @@ export default function CommentItem(
   const updateStatus = async (like, dislike) => {
     const data = {
       ...comment,
-      userId: comment._id,
+      userId: comment.userId._id,
       like,
       dislike
     }
@@ -84,7 +84,7 @@ export default function CommentItem(
   }
 
   const toggleStatusCmt = async (val) => {
-    if(profile._id){
+    if (profile._id) {
       let lc = numLike
       let dlc = numDisLike
       if (statusComment) {
@@ -139,7 +139,7 @@ export default function CommentItem(
         })
         await updateStatus(lc, dlc)
       }
-    }else {
+    } else {
       const modal = document.getElementById("modal-require-login-id");
       if (modal) {
         modal.click();

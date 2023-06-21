@@ -6,63 +6,99 @@ import instagram from "@/assets/images/social/instagram.svg";
 import twitter from "@/assets/images/social/twitter.svg";
 import Image from "next/image";
 import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import {NewAPI} from "../../apis/new";
+import {strToSlug} from "../../utils/common";
+import {DocumentAPI} from "../../apis/document";
+
+const about = [
+  {id: 1, title: "Về chúng tôi", path: "/about"},
+  {id: 4, title: "Blog", path: `/blog`},
+];
+const services = [
+  {
+    id: 1,
+    title: "Toán Học",
+    path: "/filter?subject=1",
+  },
+  {
+    id: 2,
+    title: "Vật Lý",
+    path: "/filter?subject=2",
+  },
+  {
+    id: 3,
+    title: "Hóa Học",
+    path: "/filter?subject=3",
+  },
+  {
+    id: 4,
+    title: "Sinh Học",
+    path: "/filter?subject=4",
+  },
+  {
+    id: 5,
+    title: "Tiếng Anh",
+    path: "/filter?subject=5",
+  },
+  {
+    id: 6,
+    title: "Lịch sử",
+    path: "/filter?subject=6",
+  },
+  {
+    id: 7,
+    title: "Địa Lý",
+    path: "/filter?subject=7",
+  },
+  {
+    id: 8,
+    title: "GDCD",
+    path: "/filter?subject=8",
+  },
+];
 
 export default function Footer() {
   const router = useRouter();
-  const about = [
-    {id: 1, title: "Về chúng tôi", path: "/about"},
-    {id: 4, title: "Blog", path: `/blog`},
-  ];
-  const news = [
-    {id: 1, title: "Tin 1", path: "/about"},
-    {id: 4, title: "Tin 2", path: `/blog`},
-  ];
-  const services = [
-    {
-      id: 1,
-      title: "Toán Học",
-      path: "/filter?subject=1",
-    },
-    {
-      id: 2,
-      title: "Vật Lý",
-      path: "/filter?subject=2",
-    },
-    {
-      id: 3,
-      title: "Hóa Học",
-      path: "/filter?subject=3",
-    },
-    {
-      id: 4,
-      title: "Sinh Học",
-      path: "/filter?subject=4",
-    },
-    {
-      id: 5,
-      title: "Tiếng Anh",
-      path: "/filter?subject=5",
-    },
-    {
-      id: 6,
-      title: "Lịch sử",
-      path: "/filter?subject=6",
-    },
-    {
-      id: 7,
-      title: "Địa Lý",
-      path: "/filter?subject=7",
-    },
-    {
-      id: 8,
-      title: "GDCD",
-      path: "/filter?subject=8",
-    },
-  ];
+  const [news, setNewOutstandings] = useState([]);
+  const [docs, setDocs] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await NewAPI.getNews({
+          active: 1,
+          page: 1,
+          perPage: 5,
+        });
+        if (res && res?.data) {
+          setNewOutstandings(res.data);
+        }
+        const res1 = await DocumentAPI.filterDocument({
+          perPage: 5,
+          active: 1,
+        });
+        if (res1.data) {
+          setDocs(res1.data)
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
 
   const handleClick = (item) => {
     router.push(item.path);
   };
+
+  const handleClickNews = (item) => {
+    const slug = strToSlug(item.title);
+    router.push(`/news/${slug}-${item._id}`);
+  };
+  const handleClickDocs = (item) => {
+    const slug = strToSlug(item.title);
+    router.push(`/documents/${slug}-${item._id}`);
+  };
+
   return (
     <div className="bg-[#212121] lg:py-8 py-4 padding-mobile relative bottom-0">
       <div className="container mx-auto text-white px-6 md:px-4 sm:px-4">
@@ -82,29 +118,29 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <TitleWithUnderLine title="Tài liệu ôn tập"/>
-            <ul className={"my-4"}>
-              {about.map((item) => (
-                <li
-                  className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary w-fit"}
-                  key={item.id}
-                  onClick={() => handleClick(item)}
-                >
-                  {item.title}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
             <TitleWithUnderLine title="Tin tức"/>
             <ul className={"my-4"}>
               {news.map((item) => (
                 <li
                   className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary"}
-                  key={item.id}
-                  onClick={() => handleClick(item)}
+                  key={item._id}
+                  onClick={() => handleClickNews(item)}
                 >
-                  {item.title}
+                  <span className={'line-clamp-2'}>{item.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <TitleWithUnderLine title="Tài liệu ôn tập"/>
+            <ul className={"my-4"}>
+              {docs.map((item) => (
+                <li
+                  className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary w-fit"}
+                  key={item._id}
+                  onClick={() => handleClickDocs(item)}
+                >
+                  <span className={'line-clamp-2'}>{item.title}</span>
                 </li>
               ))}
             </ul>

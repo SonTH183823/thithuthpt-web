@@ -9,7 +9,7 @@ import BannerSection from "@/components/blog/BannerSection";
 import {NewAPI} from "../../apis/new";
 
 const Blog = () => {
-  const [newOutstandings, setNewOutstandings] = useState([1, 2, 3, 4, 5]);
+  const [newOutstandings, setNewOutstandings] = useState([]);
   const [news, setNews] = useState([]);
   const [categories, setCategories] = useState([]);
   const router = useRouter();
