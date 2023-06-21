@@ -16,7 +16,9 @@ function ItemSelect({checked, handleSelect, label, hasIcon = true, mobile = fals
          onClick={() => handleSelect()}>
       {(hasIcon && checked) && <i className={`fa-solid fa-check text-primary`}/>}
       <label className={`flex-1 cursor-pointer pl-3 select-none ${checked ? 'text-primary font-semibold' : ''}`}>
-        {label}
+        <div data-tooltip-id="my-tooltip"
+             data-tooltip-content={label.length > 25 ? label : ''}
+             className={'line-clamp-1'}>{label}</div>
       </label>
     </div>
   );

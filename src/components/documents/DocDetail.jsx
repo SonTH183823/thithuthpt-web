@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import TitleExamItem from "@/components/exam/TitleExamItem";
 import {CharacteristicsItem} from "@/components/characteristics/CharacteristicsItem";
 import star from "@/assets/images/svg/star.svg";
@@ -10,12 +10,10 @@ import ModalReportPost from "@/components/modal/ModalReportPost";
 import ModalShare from "@/components/modal/ModalShare";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip as ReactTooltip} from "react-tooltip";
-import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import Link from "next/link";
 
 function DocDetail({item, notShowBtn = true}) {
-  const router = useRouter();
   const profile = useSelector((state) => state.auth.profile);
   const handleReport = () => {
     if (profile?._id) {

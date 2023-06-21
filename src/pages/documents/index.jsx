@@ -10,6 +10,7 @@ import DocSekeleton from "@/components/Sekeleton/DocSekeleton";
 import ButtonSeeMore from "@/components/button/ButtonSeeMore";
 import PrimaryDocItem from "@/components/documents/PrimaryDocItem";
 import {DocumentAPI} from "../../apis/document";
+import {Tooltip as ReactTooltip} from "react-tooltip";
 
 const subjectList = [
   {
@@ -318,6 +319,7 @@ function Documents() {
           </div>
         </div>
       </div>
+      <ReactTooltip id={'my-tooltip'}/>
     </div>
   );
 };
