@@ -76,7 +76,7 @@ export default function CommentItem(
   const updateStatus = async (like, dislike) => {
     const data = {
       ...comment,
-      userId: profile._id,
+      userId: comment._id,
       like,
       dislike
     }
