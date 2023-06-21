@@ -69,6 +69,30 @@ export const genTagExam = (item) => {
   }
 }
 
+export const genTagDoc = (item) => {
+  const date = new Date()
+  let data = {}
+  if (item?.outstanding) {
+    data = {
+      label: 'Nổi bật',
+      value: 4
+    }
+    return data
+  } else if (date.getTime() - (item?.createdAt * 1000) <= 259200000) {
+    data = {
+      label: 'Mới nhất',
+      value: 2
+    }
+    return data
+  } else {
+    data = {
+      label: subjectArrConfig[(item?.subject - 1) || 0].label,
+      value: Math.round(item?.subject / 2)
+    }
+    return data
+  }
+}
+
 export const generateDate = (date) => {
   const dateFormatArray = formatDate(date).split("/");
   if (dateFormatArray[1].charAt(0) === "0") {
@@ -107,3 +131,6 @@ export const formatNumberView = (viewCount) => {
   }
 }
 
+export const genURLDocDrive = () => {
+
+}

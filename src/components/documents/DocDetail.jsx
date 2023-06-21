@@ -2,31 +2,21 @@ import React, {useState} from 'react';
 import TitleExamItem from "@/components/exam/TitleExamItem";
 import {CharacteristicsItem} from "@/components/characteristics/CharacteristicsItem";
 import star from "@/assets/images/svg/star.svg";
-import time from "@/assets/images/svg/time.svg";
-import question from "@/assets/images/svg/question-number.svg";
-import list_check from "@/assets/images/svg/list-check.svg";
 import {kFormatter} from "../../utils/common";
 import list_view from "@/assets/images/svg/list-view.svg";
 import date from "@/assets/images/svg/calendar.svg";
 import {formatDate} from "../../utils/moment";
-import ButtonPrimary from "@/components/button/ButtonPrimary";
 import ModalReportPost from "@/components/modal/ModalReportPost";
 import ModalShare from "@/components/modal/ModalShare";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip as ReactTooltip} from "react-tooltip";
-import RadioWithoutValidate from "@/components/input/RadioWithoutValidate";
-import ModalConfirmStartExam from "@/components/modal/ModalConfirmStartExam";
 import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import Link from "next/link";
 
-function DocDetail({i, notShowBtn = true}) {
+function DocDetail({item, notShowBtn = true}) {
   const router = useRouter();
-  const item = {
-    title: 'Hệ thống bài tập trắc nghiệm phần "Tích phân" được phân dạng và có lời giải chi tiết',
-  }
   const profile = useSelector((state) => state.auth.profile);
-  const [isFavorite, setIsFavorite] = useState(null);
   const handleReport = () => {
     if (profile?._id) {
       const modal = document.getElementById("modal-report-post-id");
@@ -60,7 +50,7 @@ function DocDetail({i, notShowBtn = true}) {
             data-tooltip-id="my-tooltip"
             data-tooltip-content={'Tải xuống'}
             className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
-            href={'https://drive.google.com/file/d/1cMU7TMTzFFEZXWSRPvqSEK-qy2VrY4bV/view'}
+            href={item.link}
             target={'_blank'}
           >
             <i className="fa-regular fa-download text-xl"></i>
@@ -85,22 +75,20 @@ function DocDetail({i, notShowBtn = true}) {
       <div className={'bg-base-200 rounded-xl p-3'}>
         <div className={'flex justify-between space-x-6'}>
           <CharacteristicsItem icon={star}>
-            5.0
+            {item.rate?.toFixed(1)}
           </CharacteristicsItem>
           <CharacteristicsItem icon={list_view}>
-            {kFormatter(12345)} lượt xem
+            {kFormatter(item.numberView)} lượt xem
           </CharacteristicsItem>
           <CharacteristicsItem icon={date}>
-            {formatDate(new Date())}
+            {formatDate(item.createdAt)}
           </CharacteristicsItem>
         </div>
       </div>
-      <div className={'bg-base-200 rounded-xl p-3 mt-3'}>
-        <div>Tài liệu gồm có 23 trang Word đẹp và chuẩn. Kèm file PDF để các em có thể lưu
-          nhanh về điện thoại để làm tư liệu học tập.
-        </div>
+      <div className={'bg-base-200 rounded-xl p-3 mt-3 flex-1 h-full'}>
+        <span className={'line-clamp-3'}>{item.description}</span>
       </div>
-      <ModalReportPost id="modal-report-document" objectId={item.id}/>
+      <ModalReportPost id="modal-report-document" objectId={item._id}/>
       <ModalShare id="modal-share-document" title={item.title}/>
       <ReactTooltip id={'my-tooltip'}/>
     </div>

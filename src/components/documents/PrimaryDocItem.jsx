@@ -1,45 +1,31 @@
 import * as React from "react";
-import UserInfo from "../user/UserInfo";
-import {CharacteristicsItemIcon} from "../characteristics/CharacteristicsItem";
-import math from "../../assets/images/test/math.jpg"
 import Image from "next/image";
-import Dot from "../common/Dot";
-import {strToSlug} from "utils/common";
+import {genURLImage, strToSlug} from "utils/common";
 import {useRouter} from "next/router";
-import ExamInfoHistory from "@/components/exam/ExamInfoHistory";
-import ExamTag from "@/components/exam/ExamTag";
 import DocDetail from "@/components/documents/DocDetail";
+import DocTag from "@/components/documents/DocTag";
 
 export default function PrimaryDocItem({item}) {
-  const post = {
-    title: 'Đề thi thử môn Lý trường THPT Phạm Văn Đồng - Gia Lai - 2019'
-  }
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/documents/${strToSlug(post.title)}-${post.id}`);
+    router.push(`/documents/${strToSlug(item.title)}-${item._id}`);
   };
   return (
     <div
-      className={`md:flex box-shadow rounded-xl relative bg-base-100 cursor-pointer mb-4`}
+      className={`md:flex box-shadow rounded-xl relative bg-base-100 cursor-pointer mb-4 min-h-[200px]`}
       onClick={handleClick}
     >
       <div className="w-full h-[200px] md:h-auto md:w-[60%] relative">
         <Image
-          // src={post?.images}
-          src={math}
+          src={genURLImage(item.thumbnail)}
           layout={"fill"}
           alt={"thumb-nail"}
-          className={
-            "object-cover md:rounded-tl-xl md:rounded-bl-xl rounded-tl-xl rounded-tr-xl md:rounded-tr-none"
-          }
+          className={"object-cover md:rounded-tl-xl md:rounded-bl-xl rounded-tl-xl rounded-tr-xl md:rounded-tr-none"}
         />
-        <ExamTag
-          tag={'Tag ne'}
-          category={2}
-        />
+        <DocTag item={item} />
       </div>
       <div className="w-full p-2">
-        <DocDetail notShowBtn={false}/>
+        <DocDetail notShowBtn={false} item={item}/>
       </div>
 
     </div>

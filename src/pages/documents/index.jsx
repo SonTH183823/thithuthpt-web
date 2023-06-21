@@ -4,7 +4,6 @@ import {
   subjectArrConfig,
   xapSepConfig
 } from "../../configs/configs";
-import {ExamAPI} from "../../apis/exam";
 import ItemSelect from "@/components/filter/ItemSelect";
 import Select from "react-select";
 import DocSekeleton from "@/components/Sekeleton/DocSekeleton";
@@ -63,28 +62,31 @@ function Documents() {
     }
   };
 
-  useEffect(() => {
-    if (subject) {
-      let filterParams = {};
-      if ("subject" in router.query) {
-        delete router.query.subject;
-      }
-      filterParams.subject = subject;
-      if ("outstanding" in router.query) {
-        filterParams.outstanding = 1
-      }
-      const q = Object.fromEntries(
-        Object.entries(filterParams).filter(([_, v]) => v)
-      );
-      let queryTemp = [];
-      for (const key in q) {
-        queryTemp.push(`${key}=${q[key]}`);
-      }
-      router.push(`/documents?${queryTemp.join("&")}`);
-    } else {
-      router.push(`/documents`);
-    }
-  }, [subject])
+  // useEffect(() => {
+  //   if (subject) {
+  //     let filterParams = {};
+  //     if ("subject" in router.query) {
+  //       delete router.query.subject;
+  //     }
+  //     filterParams.subject = subject;
+  //     if ("outstanding" in router.query) {
+  //       filterParams.outstanding = 1
+  //     }
+  //     if ("category" in router.query) {
+  //       filterParams.category = router.query.category
+  //     }
+  //     const q = Object.fromEntries(
+  //       Object.entries(filterParams).filter(([_, v]) => v)
+  //     );
+  //     let queryTemp = [];
+  //     for (const key in q) {
+  //       queryTemp.push(`${key}=${q[key]}`);
+  //     }
+  //     router.push(`/documents?${queryTemp.join("&")}`);
+  //   } else {
+  //     router.push(`/documents`);
+  //   }
+  // }, [subject])
 
   useEffect(() => {
     const getPartSubject = async () => {
@@ -93,7 +95,6 @@ function Documents() {
           const res = await DocumentAPI.getPartSubject({subject})
           if (res.data) {
             setCate(res.data)
-            console.log(res.data)
           }
         } catch (e) {
           console.log(e)
@@ -110,7 +111,7 @@ function Documents() {
 
   useEffect(() => {
     (async () => {
-      await getDocs(0);
+      await getDocs(1);
     })();
     if (Object.keys(router.query).length) {
       if (router.query?.subject) setSubject(+router.query.subject)
@@ -218,7 +219,7 @@ function Documents() {
             </div> : null}
             <div
               className={'shadow-xl mx-3 flex justify-between bg-white px-3 rounded-md items-center text-sm md:text-base'}>
-              <div>Tìm thấy <span className={'font-bold'}>69</span> kết quả</div>
+              <div>Tìm thấy <span className={'font-bold'}>{total}</span> kết quả</div>
               <div className={'flex items-center space-x-2'}>
                 <div className={'font-semibold'}>Sắp xếp</div>
                 <Select
@@ -251,11 +252,11 @@ function Documents() {
                     </Fragment>
                   ) : (
                     <Fragment>
-                      {exams.map((post) => (
-                        <PrimaryDocItem key={post.id} item={post}/>
+                      {exams.map((doc) => (
+                        <PrimaryDocItem key={doc._id} item={doc}/>
                       ))}
 
-                      {!loadMore && (
+                      {loadMore && (
                         <Fragment>
                           <DocSekeleton/>
                           <DocSekeleton/>
