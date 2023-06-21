@@ -18,7 +18,7 @@ const Favorites = () => {
         </div>
       ) : (
         <div className="py-8 text-center">
-          Hiện tại, không có tin yêu thích.
+         Bạn chưa yêu thích đề thi nào 😢
         </div>
       )}
     </div>

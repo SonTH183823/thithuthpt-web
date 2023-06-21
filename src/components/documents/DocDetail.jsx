@@ -27,53 +27,6 @@ function DocDetail({i, notShowBtn = true}) {
   }
   const profile = useSelector((state) => state.auth.profile);
   const [isFavorite, setIsFavorite] = useState(null);
-  const handleFavorite = async (e) => {
-    e.stopPropagation();
-    if (profile?._id) {
-      setIsFavorite(!isFavorite)
-      //     const res = await PostAPI.toggleFavorite({
-      //         userId: profile.id,
-      //         postId: item.id,
-      //     });
-      //     setIsFavorite(!isFavorite);
-      //     if (isFavorite) {
-      //         const array = favoritePosts.filter((i) => i.post.id !== item.id);
-      //         dispatch(updateFavoritePosts(array));
-      //     } else {
-      //         let temp = [...favoritePosts];
-      //         temp.push({ post: item, userFavorite: profile });
-      //         dispatch(updateFavoritePosts(temp));
-      //     }
-      //     if (res.ok) {
-      //         toast.success("Cập nhật thông tin thành công!", {
-      //             position: "bottom-right",
-      //             autoClose: 5000,
-      //             hideProgressBar: false,
-      //             closeOnClick: true,
-      //             pauseOnHover: true,
-      //             draggable: true,
-      //             progress: undefined,
-      //             theme: "colored",
-      //         });
-      //     } else {
-      //         toast.error("Đã có lỗi xảy ra!", {
-      //             position: "bottom-right",
-      //             autoClose: 5000,
-      //             hideProgressBar: false,
-      //             closeOnClick: true,
-      //             pauseOnHover: true,
-      //             draggable: true,
-      //             progress: undefined,
-      //             theme: "colored",
-      //         });
-      //     }
-    } else {
-      const modal = document.getElementById("modal-require-login");
-      if (modal) {
-        modal.click();
-      }
-    }
-  };
   const handleReport = () => {
     if (profile?._id) {
       const modal = document.getElementById("modal-report-post-id");
@@ -94,22 +47,7 @@ function DocDetail({i, notShowBtn = true}) {
       modal.click();
     }
   };
-  const startExam = () => {
-    if (profile?._id) {
-      const modal = document.getElementById("modal-confirm-start-exam-id");
-      if (modal) {
-        modal.click();
-      }
-    } else {
-      const modal = document.getElementById("modal-require-login");
-      if (modal) {
-        modal.click();
-      }
-    }
-  };
-  const enterExam = () => {
-    router.replace('/do-exam/a');
-  }
+
   return (
     <div>
       <div className={"flex justify-between mb-2"}>
@@ -127,18 +65,6 @@ function DocDetail({i, notShowBtn = true}) {
           >
             <i className="fa-regular fa-download text-xl"></i>
           </Link>
-          <div
-            data-tooltip-id="my-tooltip"
-            data-tooltip-content={'Yêu thích'}
-            className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
-            onClick={(e) => handleFavorite(e)}
-          >
-            {isFavorite ? (
-              <i className="fa-solid fa-heart text-[#f9595f] text-xl"></i>
-            ) : (
-              <i className="fa-light fa-heart text-xl"></i>
-            )}
-          </div>
           <div
             data-tooltip-id="my-tooltip"
             data-tooltip-content={'Chia sẻ'}

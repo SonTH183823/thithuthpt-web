@@ -84,59 +84,66 @@ export default function CommentItem(
   }
 
   const toggleStatusCmt = async (val) => {
-    let lc = numLike
-    let dlc = numDisLike
-    if (statusComment) {
-      if (statusComment.status === val) {
-        setStatusCmt(null)
-        if (val === 1) {
-          setNumLike(numLike - 1)
-          lc = lc - 1
+    if(profile._id){
+      let lc = numLike
+      let dlc = numDisLike
+      if (statusComment) {
+        if (statusComment.status === val) {
+          setStatusCmt(null)
+          if (val === 1) {
+            setNumLike(numLike - 1)
+            lc = lc - 1
+          } else {
+            setNumDisLike(numDisLike - 1)
+            dlc = dlc - 1
+          }
+          if (statusComment._id) {
+            await commentAPI.deleteStatusComment(statusComment._id)
+          } else {
+            await commentAPI.deleteStatusCommentNotId(statusCmt)
+          }
+          await updateStatus(lc, dlc)
         } else {
-          setNumDisLike(numDisLike - 1)
-          dlc = dlc - 1
+          const newStt = {
+            ...statusComment,
+            status: val
+          }
+          setStatusCmt(newStt)
+          if (val === 1) {
+            setNumLike(numLike + 1)
+            setNumDisLike(numDisLike - 1)
+            lc = lc + 1
+            dlc = dlc - 1
+          } else {
+            setNumDisLike(numDisLike + 1)
+            setNumLike(numLike - 1)
+            lc = lc - 1
+            dlc = dlc + 1
+          }
+          await commentAPI.updateStatusComment(newStt, statusComment._id)
+          await updateStatus(lc, dlc)
         }
-        if (statusComment._id) {
-          await commentAPI.deleteStatusComment(statusComment._id)
-        } else {
-          await commentAPI.deleteStatusCommentNotId(statusCmt)
-        }
-        await updateStatus(lc, dlc)
       } else {
-        const newStt = {
-          ...statusComment,
-          status: val
-        }
-        setStatusCmt(newStt)
+        setStatusCmt({status: val, commentId: comment._id, userId: profile._id})
         if (val === 1) {
           setNumLike(numLike + 1)
-          setNumDisLike(numDisLike - 1)
           lc = lc + 1
-          dlc = dlc - 1
         } else {
           setNumDisLike(numDisLike + 1)
-          setNumLike(numLike - 1)
-          lc = lc - 1
           dlc = dlc + 1
         }
-        await commentAPI.updateStatusComment(newStt, statusComment._id)
+        await commentAPI.createStatusComment({
+          commentId: comment._id,
+          userId: profile._id,
+          status: val
+        })
         await updateStatus(lc, dlc)
       }
-    } else {
-      setStatusCmt({status: val, commentId: comment._id, userId: profile._id})
-      if (val === 1) {
-        setNumLike(numLike + 1)
-        lc = lc + 1
-      } else {
-        setNumDisLike(numDisLike + 1)
-        dlc = dlc + 1
+    }else {
+      const modal = document.getElementById("modal-require-login-id");
+      if (modal) {
+        modal.click();
       }
-      await commentAPI.createStatusComment({
-        commentId: comment._id,
-        userId: profile._id,
-        status: val
-      })
-      await updateStatus(lc, dlc)
     }
   }
 
