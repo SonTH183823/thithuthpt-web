@@ -75,12 +75,10 @@ export default function CommentItem(
 
   const updateStatus = async (like, dislike) => {
     const data = {
-      ...comment,
-      userId: comment.userId._id,
       like,
       dislike
     }
-    await commentAPI.updateComment(data, comment._id)
+    await commentAPI.updateReactComment(data, comment._id)
   }
 
   const toggleStatusCmt = async (val) => {
@@ -124,7 +122,6 @@ export default function CommentItem(
           await updateStatus(lc, dlc)
         }
       } else {
-        setStatusCmt({status: val, commentId: comment._id, userId: profile._id})
         if (val === 1) {
           setNumLike(numLike + 1)
           lc = lc + 1
@@ -132,11 +129,12 @@ export default function CommentItem(
           setNumDisLike(numDisLike + 1)
           dlc = dlc + 1
         }
-        await commentAPI.createStatusComment({
+        const res = await commentAPI.createStatusComment({
           commentId: comment._id,
           userId: profile._id,
           status: val
         })
+        setStatusCmt(res)
         await updateStatus(lc, dlc)
       }
     } else {

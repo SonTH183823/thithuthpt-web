@@ -13,6 +13,9 @@ export const commentAPI = {
   async updateComment(data, id) {
     return await api.put(`/comment/${id}`, data)
   },
+  async updateReactComment(data, id) {
+    return await api.put(`/reactComment/${id}`, data)
+  },
 
   async getReplyComment({commentId, offset, limit}) {
     const query = {offset, limit};
