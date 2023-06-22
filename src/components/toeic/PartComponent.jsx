@@ -6,38 +6,49 @@ import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {answerConfig} from "../../configs/configs";
 import AudioPlayer from "@/components/audio/AudioPlayer";
 
-function PartComponent({part, setTabActive}) {
+function PartComponent({part, setTabActive, listQuestion}) {
   const answers = ['A', 'B', 'C', 'D']
   let oldPosition = null
-  const [listQues, setListQues] = useState([])
+  const [listQues, setListQues] = useState([...Array(200).fill(0)])
+  const [startAndNumber, SetStartAndNumber] = useState([0, 6])
+  const structureToeic = {
+    PART1: 0,
+    PART2: 6,
+    PART3: 31,
+    PART4: 70,
+    PART5: 100,
+    PART6: 130,
+    PART7: 146
+  }
+  const startPartIndex = [0, 6, 31, 70, 100, 130, 146]
   useEffect(() => {
     switch (part) {
       case 1: {
-        setListQues([...Array(6).fill(0)])
+        SetStartAndNumber([0, 6])
         break
       }
       case 2: {
-        setListQues([...Array(30).fill(0)])
+        SetStartAndNumber([6, 31])
         break
       }
       case 3: {
-        setListQues([...Array(40).fill(0)])
+        SetStartAndNumber([31, 70])
         break
       }
       case 4: {
-        setListQues([...Array(50).fill(0)])
+        SetStartAndNumber([70, 100])
         break
       }
       case 5: {
-        setListQues([...Array(34).fill(0)])
+        SetStartAndNumber([100, 130])
         break
       }
       case 6: {
-        setListQues([...Array(45).fill(0)])
+        SetStartAndNumber([130, 146])
         break
       }
       case 7: {
-        setListQues([...Array(12).fill(0)])
+        SetStartAndNumber([146, 200])
         break
       }
     }
@@ -74,6 +85,11 @@ function PartComponent({part, setTabActive}) {
     }
   }
 
+  const exportQues = () => {
+    if (listQuestion.length > startPartIndex[part - 1] - 1) return listQuestion.slice(startAndNumber[0], startAndNumber[1])
+    return listQuestion
+  }
+
   return (
     <div className="lg:grid grid-cols-3 lg:space-x-4">
       <div className="col-span-2 relative">
@@ -83,17 +99,20 @@ function PartComponent({part, setTabActive}) {
         </div>}
         <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
           {/*{genTabUI()}*/}
-          {listQues.map((item, index) => (
+          {exportQues().map((item, index) => (
             <div className={'border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
               {/*<Image src={examImg} alt={''} className={''}/>*/}
-              <div>Câu {index + 1}</div>
+              <div
+                className={'font-semibold bg-backgroundPrimary w-6 h-6 p-2 rounded-full flex items-center justify-center border-primary border-[.5px]'}>
+                {index + 1 + startPartIndex[part - 1]}
+              </div>
               <div className={'flex flex-row justify-between'}>
                 {answers.map((ans, idx) =>
                   <div
                     key={"ans-" + index + "-" + idx}
                     className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(item === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
                     onClick={() => handleAnsQues(index, ans)}
-                  >{ans}{index + 1}</div>)}
+                  >{ans}</div>)}
               </div>
             </div>
           ))}
@@ -116,10 +135,10 @@ function PartComponent({part, setTabActive}) {
         <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4"}>
           <h3 className={'!m-2 pt-2'}>Danh sách câu hỏi Part {part}</h3>
           <div className={'grid grid-cols-8 DSxl:grid-cols-5 gap-2'}>
-            {listQues.map((item, index) => <div
+            {listQues.slice(startAndNumber[0], startAndNumber[1]).map((item, index) => <div
               onClick={() => questionClick(index)}
               className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${item ? 'active-ques' : ''}`}
-              key={index}>{index + 1}</div>)}
+              key={index}>{index + 1 + startPartIndex[part - 1]}</div>)}
           </div>
         </div>
         <ButtonPrimary title={'Nộp bài'} className={'w-full mt-4'}

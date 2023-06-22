@@ -62,7 +62,7 @@ export const genTagExam = (item) => {
     return data
   } else {
     data = {
-      label: subjectArrConfig[(item?.subject - 1) || 0].label + "  - " + levelConfig[(item?.level - 1) || 0].label,
+      label: subjectArrConfig[(item?.subject - 1) || 0].label + " - " + levelConfig[(item?.level - 1) || 0].label,
       value: item?.level || 1
     }
     return data

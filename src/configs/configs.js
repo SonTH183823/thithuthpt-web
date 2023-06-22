@@ -52,6 +52,10 @@ export const subjectArrConfig = [
   {
     value: 8,
     label: 'GDCD'
+  },
+  {
+    value: 9,
+    label: 'Toeic'
   }
 ]
 

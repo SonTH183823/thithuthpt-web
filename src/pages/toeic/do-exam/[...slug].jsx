@@ -19,8 +19,8 @@ export async function getServerSideProps({params}) {
   try {
     const id = params.slug[0].split("-").slice(-1);
     exam = await ExamAPI.getExam(id);
-    // const res = await ExamAPI.getListQuestionExam({id: id});
-    // listQuestion = res.questionIds
+    const {listeningQuestion, readingQuestion} = await ExamAPI.getListQuestionExam({id: id});
+    listQuestion = [...listeningQuestion, ...readingQuestion]
   } catch (e) {
     console.log(e);
   }
@@ -28,12 +28,13 @@ export async function getServerSideProps({params}) {
   return {
     props: {
       exam,
-      // listQuestion
+      listQuestion
     },
   };
 }
 
-export default function DoToeic({exam}) {
+export default function DoToeic({exam, listQuestion}) {
+  console.log(listQuestion)
   let oldPosition = null
   const [listQues, setListQues] = useState(Array(200).fill(0))
   const answers = ['A', 'B', 'C', 'D']
@@ -86,14 +87,14 @@ export default function DoToeic({exam}) {
             <div className="block col-span-1 lg:flex flex-col sticky top-20 h-fit lg:h-fit ">
               <div className={"bg-base-100 rounded-xl px-4 "}>
                 <h3 className={'!m-2 !mb-3'}>Thời gian còn lại</h3>
-                <CountDown/>
+                <CountDown mis={exam.time}/>
               </div>
             </div>
           </div>
-          <PartComponent part={tabActive} setTabActive={setTabActive}/>
+          <PartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion}/>
           <div className={"bg-base-100 rounded-xl px-4 lg:hidden flex mt-4"}>
             <h3 className={'!m-2 !mb-3'}>Thời gian còn lại</h3>
-            <CountDown/>
+            <CountDown mis={exam.time}/>
           </div>
         </div>
         <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'} handleClick={finishExam}/>
