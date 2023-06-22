@@ -17,25 +17,24 @@ const Blog = () => {
   const [showLoadMore, setShowLoadMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
+  const [page, setPage] = useState(2);
   const getNews = async (page) => {
-    if(page === 1) {
+    if (page === 1) {
       setLoading(true)
-    }else {
+    } else {
       setShowLoadMore(true)
     }
     try {
       const newsRes = await NewAPI.getNews({
         active: 1,
-        perPage,
+        perPage: 5,
         page
       });
       if (newsRes && newsRes?.data) {
         setNews((news) => [...news, ...newsRes.data]);
         setPage(page + 1);
 
-        if (newsRes.data.length + news.length < newsRes.total) {
+        if (newsRes.data.length + news.length < newsRes.total - 5) {
           setShowLoadMore(true);
         } else {
           setShowLoadMore(false);
@@ -56,7 +55,7 @@ const Blog = () => {
         if (categoriesRes.data) {
           setCategories([...categoriesRes.data]);
         }
-        await getNews(1);
+        await getNews(2);
       } catch (e) {
         console.log(e);
       }
@@ -68,7 +67,7 @@ const Blog = () => {
         const res = await NewAPI.getNews({
           active: 1,
           page: 1,
-          perPage
+          perPage: 5
         });
         if (res && res?.data) {
           setNewOutstandings(res.data);
@@ -97,8 +96,8 @@ const Blog = () => {
       </>
     } else {
       return <>
-        {news?.length > 5 ?
-          news.slice(5).map((item) => <NewHomeItem key={item._id} item={item}/>) :
+        {news?.length ?
+          news.map((item) => <NewHomeItem key={item._id} item={item}/>) :
           <div className={'text-center mt-4'}>Không có tin tức mới!</div>}
         {loadingMore && <>
           <NewSekeleton/>
@@ -146,7 +145,7 @@ const Blog = () => {
                   <div className="h-1 bg-primary absolute -top-1 left-0 w-[80px]"></div>
                 </div>
               </div>
-              <ListNews />
+              <ListNews/>
             </div>
             <div>
               <div>

@@ -21,8 +21,9 @@ import likegray from "@/assets/images/svg/likegray.svg"
 import dislike from "@/assets/images/svg/dislike.svg"
 import useWindowSize from "../../hooks/useWindowSize";
 import {commentAPI} from "../../apis/comment";
-import {genURLImage} from "../../utils/common";
+import {genURLImage, strToSlug} from "../../utils/common";
 import {uploadAPI} from "../../apis/upload";
+import {useRouter} from "next/router";
 
 
 export default function CommentItem(
@@ -53,6 +54,7 @@ export default function CommentItem(
   const [imageURL, setImageURL] = useState("");
   const [videoURL, setVideoURL] = useState("");
   const {width} = useWindowSize()
+  const router = useRouter()
 
   const [loadMoreReply, setLoadMoreReply] = useState(
     comment?.firstChild?.length > 1 ? true : false
@@ -300,11 +302,18 @@ export default function CommentItem(
       }
     }
   };
+
+  const navigateToProfile = () => {
+    const user = comment.userId
+    router.push(`/profile/${strToSlug(user.name)}-${user._id}`)
+  }
   return (
     <div className="pl-3">
       <div className={"flex items-start space-x-3 py-2"}>
         <Avatar
+          className={'cursor-pointer'}
           sizeAvatar="w-12"
+          onClickAva={navigateToProfile}
           avatar={checkCommentUser(comment.userId) ? profile.avatar : comment?.userId?.avatar}
         />
         <div
@@ -314,9 +323,10 @@ export default function CommentItem(
         >
           <div className={"flex items-center space-x-2 justify-between"}>
             <div className="flex items-center space-x-1">
-              <span className={"font-bold text-primary"}>
+              <span className={"font-bold text-primary hover:underline cursor-pointer"} onClick={navigateToProfile}>
                 {checkCommentUser(comment.userId) ? profile.name : comment?.userId?.name}
               </span>
+              <div className={'w-1 h-1 rounded-full bg-gray-400'}></div>
               <span className={"text-xs text-gray-400"}>
                 {moment(comment.createdAt * 1000).fromNow()}
               </span>

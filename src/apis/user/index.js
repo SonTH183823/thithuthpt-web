@@ -10,19 +10,11 @@ export const userAPI = {
     return await api.get(`/user/${id}`);
   },
 
-  async getAllAccounts(query) {
-    return await api.get(`/user?${queryString.stringify(query)}`);
-  },
-
   async updateAccount({data}) {
     return await api.put(`/user`, {...data});
   },
 
   async lockAccount({id, data}) {
     return await api.post(`/user/lock/${id}`, {...data});
-  },
-
-  async createAccount(data) {
-    return await api.post(`/user/collaborator`, {...data});
   },
 };

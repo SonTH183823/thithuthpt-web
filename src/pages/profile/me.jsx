@@ -20,7 +20,6 @@ import {useRouter} from "next/router";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
-  console.log(user)
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(1);
   const [sort, setSort] = useState(sortHistoryConfig[0]);

@@ -134,7 +134,7 @@ function DetailExam({isDoExam = false, isShowRs = true, item}) {
         <div className={"flex flex-col sm:flex-row sm:space-x-1"}>
           <div
             data-tooltip-id="my-tooltip"
-            data-tooltip-content={'Yêu thích'}
+            data-tooltip-content={isFavorite ? 'Bỏ yêu thích' : 'Yêu thích'}
             className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
             onClick={(e) => handleFavorite(e)}
           >

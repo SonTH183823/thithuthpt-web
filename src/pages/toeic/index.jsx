@@ -213,22 +213,22 @@ function Toeic(props) {
             <div
               className={'space-x-2 shadow-xl mx-3 sm:w-[97%] w-[93%] lg:hidden flex justify-start bg-white px-3 py-3 rounded-md items-center text-sm md:text-base mb-4 flex-wrap overflow-x-auto'}>
               <div className={'font-semibold'}>Đánh giá</div>
-              <ItemSelect checked={rate === null} label={'Tất cả'} hasIcon={true} handleSelect={() => {
+              <ItemSelect checked={rate === null} label={'Tất cả'} hasIcon={false} handleSelect={() => {
                 setRate(null)
               }}/>
-              <ItemSelect checked={rate === 5} label={'5⭐'} hasIcon={true} handleSelect={() => {
+              <ItemSelect checked={rate === 5} label={'5⭐'} hasIcon={false} handleSelect={() => {
                 setRate(5)
               }}/>
-              <ItemSelect checked={rate === 4} label={'4⭐'} hasIcon={true} handleSelect={() => {
+              <ItemSelect checked={rate === 4} label={'4⭐'} hasIcon={false} handleSelect={() => {
                 setRate(4)
               }}/>
-              <ItemSelect checked={rate === 3} label={'3⭐'} hasIcon={true} handleSelect={() => {
+              <ItemSelect checked={rate === 3} label={'3⭐'} hasIcon={false} handleSelect={() => {
                 setRate(3)
               }}/>
-              <ItemSelect checked={rate === 2} label={'2⭐'} hasIcon={true} handleSelect={() => {
+              <ItemSelect checked={rate === 2} label={'2⭐'} hasIcon={false} handleSelect={() => {
                 setRate(2)
               }}/>
-              <ItemSelect checked={rate === 1} label={'1⭐'} hasIcon={true} handleSelect={() => {
+              <ItemSelect checked={rate === 1} label={'1⭐'} hasIcon={false} handleSelect={() => {
                 setRate(1)
               }}/>
             </div>

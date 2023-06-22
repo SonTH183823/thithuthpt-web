@@ -12,7 +12,6 @@ import {userAPI} from "../../apis/user";
 import Avatar from "@/components/user/Avatar";
 
 export default function ProfileUser() {
-  const imageCover = 'https://img.freepik.com/free-photo/los-angeles-downtown-buildings-night_649448-298.jpg?w=2000&t=st=1682246479~exp=1682247079~hmac=c47ba41a6a4b0b14185566ea5c180982948e1d72319415edd3f4a36dfd8ec5db'
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(1);
   const router = useRouter()
@@ -27,10 +26,10 @@ export default function ProfileUser() {
       if (router?.query?.slug) {
         try {
           setLoading(true);
-          const id = router.query.slug.split("-").slice(-1);
-          const profileRes = await userAPI.getProfileById(id);
+          const id = router.query.slug.toString().split("-").slice(-1);
+          const res = await userAPI.getProfileById(id);
+          setProfile(res.data);
           setLoading(false);
-          setProfile(profileRes);
         } catch (e) {
           setLoading(false);
           console.log(e);
@@ -42,7 +41,9 @@ export default function ProfileUser() {
     if (tabActive === 2 || tabActive === 3) {
       return (
         <div className={'flex items-center justify-center shadow-md rounded-xl py-24 bg-white mb-4'}>
-          Chỉ ... mới có thể xem thông tin này!
+          <span>Chỉ</span>
+          <span className={'font-semibold mx-1'}>{profile.name}</span>
+          <span>mới có thể xem thông tin này!</span>
         </div>
       )
     }
@@ -54,13 +55,13 @@ export default function ProfileUser() {
   }
   return (
     <div>
-      {profile.id && !loading ?  (
+      {profile._id && !loading ? (
         <Fragment>
           <div className="bg-base-100">
             <div className="container mx-auto bg-base-100">
               <CoverImageSection
-                imgCover={imageCover}
-                userId={profile.id}
+                imgCover={profile.imageCover}
+                userId={profile._id}
                 avatar={profile.avatar}
                 showIconUpload={false}
               />
@@ -83,7 +84,7 @@ export default function ProfileUser() {
                   fullName={profile.name}
                   className={"lg:text-3xl text-2xl block"}
                 ></FullName>
-                <PointComponent/>
+                <PointComponent userInfo={profile}/>
               </div>
               <div className="bg-base-100 pb-4 relative hidden md:block">
                 <div className="divider"></div>
@@ -95,7 +96,7 @@ export default function ProfileUser() {
               <div className="col-span-1 h-fit">
                 <DetailUserInfoContainer profile={profile}/>
                 <div className={'my-3 block p-4 bg-base-100 rounded-lg shadow-md'}>
-                  <Award userInfo={user}/>
+                  <Award userInfo={profile}/>
                 </div>
               </div>
               <div className="col-span-2 lg:px-0 px-2 pb-2">

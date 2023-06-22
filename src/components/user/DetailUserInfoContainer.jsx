@@ -4,13 +4,14 @@ import React, {useState, useEffect, Fragment} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 // import { authUpdateProfile } from "store/auth/auth-slice";
-import {formatPrice, generateDate} from "utils/common";
+import {checkPoint, formatPrice, generateDate} from "utils/common";
 import ButtonSecondary from "../button/ButtonSecondary";
 import DetailInfoItem from "./DetailUserInfoItem";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {userAPI} from "../../apis/user";
 import {authUpdateProfile} from "../../store/auth/auth-slice";
 import PointComponent from "@/components/points/PointComponent";
+import {awardsConfig} from "../../configs/configs";
 
 export default function DetailUserInfoContainer({
                                                   profile: user,
@@ -20,6 +21,14 @@ export default function DetailUserInfoContainer({
   const [showEditBio, setShowEditBio] = useState(false);
   const profile = useSelector((state) => state.auth.profile);
   const dispatch = useDispatch();
+
+  const [awardPresent, setAwardPresent] = useState({})
+  useEffect(() => {
+    const index = checkPoint(awardsConfig, user.pointCredits)
+    if (index > 0) {
+      setAwardPresent(awardsConfig[index - 1])
+    }
+  }, [])
   const handleChangeInput = (e) => {
     setBio(e.target.value);
   };
@@ -135,7 +144,7 @@ export default function DetailUserInfoContainer({
         </div>
         <div>
           <DetailInfoItem icon={"fa-solid fa-award text-[16px]"}>
-            <span className={"font-bold text-primary"}>Thành viên</span>
+            <span className={"font-bold text-primary"}>{awardPresent.title}</span>
           </DetailInfoItem>
           {user?.school && <DetailInfoItem icon={"fa-solid fa-school-flag"}>
             <div>

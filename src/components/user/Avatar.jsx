@@ -7,10 +7,12 @@ export default function Avatar({
   avatar,
   className = "",
   isShowUploadIcon = false,
+  onClickAva
 }) {
   return (
     <div
       className={`avatar ${className} relative border border-gray-100 rounded-full`}
+      onClick={onClickAva}
     >
       <div className={`${sizeAvatar} rounded-full`}>
         <img src={genURLImage(avatar)} alt={"avatar-user"} />
