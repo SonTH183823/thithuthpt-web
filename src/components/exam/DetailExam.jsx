@@ -164,7 +164,7 @@ function DetailExam({isDoExam = false, isShowRs = true, item}) {
       <div className={'bg-base-200 rounded-xl p-3'}>
         <div className={'flex flex-row justify-between space-x-6 mb-3'}>
           <CharacteristicsItem icon={star}>
-            {item.rate}
+            {item.rate?.toFixed(1)}
           </CharacteristicsItem>
           <CharacteristicsItem icon={time}>
             {item.time} phút
