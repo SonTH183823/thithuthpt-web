@@ -13,7 +13,7 @@ export default function Home() {
                 <PrimaryBanner/>
                 <FeatureSection />
                 <div className="container">
-                    {/*<HomeExamList title={"Những đề thi nổi bật"} category={1}/>*/}
+                    <HomeExamList title={"ĐỀ THI NỔI BẬT"}/>
                     {/*<HomeExamList title={"MÔN TOÁN"} category={2}/>*/}
                     {/*<HomeExamList title={"MÔN LÝ"} category={3}/>*/}
                     {/*<HomeExamList title={"HÓA HỌC"} category={4}/>*/}

@@ -10,17 +10,25 @@ import {getToken, removeToken} from "../utils/auth";
 import {userAPI} from "../apis/user";
 import {authUpdateProfile} from "../store/auth/auth-slice";
 import {updateFavoritePosts} from "../store/post/post-slice";
-import "react-toastify/dist/ReactToastify.css";
 import {authAPI} from "../apis/auth";
 import {useRouter} from "next/router";
 import {ExamAPI} from "../apis/exam/index";
 import {updateFavoriteExams} from "../store/exam/exam-slice";
-
+import "react-toastify/dist/ReactToastify.css";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import "react-input-range/lib/css/index.css";
 import 'react-best-tabs/dist/index.css';
 import 'react-image-lightbox/style.css';
+import "swiper/css";
+import "swiper/css/pagination";
+import "react-image-lightbox/style.css";
+import "swiper/css/navigation";
+import "react-input-range/lib/css/index.css";
+import "react-tooltip/dist/react-tooltip.css";
+import "reactjs-popup/dist/index.css";
+import "swiper/css/pagination";
+import "../styles/globals.scss";
 
 function App({Component, pageProps}) {
   const router = useRouter();

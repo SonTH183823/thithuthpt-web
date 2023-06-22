@@ -80,7 +80,7 @@ function HomeExamItem({item, isSearch = false}) {
   };
   return (
     <div
-      className={`mx-3 box-border rounded-xl relative shrink-0 bg-base-100 cursor-pointer mb-2 box-shadow ${isSearch ? "" : "md:w-[372px] w-[360px]"}`}
+      className={`mx-3 box-border rounded-xl relative shrink-0 bg-base-100 cursor-pointer mb-2 box-shadow min-h-[472px] flex flex-col ${isSearch ? "" : "md:w-[372px] w-[360px]"}`}
       onClick={handleClick}
     >
       <div className="relative w-full h-[300px]">

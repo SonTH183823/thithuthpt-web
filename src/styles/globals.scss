@@ -221,23 +221,23 @@ a {
 .swiper-button-prev,
 .swiper-button-next {
   color: white !important;
-
   &::after {
     font-size: 15px !important;
     font-weight: bold !important;
-    background-color: rgba(0, 0, 0, 0.24);
+    background-color: var(--primary);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30px;
-    width: 30px;
-    border-radius: 100rem;
+    height: 40px;
+    width: 40px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
   }
 }
 
 .dot-white {
   .swiper-pagination-bullet {
-    background-color: white;
+    background-color: #dddddd;
     opacity: 0.7;
   }
 
@@ -260,7 +260,7 @@ a {
   height: 40px;
   width: 40px;
   background-color: var(--primary);
-  border-radius: 100rem;
+  border-radius: 100%;
 }
 
 .play-button:hover {

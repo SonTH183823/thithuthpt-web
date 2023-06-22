@@ -70,11 +70,15 @@ const FilterPage = () => {
     })();
     if (Object.keys(router.query).length) {
       if (router.query?.subject) setSubject(+router.query.subject)
+      if (router.query.outstanding) setSort(xapSepConfig[1])
     }
   }, [router.query]);
 
   useEffect(() => {
     if (sort.value === xapSepConfig[1].value) {
+      if ("outstanding" in router.query) {
+        delete router.query.outstanding;
+      }
       let queryTemp = [];
       for (const key in router.query) {
         queryTemp.push(`${key}=${router.query[key]}`);
