@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 // import { bannerAPI } from "apis/banner";
 import BannerSection from "@/components/blog/BannerSection";
 import {NewAPI} from "../../apis/new";
+import NewSekeleton from "@/components/Sekeleton/NewSekeleton";
 
 const Blog = () => {
   const [newOutstandings, setNewOutstandings] = useState([]);
@@ -14,15 +15,21 @@ const Blog = () => {
   const [categories, setCategories] = useState([]);
   const router = useRouter();
   const [showLoadMore, setShowLoadMore] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
   const getNews = async (page) => {
+    if(page === 1) {
+      setLoading(true)
+    }else {
+      setShowLoadMore(true)
+    }
     try {
       const newsRes = await NewAPI.getNews({
         active: 1,
         perPage,
         page
-        // isOutstanding: 0,
       });
       if (newsRes && newsRes?.data) {
         setNews((news) => [...news, ...newsRes.data]);
@@ -33,9 +40,13 @@ const Blog = () => {
         } else {
           setShowLoadMore(false);
         }
+        setLoading(false)
+        setLoadingMore(false)
       }
     } catch (e) {
       console.log(e);
+      setLoading(false)
+      setLoadingMore(false)
     }
   };
   useEffect(() => {
@@ -57,8 +68,7 @@ const Blog = () => {
         const res = await NewAPI.getNews({
           active: 1,
           page: 1,
-          perPage,
-          isOutstanding: 1,
+          perPage
         });
         if (res && res?.data) {
           setNewOutstandings(res.data);
@@ -77,6 +87,36 @@ const Blog = () => {
   const handleLoadMore = async () => {
     await getNews(page);
   };
+
+  const ListNews = () => {
+    if (loading) {
+      return <>
+        <NewSekeleton/>
+        <NewSekeleton/>
+        <NewSekeleton/>
+      </>
+    } else {
+      return <>
+        {news?.length > 5 ?
+          news.slice(5).map((item) => <NewHomeItem key={item._id} item={item}/>) :
+          <div className={'text-center mt-4'}>Không có tin tức mới!</div>}
+        {loadingMore && <>
+          <NewSekeleton/>
+          <NewSekeleton/>
+        </>}
+        {showLoadMore && (
+          <div className="flex justify-center pb-4">
+            <div
+              className=" btn bg-primary w-[200px] text-white normal-case hover:bg-primary hover:outline-none hover:border-primary outline-none"
+              onClick={handleLoadMore}
+            >
+              Xem thêm
+            </div>
+          </div>
+        )}
+      </>
+    }
+  }
 
   return (
     <div>
@@ -106,18 +146,7 @@ const Blog = () => {
                   <div className="h-1 bg-primary absolute -top-1 left-0 w-[80px]"></div>
                 </div>
               </div>
-              {news?.length > 0 &&
-                news.map((item) => <NewHomeItem key={item._id} item={item}/>)}
-              {showLoadMore && (
-                <div className="flex justify-center pb-4">
-                  <div
-                    className=" btn bg-primary w-[200px] text-white normal-case hover:bg-primary hover:outline-none hover:border-primary outline-none"
-                    onClick={handleLoadMore}
-                  >
-                    Xem thêm
-                  </div>
-                </div>
-              )}
+              <ListNews />
             </div>
             <div>
               <div>

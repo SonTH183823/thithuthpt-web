@@ -1,6 +1,13 @@
 import React from "react";
 
-const NewSekeleton = () => {
+const NewSekeleton = ({primary = false}) => {
+  if(primary) {
+    return (
+      <div className="flex lg:space-x-5 space-x-3 lg:py-4 py-1 items-start">
+        <div className="animate-pulse bg-slate-200 rounded-lg w-full h-full"></div>
+      </div>
+    )
+  }
   return (
     <div className="flex lg:space-x-5 space-x-3 lg:py-4 py-1 items-start">
       <div className="animate-pulse lg:w-[250px] lg:h-[150px] w-[200px] h-[90px] bg-slate-200 rounded-lg"></div>

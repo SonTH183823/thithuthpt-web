@@ -24,7 +24,7 @@ export default function About() {
             mình.</p>
         </div>
         <div className={'text-start w-full leading-8'}>
-          <p className={'font-semibold'}>Đặc điểm nổi bật của Thi Thử bao gồm:</p>
+          <p className={'font-semibold'}>Đặc điểm nổi bật của {genUIName()} bao gồm:</p>
           <div className={'flex space-x-2 items-start ml-5'}>
             <div className={'bg-primary w-2 h-2 rounded-full px-1 mt-2.5'}/>
             <p>Bộ đề thi phong phú: Với một cơ sở dữ liệu đa dạng và phong phú, bạn sẽ có hàng ngàn đề thi sẵn sàng để
