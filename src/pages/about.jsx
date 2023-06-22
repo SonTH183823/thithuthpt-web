@@ -3,9 +3,9 @@ import logo from "@/assets/images/logo.png";
 export default function About() {
   const genUIName = () => <span className={'text-primary font-semibold'}>thithuthpt</span>
   return (
-    <div className={"max-w-[1000px] mx-auto padding-mobile"}>
+    <div className={"max-w-[1000px] mx-auto padding-mobile lg:px-0 px-4"}>
       <div className={"flex flex-col justify-center items-center mt-8"}>
-        <div className={"relative w-[280px] h-[80PX]"}>
+        <div className={"relative w-[280px] h-[80px]"}>
           <Image
             src={logo}
             alt={"logo without icon"}
@@ -53,7 +53,7 @@ export default function About() {
           </div>
         </div>
         <div className={'py-8 text-center leading-8'}>
-          <p>Hãy tham gia ngay và trang bị cho mình những công cụ cần thiết để đạt được thành công trong các kỳ thi. Truy cập {genUIName()} ngay hôm nay và khám phá tiềm năng của bạn!</p>
+          <p>Hãy tham gia ngay và trang bị cho mình những công cụ cần thiết để đạt được thành công trong các kỳ thi. Trải nghiệm {genUIName()} ngay hôm nay và khám phá tiềm năng của bạn!</p>
         </div>
       </div>
     </div>

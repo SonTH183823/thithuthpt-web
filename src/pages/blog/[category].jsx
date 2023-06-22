@@ -95,10 +95,7 @@ const PostByCategory = () => {
               {newsByCategory?.length > 0 ?
                 newsByCategory.map((item, index) => (
                   <NewHomeItem key={index} item={item}/>
-                )) : <>
-                  <NewSekeleton/>
-                  <NewSekeleton/>
-                </>}
+                )) : <div className={'text-center pt-3'}>Không có tin tức nào 😥</div>}
               {loading && <>
                 <NewSekeleton/>
                 <NewSekeleton/>

@@ -9,7 +9,6 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from "react-share";
-import ButtonPrimary from "../button/ButtonPrimary";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast} from "react-toastify";
 
@@ -34,7 +33,7 @@ const ModalShare = (id, title) => {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: true,
         progress: undefined,
         theme: "colored",
