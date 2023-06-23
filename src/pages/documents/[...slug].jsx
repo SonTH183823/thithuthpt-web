@@ -96,13 +96,12 @@ export default function DocumentDetail({document}) {
                   <InteractiveContainer postId={document._id}/>
                 </div>
               </div>
-              <div className="block col-span-1 lg:flex flex-col">
-                <div className={"bg-base-100 rounded-xl px-4 sm:mt-0 mt-4"}>
+              <div className="block col-span-1 lg:flex flex-col space-y-4">
+                <div className={"bg-base-100 rounded-xl px-4"}>
                   <RelatedDocuments type={0} relatedDoc={relatedDoc}/>
                 </div>
-                <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
+                <div className={"bg-base-100 rounded-xl px-4"}>
                   <RelatedDocuments relatedDoc={newestDoc}/>
-
                 </div>
               </div>
             </div>

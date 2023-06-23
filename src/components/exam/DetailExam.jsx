@@ -22,7 +22,7 @@ import {ExamAPI} from "../../apis/exam";
 import {updateFavoriteExams} from "../../store/exam/exam-slice";
 import {toast} from "react-toastify";
 
-function DetailExam({isDoExam = false, isShowRs = true, item}) {
+function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}) {
   const router = useRouter();
   const profile = useSelector((state) => state.auth.profile);
   const [isFavorite, setIsFavorite] = useState(null);
@@ -188,7 +188,7 @@ function DetailExam({isDoExam = false, isShowRs = true, item}) {
       </div>
       {(isDoExam || isShowRs) ? <div className={'flex justify-between space-x-2 h-14'}>
         {isDoExam && <ButtonPrimary
-          title="Bắt đầu làm bài"
+          title={isDoAgain ? "Làm lại bài thi" : "Bắt đầu làm bài"}
           className="w-full mt-3"
           handleClick={() => startExam()}
         />}

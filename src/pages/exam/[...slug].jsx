@@ -61,7 +61,7 @@ export default function ExamDetail({exam}) {
                   <DetailExam isDoExam={true} item={exam}/>
                 </div>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <TableTypeListQues listTypeQuestion={exam.listTypeQuestion} total={exam.questionIds.length}/>
+                  <TableTypeListQues item = {exam}/>
                 </div>
                 <RatingComponents/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>

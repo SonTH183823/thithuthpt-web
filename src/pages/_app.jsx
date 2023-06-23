@@ -29,6 +29,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import "reactjs-popup/dist/index.css";
 import "swiper/css/pagination";
 import "../styles/globals.scss";
+import "@fortawesome/fontawesome-svg-core/styles.css"
 
 function App({Component, pageProps}) {
   const router = useRouter();
