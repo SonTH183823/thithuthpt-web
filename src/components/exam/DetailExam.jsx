@@ -170,7 +170,7 @@ function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}
             {item.time} phút
           </CharacteristicsItem>
           <CharacteristicsItem icon={question}>
-            {item.questionIds.length} câu
+            {item.subject === 9 ? (item.numberReading + item.numberListening) : item.numberQuestion} câu
           </CharacteristicsItem>
         </div>
         <div className={'flex justify-between space-x-6'}>

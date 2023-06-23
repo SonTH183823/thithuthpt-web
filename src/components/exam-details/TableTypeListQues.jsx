@@ -1,5 +1,4 @@
 import React from 'react';
-
 function TableTypeListQues({item}) {
   const {listTypeQuestion, numberQuestion, numberListening, numberReading} = item
   const isToeic = item.subject === 9

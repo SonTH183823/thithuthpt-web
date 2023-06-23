@@ -14,6 +14,10 @@ export const ExamAPI = {
     return await api.get(`/exam/${id}`);
   },
 
+  async getInfo() {
+    return await api.get('totalExam');
+  },
+
 
   async getExamsByUser(query) {
     return await api.get(`exam/examsByUser?${queryString.stringify(query)}`);

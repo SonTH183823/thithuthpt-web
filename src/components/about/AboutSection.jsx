@@ -6,23 +6,24 @@ import check from "@/assets/images/icons/check-mark.svg";
 import {kFormatter} from "../../utils/common";
 import ButtonSecondary from "@/components/button/ButtonSecondary";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
+import {ExamAPI} from "../../apis/exam";
 
 export default function AboutSection() {
     const list = ['Tìm kiếm đề thi, bài kiểm tra trắc nghiệm, đề cương ôn tập tự luyện', 'Làm bài thi online và đánh giá kết quả', 'Lịch sử làm bài, thảo luận câu hỏi', 'Đề thi luôn được cập nhật nhanh chóng, mới nhất', 'Tạo đề thi tự luyện ngẫu nhiên trong kho đề của chúng tôi']
-    // const [info, setInfo] = useState();
+    const [info, setInfo] = useState();
 
-    // useEffect(() => {
-    //   (async () => {
-    //     try {
-    //       const res = await statisticAPI.getInfo();
-    //       if (res) {
-    //         setInfo(res);
-    //       }
-    //     } catch (e) {
-    //       console.log(e);
-    //     }
-    //   })();
-    // }, []);
+    useEffect(() => {
+      (async () => {
+        try {
+          const res = await ExamAPI.getInfo();
+          if (res) {
+            setInfo(res);
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      })();
+    }, []);
     const genDesUI = (text) => {
         return (<div className={'text-white w-full flex flex-row items-center space-x-1'} key={text}>
             <Image src={check} alt={""} className={"object-cover"} height={16} width={24}/>
@@ -55,7 +56,7 @@ export default function AboutSection() {
                 <div className="flex items-center justify-evenly w-full text-white">
                     <div className="flex flex-col items-center">
                                 <span className="font-bold lg:text-3xl text-xl">
-                                  {'112'}
+                                  {info?.totalExam}
                                 </span>
                         <div className="text-white font-bold lg:text-xl py-1">
                             đề thi
@@ -63,12 +64,20 @@ export default function AboutSection() {
                     </div>
                     <div className="flex flex-col items-center">
                     <span className="font-bold lg:text-3xl text-xl ">
-                      {kFormatter(2345)}
+                      {kFormatter(info?.totalQuestion || 0)}
                     </span>
                         <div className="text-white font-bold lg:text-xl py-1">
                             câu hỏi
                         </div>
                     </div>
+                  <div className="flex flex-col items-center">
+                                <span className="font-bold lg:text-3xl text-xl">
+                                  {info.totalDocument}
+                                </span>
+                    <div className="text-white font-bold lg:text-xl py-1">
+                      bộ tài liệu
+                    </div>
+                  </div>
                     {/*<button className={'px-5 py-2 rounded-md bg-white hover:bg-backgroundPrimary text-primary font-semibold'}>Tham gia ngay</button>*/}
                 </div>
             </div>
