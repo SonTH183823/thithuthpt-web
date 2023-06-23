@@ -75,7 +75,7 @@ function HistoryDetail({exam}) {
                   <DetailExam item={exam} isDoExam={true} isDoAgain={true}/>
                 </div>
                 <ResultComponents/>
-                <RatingComponents/>
+                <RatingComponents postId={exam._id}/>
                 <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4 lg:hidden block"}>
                   <h3 className={'!m-2 pt-2'}>Danh sách câu hỏi</h3>
                   <div className={'grid grid-cols-8 DSxl:grid-cols-5 gap-2'}>

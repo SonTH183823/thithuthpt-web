@@ -63,7 +63,7 @@ export default function ExamDetail({exam}) {
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
                   <TableTypeListQues item = {exam}/>
                 </div>
-                <RatingComponents/>
+                <RatingComponents postId={exam._id}/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
                   <InteractiveContainer postId={exam._id} userId={profile._id}/>
                 </div>

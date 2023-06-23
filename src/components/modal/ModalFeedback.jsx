@@ -28,7 +28,7 @@ const ModalFeedback = ({ id, profile }) => {
 
   const handleCreateFeedback = async (values) => {
     try {
-      const res = await feedbackAPI.createFeedback({
+      await feedbackAPI.createFeedback({
         star: rating,
         comment: values.feedback,
         name: profile.name,
@@ -40,7 +40,7 @@ const ModalFeedback = ({ id, profile }) => {
       }
       toast.success("Đánh giá thành công!", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -52,7 +52,7 @@ const ModalFeedback = ({ id, profile }) => {
       console.log(e);
       toast.error("Đã có lỗi xảy ra!", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

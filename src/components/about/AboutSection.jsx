@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
-import TitleSection from "../common/TitleSection";
 import Image from "next/image";
 import about from "@/assets/images/about.png";
 import check from "@/assets/images/icons/check-mark.svg";
 import {kFormatter} from "../../utils/common";
-import ButtonSecondary from "@/components/button/ButtonSecondary";
-import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {ExamAPI} from "../../apis/exam";
 
 export default function AboutSection() {
@@ -72,7 +69,7 @@ export default function AboutSection() {
                     </div>
                   <div className="flex flex-col items-center">
                                 <span className="font-bold lg:text-3xl text-xl">
-                                  {info.totalDocument}
+                                  {info?.totalDocument}
                                 </span>
                     <div className="text-white font-bold lg:text-xl py-1">
                       bộ tài liệu

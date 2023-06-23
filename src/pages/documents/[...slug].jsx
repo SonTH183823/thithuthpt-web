@@ -91,7 +91,7 @@ export default function DocumentDetail({document}) {
                     </div> :
                     <PDFFile fileLink={document.link}/>}
                 </div>
-                <RatingComponents/>
+                <RatingComponents postId={document._id}/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
                   <InteractiveContainer postId={document._id}/>
                 </div>

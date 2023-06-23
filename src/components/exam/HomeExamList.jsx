@@ -12,8 +12,6 @@ import {useRouter} from "next/router";
 export default function HomeExamList({title, category}) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const swiper = useSwiper();
-
   const router = useRouter()
 
   useEffect(() => {
