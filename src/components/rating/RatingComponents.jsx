@@ -41,7 +41,7 @@ function RatingComponents({postId}) {
   }
   const handleRating = async () => {
     if (profile?._id) {
-      if (rating) {
+      if (rating && rating !== hasRate?.star) {
         try {
           await callApi()
           toast.success("Đánh giá thành công!", {
@@ -49,7 +49,7 @@ function RatingComponents({postId}) {
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
             theme: "colored",
@@ -61,7 +61,7 @@ function RatingComponents({postId}) {
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
             theme: "colored",
