@@ -1,30 +1,33 @@
 import React, {useState} from 'react';
 import Image from "next/image";
-import examImg from "@/assets/images/exam.jpeg";
-import {answerConfig} from "../../configs/configs";
+import {answerConfig, answerConfigArr} from "../../configs/configs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
-import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu";
 import {useRouter} from "next/router";
+import {genURLImage} from "../../utils/common";
 
-function QuestionItem({item, index}) {
+function QuestionItem({item, index, answer}) {
   const router = useRouter()
   const answers = ['A', 'B', 'C', 'D']
   const [showResult, setShow] = useState(false)
   return (
     <div className={'select-none border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
-      <Image src={examImg} alt={''} className={''}/>
+      <Image src={genURLImage(item.content)} alt={''} className={'w-full h-full'} width={2000}
+             height={200}/>
       <div className={'flex flex-row justify-between'}>
         {answers.map((ans, idx) =>
           <div
             key={"ans-" + index + "-" + idx}
-            className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(item === answerConfig[ans].value) ? 'active-ques' : ''}`}
-          >{ans}{index + 1}</div>)}
+            className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(answer === answerConfig[ans].value) ? 'wrong-ans ' : ' '}` + `${(item.answer === answerConfig[ans].value) ? 'right-ans' : ''}`}
+          >{ans}</div>)}
       </div>
       <div className={'flex justify-between md:my-2 my-1 md:text-base text-sm'}>
-        <div className={'hover:text-primary cursor-pointer font-semibold'}>Nhận xét (69)</div>
         <div className={'hover:text-primary cursor-pointer font-semibold'}
-             onClick={() => router.push('/question/aaa')}>Xem chi tiết
+             onClick={() => router.push(`/question/${item._id}`)}
+        >Nhận xét
+        </div>
+        <div className={'hover:text-primary cursor-pointer font-semibold'}
+             onClick={() => router.push(`/question/${item._id}`)}>Xem chi tiết
         </div>
         <div
           className={`flex space-x-1 flex-row hover:text-primary cursor-pointer font-semibold ${showResult ? 'text-primary' : ''}`}
@@ -35,9 +38,16 @@ function QuestionItem({item, index}) {
       </div>
       {showResult ?
         <div>
-          {/*<div className={'font-semibold'}>Câu {index + 1}: Đáp án đúng A</div>*/}
           <div className={'font-semibold text-center border-t-primary border-t-2 ml-8 py-2'}>Lời giải</div>
-          <Image src={examImg} alt={''} className={''}/>
+          <div className={'font-semibold'}>Câu {index + 1}: Đáp án đúng {answerConfigArr[item.answer].label}</div>
+          {
+            item.explanation ?
+              <Image src={genURLImage(item.explanation)} alt={''} className={'w-full h-full'} width={2000}
+                     height={200}/> :
+              <div className={'text-center'}>
+                {item.description ? item.description : 'Không có lời giải'}
+              </div>
+          }
         </div> : null}
     </div>
   );

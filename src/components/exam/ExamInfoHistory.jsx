@@ -37,7 +37,7 @@ function ExamInfoHistory({exam, item}) {
         <div>
           <div className="flex items-center text-primary flex-col border border-primary rounded-md">
             <div className={'text-white bg-primary p-2 uppercase text-sm'}>Điểm số</div>
-            <div className="font-bold text-xl p-2">{item.numberQuestionRight / exam.numberQuestion}</div>
+            <div className="font-bold text-xl p-2">{(item.numberQuestionRight * 10 / exam.numberQuestion).toFixed(1)}</div>
           </div>
         </div>
       </div>

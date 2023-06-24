@@ -144,6 +144,29 @@ export const answerConfig = {
   },
 };
 
+export const answerConfigArr = [
+  {
+    value: 0,
+    label: 'Not answer'
+  },
+  {
+    value: 1,
+    label: 'A'
+  },
+  {
+    value: 2,
+    label: 'B'
+  },
+  {
+    value: 3,
+    label: 'C'
+  },
+  {
+    value: 4,
+    label: 'D'
+  },
+]
+
 export const provincesConfig = {
   1: "Thành phố Hà Nội",
   2: "Tỉnh Hà Giang",

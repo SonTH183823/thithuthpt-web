@@ -14,8 +14,8 @@ export const HistoryAPI = {
     return await api.post(`/finishExam`, data);
   },
 
-  async getHistorysByUser(query) {
-    return await api.get(`history/historysByUser?${queryString.stringify(query)}`);
+  async getHistoryById(id) {
+    return await api.get(`history/${id}`);
   },
 
   async sortHistory(query) {
@@ -36,12 +36,4 @@ export const HistoryAPI = {
     return await api.post(`favorite`, {...data});
   },
 
-  async getFavoriteHistorys() {
-    return await api.get(`favorite`);
-  },
-
-
-  async getRelatedHistory({id, data}) {
-    return await api.get(`history/related/${id}?${queryString.stringify(data)}`);
-  },
 };

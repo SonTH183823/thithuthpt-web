@@ -14,7 +14,7 @@ export default function PrimaryExamItem({history}) {
   const exam = history.examId
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/history/${strToSlug(exam.title)}-${exam._id}`);
+    router.push(`/history/${strToSlug(exam.title)}-${history._id}`);
   };
   return (
     <div

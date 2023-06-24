@@ -7,31 +7,35 @@ import QuestionItem from "@/components/question/QuestionItem";
 import {DocumentAPI} from "../../apis/document";
 import {ExamAPI} from "../../apis/exam";
 import {useRouter} from "next/router";
+import {HistoryAPI} from "../../apis/history";
+import {answerConfig} from "../../configs/configs";
 
 export async function getServerSideProps({params}) {
-  let exam = {};
+  let history = {};
+  let exam = {}
   let listQuestion = []
   try {
     const id = params.slug[0].split("-").slice(-1);
-    exam = await ExamAPI.getExam(id);
-    const res = await ExamAPI.getListQuestionExam({id: id});
+    history = await HistoryAPI.getHistoryById(id)
+    const res = await ExamAPI.getListQuestionExam({id: history.examId._id});
     listQuestion = res.questionIds
+    exam = history.examId
   } catch (e) {
     console.log(e);
   }
 
   return {
     props: {
+      history,
       exam,
       listQuestion
     },
   };
 }
 
-function HistoryDetail({exam}) {
+function HistoryDetail({exam, listQuestion, history}) {
   let oldPosition = null
-  const [listQues, setListQues] = useState(Array(50).fill(0))
-  const answers = ['A', 'B', 'C', 'D']
+  const [listAnswer, setListQues] = useState(history.listAnswer)
   const [relatedExam, setRelatedExam] = useState([]);
   const router = useRouter()
 
@@ -74,19 +78,20 @@ function HistoryDetail({exam}) {
                 <div className={"bg-base-100 rounded-xl "}>
                   <DetailExam item={exam} isDoExam={true} isDoAgain={true} isShowRs={false}/>
                 </div>
-                <ResultComponents/>
+                <ResultComponents exam={exam} history={history}/>
                 <RatingComponents postId={exam._id}/>
                 <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4 lg:hidden block"}>
                   <h3 className={'!m-2 pt-2'}>Danh sách câu hỏi</h3>
                   <div className={'grid grid-cols-8 DSxl:grid-cols-5 gap-2'}>
-                    {listQues.map((item, index) => <div
+                    {listAnswer.map((item, index) => <div
                       onClick={() => questionClick(index)}
-                      className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${index % 2 === 0 ? 'wrong-ans' : 'right-ans'}` + `${index % 3 === 0 ? '' : 'right-ans'}`}
+                      className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${(item === listQuestion[index].answer) ? 'right-ans' : 'wrong-ans'}`}
                       key={'history' + index}>{index + 1}</div>)}
                   </div>
                 </div>
                 <div className={"bg-base-100 rounded-xl mt-4 md:p-4 p-1"}>
-                  {listQues.map((item, index) => (<QuestionItem index={index} item={item}/>))}
+                  {listQuestion.map((item, index) => (
+                    <QuestionItem index={index} item={item} answer={listAnswer[index]}/>))}
                   <div className={'text-primary text-center font-semibold mt-4'}>- HẾT -</div>
                 </div>
               </div>
@@ -94,9 +99,9 @@ function HistoryDetail({exam}) {
                 <div className={"bg-base-100 rounded-xl px-4 pb-4 lg:block hidden"}>
                   <h3 className={'!m-2'}>Danh sách câu hỏi</h3>
                   <div className={'grid grid-cols-8 gap-2'}>
-                    {listQues.map((item, index) => <div
+                    {listAnswer.map((item, index) => <div
                       onClick={() => questionClick(index)}
-                      className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${index % 2 === 0 ? 'wrong-ans' : 'right-ans'}` + `${index % 3 === 0 ? '' : 'right-ans'}`}
+                      className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${(item === listQuestion[index].answer) ? 'right-ans' : 'wrong-ans'}`}
                       key={'history' + index}>{index + 1}</div>)}
                   </div>
                 </div>
@@ -109,8 +114,7 @@ function HistoryDetail({exam}) {
         </div>
       ) : null}
     </Fragment>
-  )
-    ;
+  );
 }
 
 export default HistoryDetail;

@@ -14,6 +14,7 @@ import {genURLImage, strToSlug} from "../../utils/common";
 import {useRouter} from "next/router";
 import ModalComfirmDeleteComment from "@/components/modal/ModalComfirmDeleteComment";
 import {HistoryAPI} from "../../apis/history";
+import {toast} from "react-toastify";
 
 export async function getServerSideProps({params}) {
   let exam = {};
@@ -82,12 +83,26 @@ export default function DoExam({exam, listQuestion}) {
   }
 
   const onFinishExam = async () => {
-    await HistoryAPI.finishExam({
+    const res = await HistoryAPI.finishExam({
       examId: exam._id,
       listAnswer,
       timeSpent: exam.time * 60 - time
     })
-    router.push(`/history/${strToSlug(exam.title)}-${exam._id}`);
+    if (res) {
+      router.push(`/history/${strToSlug(exam.title)}-${res._id}`);
+    } else {
+      toast.error("Đã có lỗi xảy ra!", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+
   }
 
   return (<Fragment>
