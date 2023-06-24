@@ -69,7 +69,7 @@ const PostsSection = ({userId}) => {
         </div>}
     >
       {posts.length > 0 &&
-        posts.map((item) => <PrimaryPostItem post={item} key={item.id}/>)}
+        posts.map((item) => <PrimaryPostItem post={item} key={item._id}/>)}
     </InfiniteScroll>
   );
 };

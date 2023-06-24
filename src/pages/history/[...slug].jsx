@@ -93,7 +93,7 @@ function HistoryDetail({exam}) {
               <div className="block col-span-1 lg:flex flex-col sticky top-20 h-screen lg:h-fit">
                 <div className={"bg-base-100 rounded-xl px-4 pb-4 lg:block hidden"}>
                   <h3 className={'!m-2'}>Danh sách câu hỏi</h3>
-                  <div className={'grid grid-cols-8 DSxl:grid-cols-5 gap-2'}>
+                  <div className={'grid grid-cols-8 gap-2'}>
                     {listQues.map((item, index) => <div
                       onClick={() => questionClick(index)}
                       className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${index % 2 === 0 ? 'wrong-ans' : 'right-ans'}` + `${index % 3 === 0 ? '' : 'right-ans'}`}

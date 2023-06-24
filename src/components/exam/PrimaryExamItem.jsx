@@ -10,10 +10,7 @@ import {useRouter} from "next/router";
 import ExamTag from "./ExamTag";
 import ExamInfoHistory from "@/components/exam/ExamInfoHistory";
 
-export default function PrimaryExamItem({post1}) {
-  const post = {
-    title: 'Đề thi thử môn Lý trường THPT Phạm Văn Đồng - Gia Lai - 2019'
-  }
+export default function PrimaryExamItem({post}) {
   const router = useRouter();
   const handleClick = () => {
     router.push(`/history/${strToSlug(post.title)}-${post.id}`);
@@ -33,10 +30,7 @@ export default function PrimaryExamItem({post1}) {
             "object-cover md:rounded-tl-xl md:rounded-bl-xl rounded-tl-xl rounded-tr-xl md:rounded-tr-none"
           }
         />
-        <ExamTag
-          tag={'Tag ne'}
-          category={1}
-        />
+        <ExamTag item={post}/>
       </div>
       <div className="w-full p-2">
         <ExamInfoHistory item={post} showTitle={false}/>

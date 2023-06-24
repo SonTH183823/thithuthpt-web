@@ -68,10 +68,10 @@ export const sortHistoryConfig = [
     value: 2,
     label: 'Cũ nhất'
   },
-  {
-    value: 3,
-    label: 'Điểm cao nhất'
-  }
+  // {
+  //   value: 3,
+  //   label: 'Điểm cao nhất'
+  // }
 ]
 
 export const menuUser = [

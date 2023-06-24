@@ -17,6 +17,7 @@ import PointComponent from "@/components/points/PointComponent";
 import Award from "@/components/points/Award";
 import ResultProfile from "@/components/result/ResultProfile";
 import {useRouter} from "next/router";
+import HistorySection from "@/components/user/HistorySection";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
@@ -35,69 +36,11 @@ export default function ProfileUser() {
   }, [user])
   const genUITab = () => {
     if (tabActive === 2) {
-      return (
-        <>
-          <div
-            className={'shadow-md px-3 flex justify-between bg-white rounded-lg items-center text-sm md:text-base mb-4'}>
-            <div>Lịch sử làm bài <span className={'font-bold'}>69</span> kết quả</div>
-            <div className={'flex items-center space-x-2'}>
-              <div className={'font-semibold'}>Sắp xếp</div>
-              <Select
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: "5px",
-                    borderColor: "#e5e7eb",
-                    margin: "8px 0",
-                    width: "170px",
-                  }),
-                }}
-                options={sortHistoryConfig}
-                onChange={(option) => {
-                  setSort(option)
-                }}
-                value={sort}
-              />
-            </div>
-          </div>
-          <PostsSection userId={user.id}/>
-        </>
-      )
+      return <HistorySection userId={user._id}/>
     } else if (tabActive === 3) {
-      return (
-        <>
-          <div
-            className={'shadow-md px-3 flex justify-between bg-white rounded-lg items-center text-sm md:text-base mb-4'}>
-            <div>Lịch sử làm bài <span className={'font-bold'}>69</span> kết quả</div>
-            <div className={'flex items-center space-x-2'}>
-              <div className={'font-semibold'}>Sắp xếp</div>
-              <Select
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: "5px",
-                    borderColor: "#e5e7eb",
-                    margin: "8px 0",
-                    width: "170px",
-                  }),
-                }}
-                options={sortHistoryConfig}
-                onChange={(option) => {
-                  setSort(option)
-                }}
-                value={sort}
-              />
-            </div>
-          </div>
-          <PostsSection userId={user.id}/>
-        </>
-      )
+      return <HistorySection userId={user._id} isToeic={true}/>
     }
-    return (
-      <>
-        <ResultProfile/>
-      </>
-    )
+    return <ResultProfile/>
   }
   return (
     <div>
