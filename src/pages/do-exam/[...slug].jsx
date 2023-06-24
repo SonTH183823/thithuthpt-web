@@ -10,7 +10,10 @@ import FourOhFour from "../404";
 import LayoutWithoutFooter from "@/components/layout/LayoutWithoutFooter";
 import ModalConfirmFinishExam from "@/components/modal/ModalConfirmFinishExam";
 import {ExamAPI} from "../../apis/exam";
-import {genURLImage} from "../../utils/common";
+import {genURLImage, strToSlug} from "../../utils/common";
+import {useRouter} from "next/router";
+import ModalComfirmDeleteComment from "@/components/modal/ModalComfirmDeleteComment";
+import {HistoryAPI} from "../../apis/history";
 
 export async function getServerSideProps({params}) {
   let exam = {};
@@ -34,8 +37,10 @@ export async function getServerSideProps({params}) {
 
 export default function DoExam({exam, listQuestion}) {
   let oldPosition = null
-  const [listQues, setListQues] = useState(Array(listQuestion.length).fill(0))
+  const [listAnswer, setListAnswer] = useState(Array(listQuestion.length).fill(0))
+  const [time, setTime] = useState(exam.time * 60)
   const answers = ['A', 'B', 'C', 'D']
+  const router = useRouter()
   const questionClick = (index) => {
     if (index !== oldPosition) {
       oldPosition = index
@@ -48,14 +53,14 @@ export default function DoExam({exam, listQuestion}) {
   }
 
   const handleAnsQues = (index, ans) => {
-    if (listQues[index] === answerConfig[ans].value) {
-      setListQues(l => {
+    if (listAnswer[index] === answerConfig[ans].value) {
+      setListAnswer(l => {
         let newA = [...l]
         newA[index] = 0
         return newA
       })
     } else {
-      setListQues(l => {
+      setListAnswer(l => {
         let newA = [...l]
         newA[index] = answerConfig[ans].value
         return newA
@@ -63,11 +68,26 @@ export default function DoExam({exam, listQuestion}) {
     }
   }
 
+  useEffect(() => {
+    if (time === 0) {
+      onFinishExam()
+    }
+  }, [time])
+
   const finishExam = () => {
     const modal = document.getElementById("modal-confirm-finish-exam-id");
     if (modal) {
       modal.click();
     }
+  }
+
+  const onFinishExam = async () => {
+    await HistoryAPI.finishExam({
+      examId: exam._id,
+      listAnswer,
+      timeSpent: exam.time * 60 - time
+    })
+    router.push(`/history/${strToSlug(exam.title)}-${exam._id}`);
   }
 
   return (<Fragment>
@@ -88,7 +108,7 @@ export default function DoExam({exam, listQuestion}) {
                     {answers.map((ans, idx) =>
                       <div
                         key={"ans-" + index + "-" + idx}
-                        className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(listQues[index] === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
+                        className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(listAnswer[index] === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
                         onClick={() => handleAnsQues(index, ans)}
                       >{ans}</div>)}
                   </div>
@@ -100,12 +120,12 @@ export default function DoExam({exam, listQuestion}) {
           <div className="block col-span-1 lg:flex flex-col sticky top-20 h-screen lg:h-fit">
             <div className={"bg-base-100 rounded-xl px-4 "}>
               <h3 className={'!m-2'}>Thời gian còn lại</h3>
-              <CountDown mis={exam.time}/>
+              <CountDown time={time} setTime={setTime}/>
             </div>
             <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4"}>
               <h3 className={'!m-2'}>Danh sách câu hỏi</h3>
               <div className={'grid grid-cols-8 DSxl:grid-cols-5 gap-2'}>
-                {listQues.map((item, index) => <div
+                {listAnswer.map((item, index) => <div
                   onClick={() => questionClick(index)}
                   className={'bg-base-200 p-2 text-sm flex items-center justify-center rounded-md cursor-pointer select-none ' + `${item ? 'active-ques' : ''}`}
                   key={'listquess-' + index}>{index + 1}</div>)}
@@ -116,7 +136,7 @@ export default function DoExam({exam, listQuestion}) {
           </div>
         </div>
       </div>
-      <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'}/>
+      <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'} handleClick={onFinishExam}/>
     </div>) : <FourOhFour/>}
   </Fragment>)
 }

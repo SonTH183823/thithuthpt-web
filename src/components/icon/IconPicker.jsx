@@ -24,7 +24,7 @@ function IconPicker({onSelectedIcon, isContent = false, height, width, isRounded
         isOpen={isPopoverOpen}
         positions={['top', 'bottom', 'left', 'right']}
         reposition={true}
-        containerClassName={'z-[9999999] rounded-md'}
+        containerClassName={'z-[50] rounded-md'}
         onClickOutside={() => setIsPopoverOpen(false)}
         content={
           <div id={'popover-layout'} tabIndex={0} className="icon-picker is-shadow rounded-[8px] w-fit h-fit"

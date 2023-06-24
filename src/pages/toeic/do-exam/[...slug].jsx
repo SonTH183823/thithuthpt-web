@@ -34,11 +34,9 @@ export async function getServerSideProps({params}) {
 }
 
 export default function DoToeic({exam, listQuestion}) {
-  console.log(listQuestion)
   let oldPosition = null
   const [listQues, setListQues] = useState(Array(200).fill(0))
-  const answers = ['A', 'B', 'C', 'D']
-  const [type, setType] = useState('listen')
+  const [time, setTime] = useState(exam.time * 60)
   const [tabActive, setTabActive] = useState(1)
 
   const questionClick = (index) => {
@@ -87,14 +85,14 @@ export default function DoToeic({exam, listQuestion}) {
             <div className="block col-span-1 lg:flex flex-col sticky top-20 h-fit lg:h-fit ">
               <div className={"bg-base-100 rounded-xl px-4 "}>
                 <h3 className={'!m-2 !mb-3'}>Thời gian còn lại</h3>
-                <CountDown mis={exam.time}/>
+                <CountDown time={time} setTime={setTime}/>
               </div>
             </div>
           </div>
           <PartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion}/>
           <div className={"bg-base-100 rounded-xl px-4 lg:hidden flex mt-4"}>
             <h3 className={'!m-2 !mb-3'}>Thời gian còn lại</h3>
-            <CountDown mis={exam.time}/>
+            <CountDown time={time} setTime={setTime}/>
           </div>
         </div>
         <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'} handleClick={finishExam}/>

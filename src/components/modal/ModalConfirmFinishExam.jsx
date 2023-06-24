@@ -3,11 +3,7 @@ import React from "react";
 import ButtonPrimary from "../button/ButtonPrimary";
 import finishExam from "@/assets/images/finishExam.png";
 
-const ModalConfirmFinishExam = (
-  {
-    handleClick = () => {
-    }, id
-  }) => {
+const ModalConfirmFinishExam = ({ handleClick = () => {}, id }) => {
   return (
     <div>
       <input type="checkbox" id={id} className="modal-toggle"/>
@@ -16,7 +12,7 @@ const ModalConfirmFinishExam = (
         className="modal cursor-pointer"
         id={"modal-confirm-finish-exam-id"}
       >
-        <label className="modal-box relative" htmlFor="">
+        <label className="modal-box relative" htmlFor={id}>
           <div className="flex flex-col items-center space-y-2">
 
             <div className="relative w-[300px] h-[120px]">

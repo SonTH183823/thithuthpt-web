@@ -72,7 +72,7 @@ function HistoryDetail({exam}) {
             <div className="lg:grid grid-cols-3 lg:space-x-4">
               <div className="col-span-2 relative">
                 <div className={"bg-base-100 rounded-xl "}>
-                  <DetailExam item={exam} isDoExam={true} isDoAgain={true}/>
+                  <DetailExam item={exam} isDoExam={true} isDoAgain={true} isShowRs={false}/>
                 </div>
                 <ResultComponents/>
                 <RatingComponents postId={exam._id}/>

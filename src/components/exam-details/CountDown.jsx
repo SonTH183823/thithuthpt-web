@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-function CountDown({mis}) {
-  const [time, setTime] = useState(mis * 60 || 130);
+function CountDown({time, setTime}) {
   const [isRed, setRed] = useState(false)
   useEffect(() => {
     let timer = setInterval(() => {
@@ -14,6 +13,7 @@ function CountDown({mis}) {
       });
     }, 1000);
   }, []);
+
   return (
     <div className={'flex text-primary font-bold text-5xl w-full justify-center pb-4 select-none'}>
             <span

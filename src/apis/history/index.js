@@ -10,8 +10,8 @@ export const HistoryAPI = {
     return await api.get(`/historyUser?${queryString.stringify(query)}`);
   },
 
-  async getHistoryByExamId(id) {
-    return await api.get(`/history/${id}`);
+  async finishExam(data) {
+    return await api.post(`/finishExam`, data);
   },
 
   async getHistorysByUser(query) {
