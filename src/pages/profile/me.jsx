@@ -1,18 +1,11 @@
-import PrimaryPostItem from "@/components/exam/PrimaryExamItem";
-import Avatar from "@/components/user/Avatar";
 import DetailUserInfoContainer from "@/components/user/DetailUserInfoContainer";
 import FullName from "@/components/user/FullName";
 import React, {useState, useEffect, Fragment} from "react";
 import Tabs, {Tab} from "react-best-tabs";
-// import { PostAPI } from "apis/post";
-import Link from "next/link";
 import ProfileSekeleton from "@/components/Sekeleton/ProfileSekeleton";
 import CoverImageSection from "@/components/user/CoverImageSection";
 import AvatarWithUpload from "@/components/user/AvatarWithUpload";
-import PostsSection from "@/components/user/PostsSection";
 import {useSelector} from "react-redux";
-import Select from "react-select";
-import {sortHistoryConfig} from "../../configs/configs";
 import PointComponent from "@/components/points/PointComponent";
 import Award from "@/components/points/Award";
 import ResultProfile from "@/components/result/ResultProfile";
@@ -23,10 +16,10 @@ export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(1);
-  const [sort, setSort] = useState(sortHistoryConfig[0]);
+  const [index, setIndex] = useState(0);
   const router = useRouter()
   const handleSelectTab = (event, tab) => {
-    setSort(sortHistoryConfig[0])
+    setIndex(index + 1)
     setTabActive(tab)
   }
   useEffect(() => {
@@ -106,7 +99,9 @@ export default function ProfileUser() {
                     </Tabs>
                   )}
                 </div>
-                {genUITab()}
+                <div key={index}>
+                  {genUITab()}
+                </div>
               </div>
             </div>
           </div>

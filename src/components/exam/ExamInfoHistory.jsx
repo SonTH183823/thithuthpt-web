@@ -11,36 +11,33 @@ import question from "../../assets/images/svg/question-number.svg";
 import date from "../../assets/images/svg/calendar.svg";
 import star from "../../assets/images/svg/star.svg";
 
-function ExamInfoHistory({items}) {
-  const item = {
-    showTitle: true,
-    price: 10232434,
-    deposit: 12242354,
-    createdAt: 1213445,
-    title: 'Đề thi THPT Quốc gia năm 2021 môn Lịch sử Mã đề 301',
-    category: 4
+function ExamInfoHistory({exam, item}) {
+  const timeSpentConvert = (time) => {
+    const m = Math.floor(time / 60)
+    const s = time % 60
+    return `${m} phút ${s} giây`
   }
   return (
     <div className={"p-2"}>
       <TitleExamItem className={"font-bold text-info flex items-center mb-2 cursor-pointer"}>
-        <span>{item.title}</span>
+        <span>{exam.title}</span>
       </TitleExamItem>
       <div className={'bg-base-200 rounded-xl p-3 flex'}>
         <div className={'flex flex-col items-start space-y-2 flex-1'}>
           <CharacteristicsItem icon={question}>
-            Số câu đúng 36/50 câu
+            Số câu đúng {item.numberQuestionRight}/{exam.numberQuestion} câu
           </CharacteristicsItem>
           <CharacteristicsItem icon={time}>
-            Thời gian làm bài 59 phút
+            Thời gian làm bài {timeSpentConvert(item.timeSpent)}
           </CharacteristicsItem>
           <CharacteristicsItem icon={date}>
-            Ngày làm bài {formatDate(new Date())}
+            Ngày làm bài {formatDate(item.createdAt)}
           </CharacteristicsItem>
         </div>
         <div>
           <div className="flex items-center text-primary flex-col border border-primary rounded-md">
             <div className={'text-white bg-primary p-2 uppercase text-sm'}>Điểm số</div>
-            <div className="font-bold text-xl p-2">9.6</div>
+            <div className="font-bold text-xl p-2">{item.numberQuestionRight / exam.numberQuestion}</div>
           </div>
         </div>
       </div>

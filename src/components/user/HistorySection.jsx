@@ -147,7 +147,7 @@ const PostsSection = ({userId, isToeic = false}) => {
           </div>}
       >
         {histories.length > 0 &&
-          histories.map((item) => <PrimaryPostItem post={item} key={item._id}/>)}
+          histories.map((item) => <PrimaryPostItem history={item} key={item._id}/>)}
       </InfiniteScroll>
     </>
   );
