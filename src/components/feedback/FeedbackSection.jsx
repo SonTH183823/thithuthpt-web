@@ -60,7 +60,6 @@ export default function FeedbackSection() {
               loop={true}
               loopFillGroupWithBlank={true}
               className={width > 480 ? "custom-swiper" : ""}
-              navigation={width > 480}
               modules={[Navigation]}
               breakpoints={{
                 500: {

@@ -1,27 +1,32 @@
 import CommentInput from "@/components/comment/CommentInput";
 import Image from "next/image";
-import camera from "@/assets/images/camera.png";
-import video from "@/assets/images/video.png";
 import Avatar from "../user/Avatar";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {BigPlayButton, ControlBar, Player} from "video-react";
 import {faImage, faPlus, faVideo} from "@fortawesome/free-solid-svg-icons";
 import {genURLImage} from "../../utils/common";
+import IconPicker from "@/components/icon/IconPicker";
 
-export default function CommentBox({
-                                     postId,
-                                     profile,
-                                     comment,
-                                     setComment,
-                                     handlePostComment,
-                                     handleChangeInput,
-                                     handleChangeVideoInput,
-                                     imageURL,
-                                     videoURL,
-                                     setImageURL,
-                                     setVideoURL,
-                                     loading,
-                                   }) {
+export default function CommentBox(
+  {
+    postId,
+    profile,
+    comment,
+    setComment,
+    handlePostComment,
+    handleChangeInput,
+    handleChangeVideoInput,
+    imageURL,
+    videoURL,
+    setImageURL,
+    setVideoURL,
+    loading,
+  }) {
+  const addIcon = (icon) => {
+    if (icon) {
+      setComment(comment + icon)
+    }
+  }
   return (
     <div className={`flex items-start space-x-3`}>
       <Avatar sizeAvatar="w-12" avatar={profile.avatar}/>
@@ -29,7 +34,8 @@ export default function CommentBox({
         <div className={"p-3"}>
           <CommentInput comment={comment} setComment={setComment}/>
           <div className="flex items-center justify-end">
-            <div className={"flex justify-end pt-3 cursor-pointer items-center space-x-2"}>
+            <div className={"flex justify-end pt-3 cursor-pointer items-center space-x-2 select-none"}>
+              <IconPicker onSelectedIcon={addIcon}/>
               <label className={'cursor-pointer h-full w-5'}>
                 <FontAwesomeIcon icon={faImage} className={'text-primary'}/>
                 <input type="file" accept="image/png, image/jpeg" className="hidden cursor-pointer"
@@ -43,9 +49,10 @@ export default function CommentBox({
                        multiple={false}
                        onChange={(e) => handleChangeVideoInput(e)}/>
               </label>
+
             </div>
             <div
-              className={"flex justify-end pt-3 cursor-pointer ml-2.5"}
+              className={"flex justify-end pt-3 cursor-pointer ml-2.5 select-none"}
               onClick={handlePostComment}
             >
               <span

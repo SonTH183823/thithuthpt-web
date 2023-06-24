@@ -1,6 +1,7 @@
 import React from 'react';
-
-function TableTypeListQues({listTypeQuestion, total, isToeic = false}) {
+function TableTypeListQues({item}) {
+  const {listTypeQuestion, numberQuestion, numberListening, numberReading} = item
+  const isToeic = item.subject === 9
   const listTypeToeic = [
     {
       name: 'Part 1 (Listening)',
@@ -26,23 +27,58 @@ function TableTypeListQues({listTypeQuestion, total, isToeic = false}) {
       numQues: 54
     },
   ]
-  return (
-    <>
-      <h3>Phân loại câu hỏi trong đề thi</h3>
-      <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[1px]">
-        <div className="px-4 py-2 col-span-1 text-center">#</div>
-        <div className="px-4 py-2 col-span-3">Dạng câu hỏi</div>
-        <div className="px-4 py-2 col-span-2 text-center">Số câu hỏi</div>
-      </div>
-      {isToeic ? <>
+
+  const arr = [
+    {
+      name: 'Listening',
+      numQues: numberListening
+    },
+    {
+      name: 'Reading',
+      numQues: numberReading
+    }
+  ]
+
+  const genUI = () => {
+    if (isToeic) {
+      if (item.cateToeic === 2) {
+        return (
+          <>
+            {arr.map((item, index) => (
+              <div className="grid grid-cols-6 gap-4 border-b-primary border-b-[1px]"
+                   key={'listTypeQuestionToeic' + index}>
+                <div className="px-4 py-2 col-span-1 text-center">{index + 1}</div>
+                <div className="px-4 py-2 col-span-3">{item.name}</div>
+                <div className="px-4 py-2 col-span-2 text-center">{item.numQues}</div>
+              </div>
+            ))}
+            <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[.5px]">
+              <div className="px-4 py-2 col-span-1 text-center"></div>
+              <div className="px-4 py-2 col-span-3">Tổng số</div>
+              <div className="px-4 py-2 col-span-2 text-center">{numberReading + numberListening}</div>
+            </div>
+          </>
+        )
+      }
+      return (
+        <>
           {listTypeToeic.map((item, index) => (
-            <div className="grid grid-cols-6 gap-4 border-b-primary border-b-[1px]" key={'listTypeQuestionToeic' + index}>
+            <div className="grid grid-cols-6 gap-4 border-b-primary border-b-[1px]"
+                 key={'listTypeQuestionToeic' + index}>
               <div className="px-4 py-2 col-span-1 text-center">{index + 1}</div>
               <div className="px-4 py-2 col-span-3">{item.name}</div>
               <div className="px-4 py-2 col-span-2 text-center">{item.numQues}</div>
             </div>
           ))}
-        </> :
+          <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[.5px]">
+            <div className="px-4 py-2 col-span-1 text-center"></div>
+            <div className="px-4 py-2 col-span-3">Tổng số</div>
+            <div className="px-4 py-2 col-span-2 text-center">200</div>
+          </div>
+        </>
+      )
+    } else {
+      return (
         <>
           {listTypeQuestion.map((item, index) => (
             <div className="grid grid-cols-6 gap-4 border-b-primary border-b-[1px]" key={'listTypeQuestion' + index}>
@@ -51,14 +87,26 @@ function TableTypeListQues({listTypeQuestion, total, isToeic = false}) {
               <div className="px-4 py-2 col-span-2 text-center">{item.value}</div>
             </div>
           ))}
-        </>}
+          {listTypeQuestion.length > 0 ?
+            <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[.5px]">
+              <div className="px-4 py-2 col-span-1 text-center"></div>
+              <div className="px-4 py-2 col-span-3">Tổng số</div>
+              <div className="px-4 py-2 col-span-2 text-center">{numberQuestion}</div>
+            </div> : <div className={'w-full text-center mt-3'}>Không có dữ liệu</div>}
+        </>
+      )
+    }
+  }
 
-      {(!isToeic && listTypeQuestion.length > 0) ?
-        <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[.5px]">
-          <div className="px-4 py-2 col-span-1 text-center"></div>
-          <div className="px-4 py-2 col-span-3">Tổng số</div>
-          <div className="px-4 py-2 col-span-2 text-center">{isToeic ? '200' : total}</div>
-        </div> : <div className={'w-full text-center mt-3'}>Không có dữ liệu</div>}
+  return (
+    <>
+      <h3>Phân loại câu hỏi trong đề thi</h3>
+      <div className="grid grid-cols-6 gap-4 font-bold border-b-primary border-b-[1px]">
+        <div className="px-4 py-2 col-span-1 text-center">#</div>
+        <div className="px-4 py-2 col-span-3">Dạng câu hỏi</div>
+        <div className="px-4 py-2 col-span-2 text-center">Số câu hỏi</div>
+      </div>
+      {genUI()}
     </>
   );
 }

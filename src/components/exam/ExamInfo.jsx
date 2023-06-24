@@ -34,7 +34,7 @@ function ExamInfo({item}) {
             {item.time} phút
           </CharacteristicsItem>
           <CharacteristicsItem icon={question}>
-            {item.questionIds.length} câu
+            {item.subject === 9 ? (item.numberReading + item.numberListening) : item.numberQuestion} câu
           </CharacteristicsItem>
           <CharacteristicsItem icon={date}>
             {formatDate(item.createdAt)}

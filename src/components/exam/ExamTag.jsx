@@ -1,8 +1,9 @@
 import * as React from "react";
 import styles from "./HomeExamItem.module.scss";
-import {genTagExam} from "../../utils/common";
-export default function ExamTag({ tag, category, classCustom="", item }) {
-  const {value, label} = genTagExam(item)
+import {genTagDoc, genTagExam} from "../../utils/common";
+
+export default function ExamTag({tag, category, classCustom = "", item}) {
+  const {value, label} = item.subject === 9 ? genTagDoc(item) : genTagExam(item)
   const getBackground = () => {
     switch (value) {
       case 4: {
@@ -15,7 +16,7 @@ export default function ExamTag({ tag, category, classCustom="", item }) {
         return `bg-primary`;
       }
       default: {
-        return `bg-green-400`;
+        return `bg-violet-400`;
       }
     }
   };

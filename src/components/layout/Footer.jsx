@@ -109,7 +109,7 @@ export default function Footer() {
               {services.map((item) => (
                 <li
                   key={item.id}
-                  className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary"}
+                  className={"mb-4 cursor-pointer text-backgroundGray hover:underline hover:text-primary w-fit"}
                   onClick={() => handleClick(item)}
                 >
                   {item.title}
