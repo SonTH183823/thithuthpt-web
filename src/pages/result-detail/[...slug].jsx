@@ -90,7 +90,8 @@ function ResultDetail({exam, listQuestion}) {
                 </div>
                 <div className={"bg-base-100 rounded-xl mt-4 md:p-4 p-1"}>
                   {listQuestion.map((item, index) => (
-                    <QuestionItem index={index} item={item} answer={listQuestion[index]} showAns={true}/>))}
+                    <QuestionItem index={index} item={item} answer={listQuestion[index]} showAns={true}
+                                  examId={exam._id} key={'question-item-rs' + index}/>))}
                   <div className={'text-primary text-center font-semibold mt-4'}>- HẾT -</div>
                 </div>
               </div>

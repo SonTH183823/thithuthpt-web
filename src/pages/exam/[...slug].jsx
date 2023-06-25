@@ -70,7 +70,7 @@ export default function ExamDetail({exam}) {
               </div>
               <div className="block col-span-1 lg:flex flex-col">
                 <div className={"bg-base-100 rounded-xl px-4 hidden lg:block"}>
-                  <BXH idExam={12}/>
+                  <BXH idExam={exam._id}/>
                 </div>
                 <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
                   <RelatedExam relatedExam={relatedExam}/>

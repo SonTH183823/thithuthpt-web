@@ -9,6 +9,9 @@ export const HistoryAPI = {
   async getAllHistoryByUserId(query) {
     return await api.get(`/historyUser?${queryString.stringify(query)}`);
   },
+  async getBXHByExamId(id) {
+    return await api.get(`/BXH/${id}`);
+  },
 
   async finishExam(data) {
     return await api.post(`/finishExam`, data);

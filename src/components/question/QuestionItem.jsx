@@ -6,7 +6,7 @@ import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {useRouter} from "next/router";
 import {genURLImage} from "../../utils/common";
 
-function QuestionItem({item, index, answer, showAns = false}) {
+function QuestionItem({item, index, answer, showAns = false, examId}) {
   const router = useRouter()
   const answers = ['A', 'B', 'C', 'D']
   const [showResult, setShow] = useState(showAns)
@@ -23,11 +23,11 @@ function QuestionItem({item, index, answer, showAns = false}) {
       </div>
       <div className={'flex justify-between md:my-2 my-1 md:text-base text-sm'}>
         <div className={'hover:text-primary cursor-pointer font-semibold'}
-             onClick={() => router.push(`/question/${item._id}`)}
+             onClick={() => router.push(`/question/${item._id}?exam=${examId}`)}
         >Nhận xét
         </div>
         <div className={'hover:text-primary cursor-pointer font-semibold'}
-             onClick={() => router.push(`/question/${item._id}`)}>Xem chi tiết
+             onClick={() => router.push(`/question/${item._id}?exam=${examId}`)}>Xem chi tiết
         </div>
         <div
           className={`flex space-x-1 flex-row hover:text-primary cursor-pointer font-semibold ${showResult ? 'text-primary' : ''}`}
