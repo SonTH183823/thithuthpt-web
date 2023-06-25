@@ -8,9 +8,11 @@ import examImg from "@/assets/images/exam.jpeg";
 import Image from "next/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
+import {genURLImage} from "../../utils/common";
+import {answerConfigArr} from "../../configs/configs";
 
 function QuestionDetail({question}) {
-  const [showResult, setShow] = useState(false)
+  const [showResult, setShow] = useState(true)
   const handleReport = () => {
     const accessToken = Cookies.get(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY);
     if (accessToken) {
@@ -33,7 +35,8 @@ function QuestionDetail({question}) {
     }
   };
   return (<div className={"pt-4 px-3"}>
-    <Image src={examImg} alt={''} className={''}/>
+    <Image src={genURLImage(question.content)} alt={''} className={'w-full h-full'} width={2000}
+           height={200}/>
     <div className="grid grid-cols-3 gap-4 my-2 border-t-2 border-t-primary mx-5 py-2 font-semibold">
       <div
         className={'select-none col-span-1 hover:bg-base-200 cursor-pointer py-2 flex items-center justify-center rounded-sm space-x-1 ' + `${showResult ? 'text-primary' : ''}`}
@@ -55,10 +58,17 @@ function QuestionDetail({question}) {
       </div>
     </div>
     {showResult ? <div className={'pb-3'}>
-      <div className={'font-semibold'}>Đáp án đúng A</div>
-      <Image src={examImg} alt={''} className={''}/>
+      <div className={'font-semibold'}>Đáp án đúng {answerConfigArr[question.answer].label}</div>
+      {
+        question.explanation ?
+          <Image src={genURLImage(question.explanation)} alt={''} className={'w-full h-full'} width={2000}
+                 height={200}/> :
+          <div className={'text-center'}>
+            {item.description ? question.description : 'Không có lời giải'}
+          </div>
+      }
     </div> : null}
-    <ModalReportPost id="modal-report-question-id" objectId={question.id} isQuestion={true}/>
+    <ModalReportPost id="modal-report-question-id" objectId={question._id} isQuestion={true}/>
     <ModalShare id="modal-share-post" title={question.title}/>
     <ReactTooltip id='my-tooltip'/>
   </div>);

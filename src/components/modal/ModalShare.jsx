@@ -64,11 +64,11 @@ const ModalShare = (id, title) => {
             </TelegramShareButton>
           </div>
           <h3 className="text-lg font-bold">Hoặc sao chép liên kết</h3>
-          <div className="flex items-center justify-between bg-gray-200 rounded-lg">
-            <div className="p-3 flex-1">
+          <div className="flex items-center justify-between bg-gray-200 rounded-lg w-full">
+            <div className="p-3 flex-1 w-[75%]">
               <span className="line-clamp-1 sm:text-base text-sm"> {shareUrl}</span>
             </div>
-            <div className="w-fit">
+            <div className="w-[25%]">
               <CopyToClipboard
                 text={shareUrl}
                 onCopy={() => {
@@ -76,7 +76,7 @@ const ModalShare = (id, title) => {
                 }}
               >
                 <div
-                  className="btn max-w-[100px] w-full bg-primary sm:text-base text-xs sm:px-3 px-1 rounded-lg normal-case text-white hover:bg-primary hover:border-primary border-primary">
+                  className="btn w-full bg-primary sm:text-base text-xs sm:px-3 px-1 rounded-lg normal-case text-white hover:bg-primary hover:border-primary border-primary">
                   Sao chép
                 </div>
               </CopyToClipboard>

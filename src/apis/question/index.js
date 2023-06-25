@@ -1,7 +1,7 @@
 import api from "apis/api";
 import queryString from "query-string";
 
-export const questionAPI = {
+export const QuestionAPI = {
   async raiseQuestion(data) {
     return await api.post("/question", { ...data });
   },

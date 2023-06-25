@@ -18,14 +18,29 @@ import RatingComponents from "@/components/rating/RatingComponents";
 import QuestionItem from "@/components/question/QuestionItem";
 import QuestionDetail from "@/components/question/QuestionDetail";
 import ModalReportPost from "@/components/modal/ModalReportPost";
+import {QuestionAPI} from "../../apis/question";
 
-export default function Question() {
+export async function getServerSideProps({params}) {
+  let question = {};
+  try {
+    const id = params.slug[0].split("-").slice(-1);
+    question = await QuestionAPI.getQuestionById(id)
+  } catch (e) {
+    console.log(e);
+  }
+
+  return {
+    props: {
+      question
+    },
+  };
+}
+
+
+export default function Question({question}) {
   const profile = useSelector((state) => state.auth.profile);
-  const router = useRouter();
-  const [question, setQuestion] = useState({id: 1})
-  const [isFavorite, setIsFavorite] = useState(null);
+  const router = useRouter()
   // const favoritePosts = useSelector((state) => state.post.favoritePosts);
-  const favoritePosts = []
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -56,76 +71,11 @@ export default function Question() {
   //     })();
   // }, []);
 
-  const handleReport = () => {
-    if (profile.id) {
-      const modal = document.getElementById("modal-report-post-id");
-      if (modal) {
-        modal.click();
-      }
-    } else {
-      const modal = document.getElementById("modal-require-login-id");
-      if (modal) {
-        modal.click();
-      }
-    }
-  };
 
-  const handleShare = () => {
-    const modal = document.getElementById("modal-share-id");
-    if (modal) {
-      modal.click();
-    }
-  };
-
-  const handleFavorite = async () => {
-    if (profile.id) {
-      const res = await PostAPI.toggleFavorite({
-        userId: profile.id,
-        postId: post.id,
-      });
-      setIsFavorite(!isFavorite);
-      if (isFavorite) {
-        const array = favoritePosts.filter((i) => i.post.id !== post.id);
-        dispatch(updateFavoritePosts(array));
-      } else {
-        let temp = [...favoritePosts];
-        temp.push({post: post, userFavorite: profile});
-        dispatch(updateFavoritePosts(temp));
-      }
-      if (res.ok) {
-        toast.success("Cập nhật thông tin thành công!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      } else {
-        toast.error("Đã có lỗi xảy ra!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-    } else {
-      const modal = document.getElementById("modal-require-login");
-      if (modal) {
-        modal.click();
-      }
-    }
-  };
 
   return (
     <Fragment>
-      {question.id ? (
+      {question._id ? (
         <div className={"bg-base-200"}>
           <div className="container mx-auto py-2 sm:py-4 padding-mobile">
             <div className="lg:grid grid-cols-3 lg:space-x-4">
@@ -137,7 +87,7 @@ export default function Question() {
 
                 </div>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={question.id}/>
+                  <InteractiveContainer postId={question._id}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col">
@@ -145,13 +95,11 @@ export default function Question() {
                   <BXH idExam={12}/>
                 </div>
                 <div className={"bg-base-100 rounded-xl px-4 mt-4"}>
-                  <RelatedExam idExam={12}/>
+                  {/*<RelatedExam idExam={12}/>*/}
                 </div>
               </div>
             </div>
           </div>
-          {/*<ModalReportPost id={"modal-report-question"} objectId={question.id} isQuestion={true}/>*/}
-          <ModalShare id={"modal-share-post"} title={question.id}/>
         </div>
       ) : null}
     </Fragment>
