@@ -9,6 +9,7 @@ import {ExamAPI} from "../../apis/exam";
 import {useRouter} from "next/router";
 import {HistoryAPI} from "../../apis/history";
 import {answerConfig} from "../../configs/configs";
+import TableTypeListQuesHistory from "@/components/history/TableTypeListQues";
 
 export async function getServerSideProps({params}) {
   let history = {};
@@ -35,7 +36,7 @@ export async function getServerSideProps({params}) {
 
 function HistoryDetail({exam, listQuestion, history}) {
   let oldPosition = null
-  const [listAnswer, setListQues] = useState(history.listAnswer)
+  const listAnswer = history.listAnswer
   const [relatedExam, setRelatedExam] = useState([]);
   const router = useRouter()
 
@@ -79,6 +80,7 @@ function HistoryDetail({exam, listQuestion, history}) {
                   <DetailExam item={exam} isDoExam={true} isDoAgain={true} isShowRs={false}/>
                 </div>
                 <ResultComponents exam={exam} history={history}/>
+                <TableTypeListQuesHistory exam={exam} history={history}/>
                 <RatingComponents postId={exam._id}/>
                 <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4 lg:hidden block"}>
                   <h3 className={'!m-2 pt-2'}>Danh sách câu hỏi</h3>
