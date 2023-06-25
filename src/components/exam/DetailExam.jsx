@@ -104,6 +104,10 @@ function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}
       modal.click();
     }
   };
+
+  const navigateToResult = () => {
+    router.push(`/result-detail/${strToSlug(item.title)}-${item._id}`)
+  }
   const startExam = () => {
     if (profile?._id) {
       const modal = document.getElementById("modal-confirm-start-exam-id");
@@ -195,7 +199,7 @@ function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}
         {isShowRs && <ButtonSecondary
           title="Giải chi tiết"
           className="w-full mt-3 text-sm font-semibold"
-          handleClick={() => startExam()}
+          handleClick={navigateToResult}
         />}
       </div> : null}
 

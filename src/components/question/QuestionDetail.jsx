@@ -10,9 +10,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {genURLImage} from "../../utils/common";
 import {answerConfigArr} from "../../configs/configs";
+import Lightbox from "react-image-lightbox";
 
 function QuestionDetail({question}) {
   const [showResult, setShow] = useState(true)
+  const [openLightBox, setOpenLightBox] = useState(false)
+  const [openLightBoxE, setOpenLightBoxE] = useState(false)
   const handleReport = () => {
     const accessToken = Cookies.get(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY);
     if (accessToken) {
@@ -35,8 +38,14 @@ function QuestionDetail({question}) {
     }
   };
   return (<div className={"pt-4 px-3"}>
-    <Image src={genURLImage(question.content)} alt={''} className={'w-full h-full'} width={2000}
-           height={200}/>
+    <Image src={genURLImage(question.content)} alt={''} className={'w-full h-full cursor-pointer'} width={2000}
+           height={200} onClick={() => setOpenLightBox(true)}/>
+    {openLightBox && (
+      <Lightbox
+        mainSrc={genURLImage(question.content)}
+        onCloseRequest={() => setOpenLightBox(false)}
+      />
+    )}
     <div className="grid grid-cols-3 gap-4 my-2 border-t-2 border-t-primary mx-5 py-2 font-semibold">
       <div
         className={'select-none col-span-1 hover:bg-base-200 cursor-pointer py-2 flex items-center justify-center rounded-sm space-x-1 ' + `${showResult ? 'text-primary' : ''}`}
@@ -61,10 +70,19 @@ function QuestionDetail({question}) {
       <div className={'font-semibold'}>Đáp án đúng {answerConfigArr[question.answer].label}</div>
       {
         question.explanation ?
-          <Image src={genURLImage(question.explanation)} alt={''} className={'w-full h-full'} width={2000}
-                 height={200}/> :
+          <>
+            <Image src={genURLImage(question.explanation)} alt={''} className={'w-full h-full cursor-pointer'} width={2000}
+                   height={200} onClick={() => setOpenLightBoxE(true)}/>
+            {openLightBoxE && (
+              <Lightbox
+                mainSrc={genURLImage(question.explanation)}
+                onCloseRequest={() => setOpenLightBoxE(false)}
+              />
+            )}
+          </>
+          :
           <div className={'text-center'}>
-            {item.description ? question.description : 'Không có lời giải'}
+            {question.description ? question.description : 'Không có lời giải'}
           </div>
       }
     </div> : null}

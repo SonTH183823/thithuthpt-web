@@ -6,10 +6,10 @@ import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {useRouter} from "next/router";
 import {genURLImage} from "../../utils/common";
 
-function QuestionItem({item, index, answer}) {
+function QuestionItem({item, index, answer, showAns = false}) {
   const router = useRouter()
   const answers = ['A', 'B', 'C', 'D']
-  const [showResult, setShow] = useState(false)
+  const [showResult, setShow] = useState(showAns)
   return (
     <div className={'select-none border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
       <Image src={genURLImage(item.content)} alt={''} className={'w-full h-full'} width={2000}

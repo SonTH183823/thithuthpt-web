@@ -44,7 +44,7 @@ const PostsSection = ({userId, isToeic = false}) => {
           data.subject = subject
         }
         if (sort.value === 2) {
-          data.sort = '1'
+          data.sort = '0'
         }
         const res = await HistoryAPI.getAllHistoryByUserId(data);
         if (res.total) {
@@ -73,7 +73,7 @@ const PostsSection = ({userId, isToeic = false}) => {
         data.subject = subject
       }
       if (sort.value === 2) {
-        data.sort = '1'
+        data.sort = '0'
       }
       const res = await HistoryAPI.getAllHistoryByUserId(data);
       setPage(page + 1);

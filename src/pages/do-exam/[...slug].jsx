@@ -1,9 +1,7 @@
-import React, {Fragment, useEffect, useRef, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import DetailExam from "@/components/exam/DetailExam";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
 import Image from "next/image";
-import examImg from '@/assets/images/exam.jpeg'
-import examImg2 from '@/assets/images/test/tets.png'
 import CountDown from "@/components/exam-details/CountDown";
 import {answerConfig} from "../../configs/configs";
 import FourOhFour from "../404";
@@ -12,9 +10,9 @@ import ModalConfirmFinishExam from "@/components/modal/ModalConfirmFinishExam";
 import {ExamAPI} from "../../apis/exam";
 import {genURLImage, strToSlug} from "../../utils/common";
 import {useRouter} from "next/router";
-import ModalComfirmDeleteComment from "@/components/modal/ModalComfirmDeleteComment";
 import {HistoryAPI} from "../../apis/history";
 import {toast} from "react-toastify";
+import Lightbox from "react-image-lightbox";
 
 export async function getServerSideProps({params}) {
   let exam = {};
@@ -39,6 +37,7 @@ export async function getServerSideProps({params}) {
 export default function DoExam({exam, listQuestion}) {
   let oldPosition = null
   const [listAnswer, setListAnswer] = useState(Array(listQuestion.length).fill(0))
+  const [openLightBox, setOpenLightBox] = useState(Array(listQuestion.length).fill(false))
   const [time, setTime] = useState(exam.time * 60)
   const answers = ['A', 'B', 'C', 'D']
   const router = useRouter()
@@ -105,6 +104,14 @@ export default function DoExam({exam, listQuestion}) {
 
   }
 
+  const arrChange = (val, index) => {
+    setOpenLightBox((arr) => {
+      let a = arr
+      a[index] = val
+      return a
+    })
+  }
+
   return (<Fragment>
     {exam._id ? (<div className={"bg-base-200"}>
       <div className="container mx-auto py-4 padding-mobile">
@@ -117,8 +124,20 @@ export default function DoExam({exam, listQuestion}) {
               {listQuestion.map((item, index) => (
                 <div className={'border-b-primary border-b-2 p-2'} key={'question-' + item._id}
                      id={'question-' + index}>
-                  <Image src={genURLImage(item.content)} alt={''} className={'w-full h-full'} width={2000}
-                         height={200}/>
+                  <Image
+                    src={genURLImage(item.content)}
+                    alt={''}
+                    className={'w-full h-full cursor-pointer'}
+                    width={2000}
+                    height={200}
+                    onClick={() => arrChange(true, index)}
+                  />
+                  {openLightBox[index] && (
+                    <Lightbox
+                      mainSrc={genURLImage(item.content)}
+                      onCloseRequest={() => arrChange(false, index)}
+                    />
+                  )}
                   <div className={'flex flex-row justify-between'}>
                     {answers.map((ans, idx) =>
                       <div

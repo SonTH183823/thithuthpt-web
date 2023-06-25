@@ -3,7 +3,6 @@ import React from 'react';
 function TableTypeListQuesHistory({exam, history}) {
   const { numberQuestion, numberListening, numberReading} = exam
   const {rsTypeQuestion, numberQuestionRight, numberListeningQuestionRight, numberReadingQuestionRight} = history
-  console.log(history)
   const isToeic = exam.subject === 9
   const listTypeToeic = [
     {
