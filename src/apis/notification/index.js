@@ -14,12 +14,6 @@ export const notificationAPI = {
     return api.post(`/notification/markRead/${id}`);
   },
 
-  async getNotificationsUnViewed(query) {
-    return api.get(
-      `/notification/unViewedNotification?${queryString.stringify(query)}`
-    );
-  },
-
   async markAllViewed() {
     return api.post(`/notification/markAllViewed`);
   },

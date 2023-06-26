@@ -1,147 +1,142 @@
-// import { async } from "@firebase/util";
+import {async} from "@firebase/util";
 import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu";
-// import { notificationAPI } from "apis/notification";
 import * as React from "react";
 import {useState} from "react";
 import {useEffect} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import NotificationITem from "./NotificationItem";
+import {notificationAPI} from "../../apis/notification";
 
 export default function Notification(props) {
-    const [notifications, setNotifications] = useState([1, 2, 3]);
-    const [total, setTotal] = useState(4);
-    const [hasMore, setHasMore] = useState(true);
-    const [loading, setLoading] = useState(false);
-    const [limit, setLimit] = useState(20);
-    const [offset, setOffset] = useState(0);
-    const [page, setPage] = useState(1);
-    const [open, setOpen] = useState(false);
+  const [notifications, setNotifications] = useState([1, 2, 3]);
+  const [total, setTotal] = useState(4);
+  const [hasMore, setHasMore] = useState(true);
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(1);
+  const [open, setOpen] = useState(false);
 
-    const getNumberNotificationUnViewed = async () => {
-        // const totalRes = await notificationAPI.getTotalNotificationUnViewed();
-        // if (totalRes.total) {
-        //   setTotal(totalRes.total);
-        // }
-    };
-    const getAllNoitification = async ({o}) => {
-        // try {
-        //   const res = await notificationAPI.getNotifications({ offset: o, limit });
-        //   if (res.notifications.length) {
-        //     setNotifications(res.notifications);
-        //     if (res.notifications.length === res.total) {
-        //       setHasMore(false);
-        //     }
-        //   } else {
-        //     setNotifications([]);
-        //     setHasMore(false);
-        //   }
-        // } catch (e) {
-        //   console.log(e);
-        //   setHasMore(false);
-        // }
-    };
-
-    useEffect(() => {
-        getNumberNotificationUnViewed();
-    }, []);
-    useEffect(() => {
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.addEventListener("message", async (e) => {
-                try {
-                    getNumberNotificationUnViewed();
-                } catch (e) {
-                    console.log(e);
-                }
-            });
+  const getNumberNotificationUnViewed = async () => {
+    const totalRes = await notificationAPI.getTotalNotificationUnViewed();
+    if (totalRes.total) {
+      setTotal(totalRes.total);
+    }
+  };
+  const getAllNotification = async ({p}) => {
+    try {
+      const res = await notificationAPI.getNotifications({page: p, perPage: limit});
+      if (res.data.length) {
+        setNotifications(res.data);
+        if (res.data.length === res.total) {
+          setHasMore(false);
         }
-    }, []);
+      } else {
+        setNotifications([]);
+        setHasMore(false);
+      }
+    } catch (e) {
+      console.log(e);
+      setHasMore(false);
+    }
+  };
 
-    const getMoreNotification = async () => {
-        // try {
-        //   setLoading(true);
-        //   const res = await notificationAPI.getNotifications({
-        //     offset: offset + limit,
-        //     limit,
-        //   });
-        //   setOffset(offset + limit);
-        //   setLoading(false);
-        //   if (res.notifications.length) {
-        //     setNotifications([...notifications, ...res.notifications]);
-        //   } else {
-        //     setHasMore(false);
-        //   }
-        // } catch (e) {
-        //   console.log(e);
-        //   setLoading(false);
-        //   setHasMore(false);
-        // }
-    };
-    const markAllViewed = async () => {
-        // try {
-        //   await notificationAPI.markAllViewed();
-        // } catch (e) {
-        //   console.log(e);
-        // }
-    };
-    return (
-        <Menu
-            offsetY={10}
-            onMenuChange={(e) => {
-                setOpen(e.open)
-                if (e.open) {
-                    setTotal(0);
-                    // getAllNoitification({ o: 0 });
-                    // if (total) {
-                    //   markAllViewed();
-                    // }
-                }
-            }}
-            menuButton={
-                <MenuButton className={"relative"}>
-                    <i className={`fa-sharp fa-solid fa-bell text-lg ${open ? 'text-primary' : 'text-colorIconMenu'}`}></i>
-                    {total > 0 && (
-                        <div
-                            className="absolute -top-1 -right-5 bg-red-500 text-white rounded-full text-xs h-[20px] w-[20px] flex items-center justify-center">
-                            {total < 10 ? total : "9+"}
-                        </div>
-                    )}
-                </MenuButton>
-            }
-            transition
-        >
+  useEffect(() => {
+    getNumberNotificationUnViewed();
+  }, []);
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", async (e) => {
+        try {
+          getNumberNotificationUnViewed();
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    }
+  }, []);
+
+  const getMoreNotification = async () => {
+    try {
+      const res = await notificationAPI.getNotifications({
+        page: page + 1,
+        perPage: limit
+      });
+      setPage(page + 1);
+      if (res.data.length) {
+        setNotifications([...notifications, ...res.data]);
+      } else {
+        setHasMore(false);
+      }
+    } catch (e) {
+      console.log(e);
+      setHasMore(false);
+    }
+  };
+  const markAllViewed = async () => {
+    try {
+      await notificationAPI.markAllViewed();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  return (
+    <Menu
+      offsetY={10}
+      onMenuChange={(e) => {
+        setOpen(e.open)
+        if (e.open) {
+          setTotal(0);
+          getAllNotification({o: 0});
+          if (total) {
+            markAllViewed();
+          }
+        }
+      }}
+      menuButton={
+        <MenuButton className={"relative"}>
+          <i className={`fa-sharp fa-solid fa-bell text-lg ${open ? 'text-primary' : 'text-colorIconMenu'}`}></i>
+          {total > 0 && (
             <div
-                className="w-[350px] max-h-[75vh] overflow-auto px-2 bg-base-100"
-                id={"scroll-notification"}
-            >
-                <h3 className="m-0 px-[10px] text-info">Thông báo</h3>
-                {notifications.length > 0 ? (
-                    <InfiniteScroll
-                        dataLength={notifications.length}
-                        next={getMoreNotification}
-                        hasMore={hasMore}
-                        endMessage={
-                            <div className="text-sm font-normal text-center">
-                                Đã tải hết thông báo.
-                            </div>
-                        }
-                        scrollableTarget={"scroll-notification"}
-                        loader={<span>Đang tải...</span>}
-                    >
-                        {notifications.map((notification) => (
-                            <NotificationITem
-                                notification={notification}
-                                key={notification.id}
-                            />
-                        ))}
-                        {/*<NotificationITem/>*/}
-                        {/*<NotificationITem/>*/}
-                    </InfiniteScroll>
-                ) : (
-                    <div className="font-normal text-sm py-4 text-center">
-                        Hiện tại, không có thông báo.
-                    </div>
-                )}
+              className="absolute -top-1 -right-5 bg-red-500 text-white rounded-full text-xs h-[20px] w-[20px] flex items-center justify-center">
+              {total < 10 ? total : "9+"}
             </div>
-        </Menu>
-    );
+          )}
+        </MenuButton>
+      }
+      transition
+    >
+      <div
+        className="w-[350px] max-h-[75vh] overflow-auto px-2 bg-base-100"
+        id={"scroll-notification"}
+      >
+        <h3 className="m-0 px-[10px] text-info">Thông báo</h3>
+        {notifications.length > 0 ? (
+          <InfiniteScroll
+            dataLength={notifications.length}
+            next={getMoreNotification}
+            hasMore={hasMore}
+            endMessage={
+              <div className="text-sm font-normal text-center">
+                Đã tải hết thông báo.
+              </div>
+            }
+            scrollableTarget={"scroll-notification"}
+            loader={<span>Đang tải...</span>}
+          >
+            {notifications.map((notification) => (
+              <NotificationITem
+                notification={notification}
+                key={notification._id}
+              />
+            ))}
+            {/*<NotificationITem/>*/}
+            {/*<NotificationITem/>*/}
+          </InfiniteScroll>
+        ) : (
+          <div className="font-normal text-sm py-4 text-center">
+            Hiện tại, không có thông báo.
+          </div>
+        )}
+      </div>
+    </Menu>
+  );
 }

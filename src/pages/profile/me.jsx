@@ -22,11 +22,13 @@ export default function ProfileUser() {
     setIndex(index + 1)
     setTabActive(tab)
   }
-  useEffect(() => {
-    if (!user?._id) {
-      router.push('/sign-in')
-    }
-  }, [user])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (!user?._id) {
+  //       router.push('/sign-in')
+  //     }
+  //   }, 1000)
+  // }, [user])
   const genUITab = () => {
     if (tabActive === 2) {
       return <HistorySection userId={user._id}/>

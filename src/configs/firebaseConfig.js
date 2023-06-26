@@ -22,7 +22,7 @@ export async function requestPermission() {
     if (permission && permission === "granted") {
       const fcmToken = await getToken(messaging, {
         vapidKey:
-          "BGLzc1HyoLoEhiKDk68XWlcUVr1i_F-4upQmMjIHqo_shWvBnAvHL517rWgHQ0vN5g2vWtOeqUVibC04ZKZE78I",
+          "BDlqZ3i_B4919yZODvdYckG3EQe7OcPIdm5B0ccaZJLbdxXMUbwBONh7CmpAT5kip3zoHhUN6X24HaC-8XvODK4",
       });
       if (fcmToken) {
         return fcmToken;

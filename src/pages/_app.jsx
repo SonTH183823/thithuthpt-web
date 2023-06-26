@@ -32,7 +32,6 @@ import "../styles/globals.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css"
 
 function App({Component, pageProps}) {
-  const router = useRouter();
   const Layout = Component.Layout ?? MainLayout;
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.profile);
@@ -64,6 +63,7 @@ function App({Component, pageProps}) {
   useEffect(() => {
     (async () => {
       const fcmToken = await requestPermission();
+      console.log('fcmToken', fcmToken)
       if (fcmToken) {
         localStorage.setItem("fcmToken", fcmToken);
       }
