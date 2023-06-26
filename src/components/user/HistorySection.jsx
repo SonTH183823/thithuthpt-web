@@ -1,4 +1,3 @@
-// import { PostAPI } from "apis/post";
 import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PrimaryPostItem from "../exam/PrimaryExamItem";
@@ -16,7 +15,7 @@ const subjectList = [
   },
   ...subjectArrConfig
 ]
-const PostsSection = ({userId, isToeic = false}) => {
+const HistorySection = ({userId, isToeic = false}) => {
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
@@ -153,4 +152,4 @@ const PostsSection = ({userId, isToeic = false}) => {
   );
 };
 
-export default PostsSection;
+export default React.memo(HistorySection);

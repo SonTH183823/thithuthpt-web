@@ -1,4 +1,3 @@
-import {async} from "@firebase/util";
 import {Menu, MenuButton, MenuItem} from "@szhsin/react-menu";
 import * as React from "react";
 import {useState} from "react";
@@ -8,7 +7,7 @@ import NotificationITem from "./NotificationItem";
 import {notificationAPI} from "../../apis/notification";
 
 export default function Notification(props) {
-  const [notifications, setNotifications] = useState([1, 2, 3]);
+  const [notifications, setNotifications] = useState([]);
   const [total, setTotal] = useState(4);
   const [hasMore, setHasMore] = useState(true);
   const [limit, setLimit] = useState(20);
@@ -133,7 +132,7 @@ export default function Notification(props) {
           </InfiniteScroll>
         ) : (
           <div className="font-normal text-sm py-4 text-center">
-            Hiện tại, không có thông báo.
+            Chưa có thông báo nào!
           </div>
         )}
       </div>

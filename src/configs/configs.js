@@ -1064,3 +1064,10 @@ export const reasonReportQuestionOptions = [
     isChecked: false,
   },
 ]
+
+export const typePostConfig = {
+  EXAM: 1,
+  QUESTION: 2,
+  DOCUMENT: 3,
+  NEWS: 4
+}

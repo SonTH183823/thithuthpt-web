@@ -63,7 +63,6 @@ function App({Component, pageProps}) {
   useEffect(() => {
     (async () => {
       const fcmToken = await requestPermission();
-      console.log('fcmToken', fcmToken)
       if (fcmToken) {
         localStorage.setItem("fcmToken", fcmToken);
       }

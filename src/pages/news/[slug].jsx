@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 import InteractiveContainer from "@/components/interactive/InteractiveContainer";
 import {useSelector} from "react-redux";
 import ModalShare from "@/components/modal/ModalShare";
+import {typePostConfig} from "../../configs/configs";
 
 export async function getServerSideProps({params}) {
   let newData = {};
@@ -83,7 +84,7 @@ const DetailNew = ({newData}) => {
               </div>
               <div className="divider"></div>
               <div className={"bg-base-100 rounded-xl mt-4"}>
-                <InteractiveContainer postId={newData._id} userId={profile._id}/>
+                <InteractiveContainer postId={newData._id} title={newData.title} typePost={typePostConfig.NEWS}/>
               </div>
             </div>
             <div className="col-span-4">

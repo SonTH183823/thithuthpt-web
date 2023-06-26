@@ -6,6 +6,7 @@ import RelatedExam from "@/components/exam-details/RelatedExam";
 import QuestionDetail from "@/components/question/QuestionDetail";
 import {QuestionAPI} from "../../apis/question";
 import {ExamAPI} from "../../apis/exam";
+import {typePostConfig} from "../../configs/configs";
 
 export async function getServerSideProps({params}) {
   let question = {};
@@ -62,7 +63,7 @@ export default function Question({question}) {
 
                 </div>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={question._id}/>
+                  <InteractiveContainer postId={question._id} typePost={typePostConfig.QUESTION} title={''}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col">

@@ -14,6 +14,7 @@ import HistorySection from "@/components/user/HistorySection";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
+  console.log(user)
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(1);
   const [index, setIndex] = useState(0);

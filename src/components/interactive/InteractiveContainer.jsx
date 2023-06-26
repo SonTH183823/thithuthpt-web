@@ -7,7 +7,7 @@ import {toast} from "react-toastify";
 import {commentAPI} from "../../apis/comment";
 import {uploadAPI} from "../../apis/upload";
 
-export default function InteractiveContainer({postId}) {
+export default function InteractiveContainer({postId, title, typePost }) {
   const profile = useSelector((state) => state.auth.profile);
 
   const [perPage, setLimit] = useState(5);
@@ -30,6 +30,8 @@ export default function InteractiveContainer({postId}) {
         content: comment,
         imageAttach: imageURL,
         videoAttach: videoURL,
+        title,
+        typePost
       });
       setLoading(false);
       if (res) {

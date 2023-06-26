@@ -10,6 +10,7 @@ import {ExamAPI} from "../../apis/exam";
 import {DocumentAPI} from "../../apis/document";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {typePostConfig} from "../../configs/configs";
 
 export async function getServerSideProps({params}) {
   let document = {};
@@ -93,7 +94,7 @@ export default function DocumentDetail({document}) {
                 </div>
                 <RatingComponents postId={document._id}/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={document._id}/>
+                  <InteractiveContainer postId={document._id} typePost={typePostConfig.DOCUMENT} title={document.title}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col space-y-4">

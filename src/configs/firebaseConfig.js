@@ -27,6 +27,8 @@ export async function requestPermission() {
       if (fcmToken) {
         return fcmToken;
       }
+    }else {
+      console.log('Người dùng đã từ chối cấp quyền thông báo.');
     }
   } catch (e) {
     console.log(e);

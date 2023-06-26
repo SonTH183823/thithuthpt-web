@@ -8,6 +8,7 @@ import TableTypeListQues from "@/components/exam-details/TableTypeListQues";
 import RelatedExam from "@/components/exam-details/RelatedExam";
 import RatingComponents from "@/components/rating/RatingComponents";
 import {ExamAPI} from "../../apis/exam";
+import {typePostConfig} from "../../configs/configs";
 
 export async function getServerSideProps({params}) {
   let exam = {};
@@ -26,7 +27,6 @@ export async function getServerSideProps({params}) {
 }
 
 export default function ExamDetail({exam}) {
-  const profile = useSelector((state) => state.auth.profile);
   const router = useRouter();
   const [relatedExam, setRelatedExam] = useState([]);
 
@@ -65,7 +65,7 @@ export default function ExamDetail({exam}) {
                 </div>
                 <RatingComponents postId={exam._id}/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <InteractiveContainer postId={exam._id} userId={profile._id}/>
+                  <InteractiveContainer postId={exam._id} title={exam.title} typePost={typePostConfig.EXAM}/>
                 </div>
               </div>
               <div className="block col-span-1 lg:flex flex-col">
