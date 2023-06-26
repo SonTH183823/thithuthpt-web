@@ -8,7 +8,7 @@ import {notificationAPI} from "../../apis/notification";
 
 export default function Notification(props) {
   const [notifications, setNotifications] = useState([]);
-  const [total, setTotal] = useState(4);
+  const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
@@ -20,7 +20,7 @@ export default function Notification(props) {
       setTotal(totalRes.total);
     }
   };
-  const getAllNotification = async ({p}) => {
+  const getAllNotification = async (p) => {
     try {
       const res = await notificationAPI.getNotifications({page: p, perPage: limit});
       if (res.data.length) {
@@ -84,10 +84,8 @@ export default function Notification(props) {
         setOpen(e.open)
         if (e.open) {
           setTotal(0);
-          getAllNotification({o: 0});
-          if (total) {
-            markAllViewed();
-          }
+          getAllNotification(1);
+          markAllViewed();
         }
       }}
       menuButton={
