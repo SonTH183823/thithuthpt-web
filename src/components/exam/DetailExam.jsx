@@ -156,12 +156,12 @@ function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}
           >
             <i className="fa-regular fa-share text-xl"></i>
           </div>
-          <div
-            data-tooltip-id="my-tooltip"
-            data-tooltip-content={'Báo cáo'}
-            className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
-            onClick={(e) => handleReport()}
-          ><i className="fa-regular fa-flag text-lg"></i></div>
+          {/*<div*/}
+          {/*  data-tooltip-id="my-tooltip"*/}
+          {/*  data-tooltip-content={'Báo cáo'}*/}
+          {/*  className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"*/}
+          {/*  onClick={(e) => handleReport()}*/}
+          {/*><i className="fa-regular fa-flag text-lg"></i></div>*/}
         </div>
       </div>
 
