@@ -1,3 +1,8 @@
+import commentIcon from '../assets/images/svg/comment1.svg'
+import awards from '../assets/images/svg/awards.svg'
+import like from  '../assets/images/svg/like.svg'
+import dislike from  '../assets/images/svg/dislike.svg'
+
 export const menuGuest = [
   {
     id: 1,
@@ -74,6 +79,24 @@ export const sortHistoryConfig = [
   // }
 ]
 
+export const iconLib = {
+  1: {
+    label: 'Bình luận',
+    icon: commentIcon
+  },
+  2: {
+    label: 'Điểm Carpla',
+    icon: awards
+  },
+  3:{
+    label: 'Thích',
+    icon: like
+  },
+  4: {
+    label: 'Không thích',
+    icon: dislike
+  }
+}
 export const menuUser = [
   {
     id: 1,
@@ -86,6 +109,12 @@ export const menuUser = [
     title: "Chỉnh sửa thông tin cá nhân",
     icon: "fa-regular fa-pen-to-square",
     path: "/management/profile",
+  },
+  {
+    id: 5,
+    title: "Danh sách yêu thích",
+    icon: "fa-regular fa-heart",
+    path: "/exam/favorites",
   },
   // {
   //   id: 4,

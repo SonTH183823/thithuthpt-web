@@ -10,9 +10,9 @@ import React, {useState} from "react";
 import Avatar from "../user/Avatar";
 import Image from "next/image";
 import {notificationAPI} from "../../apis/notification";
+import {iconLib} from "../../configs/configs";
 
-export default function NotificationITem({notification}) {
-  console.log(notification)
+export default function NotificationItem({notification}) {
   const router = useRouter();
   const handleClick = async () => {
     await handleMarkRead();
@@ -28,6 +28,24 @@ export default function NotificationITem({notification}) {
       }
     }
   };
+  const IconNotification = () => {
+    switch (notification.type) {
+      case 1: {
+        return <Image src={iconLib[1]?.icon} width={25} height={25} alt={''}/>
+      }
+      case 2: {
+        return <Image src={iconLib[2]?.icon} width={25} height={25} alt={''}/>
+      }
+      case 3: {
+        return <Image src={iconLib[3]?.icon} width={25} height={25} alt={''}/>
+      }
+      case 4: {
+        return <Image src={iconLib[4]?.icon} width={25} height={25} alt={''}/>
+      }
+      default:
+        return <></>
+    }
+  }
   return (
     <MenuItem
       onClick={() => handleClick()}
@@ -35,15 +53,15 @@ export default function NotificationITem({notification}) {
     >
       <div className="flex space-x-3 px-1 items-center">
         {!notification.isRead ? (
-          <div className="w-[5px] h-[5px] bg-primary rounded-full absolute"></div>
+          <div className="w-[6px] h-[6px] bg-primary rounded-full absolute"></div>
         ) : (
-          <div className="w-[5px]"></div>
+          <div className="w-[6px]"></div>
         )}
-        <div className="flex-1">
-          {notification.type === 1 ? (
+        <div className="flex-1 w-14 relative">
+          {notification?.userPushId?.avatar ? (
             <Avatar
               sizeAvatar="w-12"
-              avatar={notification?.userPushId?.avatar}
+              avatar={notification.userPushId.avatar}
             />
           ) : (
             <div className="w-12 h-12 relative rounded-full overflow-hidden">
@@ -55,6 +73,9 @@ export default function NotificationITem({notification}) {
               />
             </div>
           )}
+          <div className={'absolute -right-1 bottom-1'}>
+            <IconNotification />
+          </div>
         </div>
         <div className="flex flex-col">
           <div

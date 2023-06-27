@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 @import '~video-react/styles/scss/video-react';
+@layer components {
+  .info-title {
+    @apply text-lg text-secondary font-bold;
+  }
 
+  .padding-mobile {
+    @apply lg:px-0 px-2;
+  }
+}
 :root {
   --primary: #02967D;
   --chkbg: red;

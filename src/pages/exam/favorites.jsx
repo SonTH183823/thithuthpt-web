@@ -5,7 +5,7 @@ import HomeExamItem from "@/components/exam/HomeExamItem";
 const Favorites = () => {
   const favoriteExams = useSelector((state) => state.exam.favoriteExams);
   return (
-    <div className="container mx-auto py-8 padding-mobile">
+    <div className="container mx-auto md:py-8 py-2 padding-mobile">
       <h3>Danh sách đề thi yêu thích</h3>
       {favoriteExams?.length ? (
         <div className="md:grid xl:grid-cols-3 md:grid-cols-2 lg:gap-3 gap-1">

@@ -3,8 +3,10 @@ import * as React from "react";
 import {useState} from "react";
 import {useEffect} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import NotificationITem from "./NotificationItem";
 import {notificationAPI} from "../../apis/notification";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import NotificationItem from "./NotificationItem";
 
 export default function Notification(props) {
   const [notifications, setNotifications] = useState([]);
@@ -13,6 +15,7 @@ export default function Notification(props) {
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
+  const [btnActive, setBtnActive] = useState(1);
 
   const getNumberNotificationUnViewed = async () => {
     const totalRes = await notificationAPI.getTotalNotificationUnViewed();
@@ -106,33 +109,35 @@ export default function Notification(props) {
         id={"scroll-notification"}
       >
         <h3 className="m-0 px-[10px] text-info">Thông báo</h3>
-        {notifications.length > 0 ? (
-          <InfiniteScroll
-            dataLength={notifications.length}
-            next={getMoreNotification}
-            hasMore={hasMore}
-            endMessage={
-              <div className="text-sm font-normal text-center">
-                Đã tải hết thông báo.
-              </div>
-            }
-            scrollableTarget={"scroll-notification"}
-            loader={<span>Đang tải...</span>}
-          >
+        <InfiniteScroll
+          dataLength={notifications.length}
+          next={getMoreNotification}
+          hasMore={hasMore}
+          endMessage={
+            <div className="text-sm font-normal text-center">
+              Đã tải hết thông báo.
+            </div>
+          }
+          scrollableTarget={"scroll-notification"}
+          loader={
+            <div className={'text-center flex items-center space-x-2 justify-center'}>
+              <FontAwesomeIcon icon={faSpinner} spin={true} className={'w-5'}/>
+              <span>Đang tải...</span>
+            </div>}
+        >
+          {notifications.length > 0 ? <>
             {notifications.map((notification) => (
-              <NotificationITem
+              <NotificationItem
                 notification={notification}
                 key={notification._id}
               />
             ))}
-            {/*<NotificationITem/>*/}
-            {/*<NotificationITem/>*/}
-          </InfiniteScroll>
-        ) : (
-          <div className="font-normal text-sm py-4 text-center">
-            Chưa có thông báo nào!
-          </div>
-        )}
+          </> : (
+            <div className="font-normal text-sm py-4 text-center">
+              Chưa có thông báo nào!
+            </div>
+          )}
+        </InfiniteScroll>
       </div>
     </Menu>
   );
