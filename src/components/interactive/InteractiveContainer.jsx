@@ -332,6 +332,9 @@ export default function InteractiveContainer({postId, title, typePost }) {
               setComments={setComments}
               setComment={setComment}
               totalReplyProp={comment.total || 3}
+              title={title}
+              typePost={typePost}
+              postId={postId}
             />
           ))}
         </>}

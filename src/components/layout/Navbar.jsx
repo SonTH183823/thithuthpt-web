@@ -69,7 +69,7 @@ export default function Navbar() {
             ></i>
             <Logo/>
           </div>
-          <div className="lg:hidden flex space-x-2">
+          <div className="lg:hidden flex space-x-4">
             {profile?._id && (
               <Fragment>
                 <li

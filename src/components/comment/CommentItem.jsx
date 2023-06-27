@@ -38,6 +38,9 @@ export default function CommentItem(
     handleUpdateComment: handleUpdateCommentProp,
     handlePostCommentReply,
     totalReplyProp,
+    typePost,
+    postId,
+    title,
   }) {
   const [numLike, setNumLike] = useState(0)
   const [numDisLike, setNumDisLike] = useState(0)
@@ -134,7 +137,11 @@ export default function CommentItem(
         const res = await commentAPI.createStatusComment({
           commentId: comment._id,
           userId: profile._id,
-          status: val
+          status: val,
+          postId,
+          userCmtId: comment.userId?._id,
+          title,
+          typePost
         })
         setStatusCmt(res)
         await updateStatus(lc, dlc)

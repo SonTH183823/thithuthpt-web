@@ -55,7 +55,7 @@ export default function NotificationItem({notification}) {
         {!notification.isRead ? (
           <div className="w-[6px] h-[6px] bg-primary rounded-full absolute"></div>
         ) : (
-          <div className="w-[6px]"></div>
+          <div className="w-[6px] h-[6px] rounded-full absolute"></div>
         )}
         <div className="flex-1 w-14 relative">
           {notification?.userPushId?.avatar ? (
@@ -74,14 +74,13 @@ export default function NotificationItem({notification}) {
             </div>
           )}
           <div className={'absolute -right-1 bottom-1'}>
-            <IconNotification />
+            <IconNotification/>
           </div>
         </div>
         <div className="flex flex-col">
-          <div
-            dangerouslySetInnerHTML={{__html: notification.content}}
-            className="text-sm font-normal line-clamp-3"
-          ></div>
+          <div className="text-sm font-normal line-clamp-3">
+            <div dangerouslySetInnerHTML={{__html: notification.content}}/>
+          </div>
           <span className="text-xs font-normal">
             {moment(notification.createdAt * 1000).fromNow()}
           </span>
