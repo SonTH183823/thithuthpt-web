@@ -1,6 +1,7 @@
 import commentIcon from '../assets/images/svg/comment1.svg'
 import awards from '../assets/images/svg/awards.svg'
 import like from  '../assets/images/svg/like.svg'
+import likeNoti from  '../assets/images/svg/likeNoti.svg'
 import dislike from  '../assets/images/svg/dislike.svg'
 
 export const menuGuest = [
@@ -90,11 +91,11 @@ export const iconLib = {
   },
   3:{
     label: 'Thích',
-    icon: like
+    icon: likeNoti
   },
   4: {
     label: 'Không thích',
-    icon: dislike
+    icon: likeNoti
   }
 }
 export const menuUser = [

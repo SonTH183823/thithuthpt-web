@@ -67,7 +67,7 @@ const Award = ({userInfo}) => {
         <div className={'flex-1'}>
           <div className={'text-primary font-bold'}>{awardPresent.title}</div>
           <div className={'flex items-center'}>
-            {isShowLevel ? <span className={'text-info'}><span
+            {isShowLevel ? <span className={'text-info'}>Còn <span
                 className={'font-bold'}>{nextAward.minimumLevel - Math.floor(userInfo.pointCredits)} Points</span> để đạt cấp độ <span
                 className={'font-bold text-primary'}>{nextAward.title}</span></span>
               :
