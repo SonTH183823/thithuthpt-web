@@ -69,13 +69,21 @@ export default function Navbar() {
             ></i>
             <Logo/>
           </div>
-          <div className="lg:hidden block">
+          <div className="lg:hidden flex space-x-2">
+            {profile?._id && (
+              <Fragment>
+                <li
+                  className="h-[32px] w-[32px] flex items-center justify-center rounded-full bg-backgroundGray nav-item font-bold cursor-pointer user-menu">
+                  <Notification/>
+                </li>
+              </Fragment>
+            )}
             {profile?.avatar ? (
               <div
                 className="h-[32px] w-[32px] relative cursor-pointer "
                 onClick={openDrawerRight}
               >
-                <img
+                <Image
                   alt="avatar"
                   layout="fill"
                   objectFit="cover"

@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
+import {genURLImage} from "../../../utils/common";
+import Image from "next/image";
 
 const DrawerHeader = () => {
   const profile = useSelector((state) => state.auth.profile);
@@ -9,15 +11,15 @@ const DrawerHeader = () => {
         {profile?.avatar ? (
           <Fragment>
             <div className="h-[40px] w-[40px] relative cursor-pointer">
-              <img
+              <Image
                 alt="avatar"
                 layout="fill"
                 objectFit="cover"
-                src={profile.avatar}
+                src={genURLImage(profile.avatar)}
                 className="rounded-full"
               />
             </div>
-            <span className="font-bold text-white">{profile.displayName}</span>
+            <span className="font-bold text-white">{profile.name}</span>
           </Fragment>
         ) : (
           <Fragment>
