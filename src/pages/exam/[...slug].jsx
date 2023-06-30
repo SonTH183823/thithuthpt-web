@@ -50,6 +50,12 @@ export default function ExamDetail({exam}) {
     })();
   }, [router.query]);
 
+  useEffect(() => {
+    setTimeout(async () => {
+      await ExamAPI.countTestView(exam._id, {type: 'view'})
+    }, 3000)
+  }, [exam._id])
+
   return (
     <Fragment>
       {exam._id ? (
@@ -61,7 +67,7 @@ export default function ExamDetail({exam}) {
                   <DetailExam isDoExam={true} item={exam}/>
                 </div>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
-                  <TableTypeListQues item = {exam}/>
+                  <TableTypeListQues item={exam}/>
                 </div>
                 <RatingComponents postId={exam._id}/>
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>

@@ -41,6 +41,12 @@ export default function DoExam({exam, listQuestion}) {
   const [time, setTime] = useState(exam.time * 60)
   const answers = ['A', 'B', 'C', 'D']
   const router = useRouter()
+
+  useEffect(() => {
+    setTimeout(async () => {
+      await ExamAPI.countTestView(exam._id, {type: 'test'})
+    }, 3000)
+  }, [exam._id])
   const questionClick = (index) => {
     if (index !== oldPosition) {
       oldPosition = index

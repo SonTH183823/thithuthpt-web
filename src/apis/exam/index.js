@@ -13,6 +13,9 @@ export const ExamAPI = {
   async getExam(id) {
     return await api.get(`/exam/${id}`);
   },
+  async countTestView(id, data) {
+    return await api.put(`/countTestView/${id}`, data);
+  },
 
   async getInfo() {
     return await api.get('totalExam');

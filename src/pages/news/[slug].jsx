@@ -8,6 +8,7 @@ import InteractiveContainer from "@/components/interactive/InteractiveContainer"
 import {useSelector} from "react-redux";
 import ModalShare from "@/components/modal/ModalShare";
 import {typePostConfig} from "../../configs/configs";
+import {DocumentAPI} from "../../apis/document";
 
 export async function getServerSideProps({params}) {
   let newData = {};
@@ -26,7 +27,6 @@ export async function getServerSideProps({params}) {
 
 const DetailNew = ({newData}) => {
   const [latestNews, setLatestNews] = useState([]);
-  const profile = useSelector((state) => state.auth.profile);
   const router = useRouter()
   useEffect(() => {
     (async () => {

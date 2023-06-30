@@ -38,7 +38,11 @@ export default function DoToeic({exam, listQuestion}) {
   const [listQues, setListQues] = useState(Array(200).fill(0))
   const [time, setTime] = useState(exam.time * 60)
   const [tabActive, setTabActive] = useState(1)
-
+  useEffect(() => {
+    setTimeout(async () => {
+      await ExamAPI.countTestView(exam._id, {type: 'test'})
+    }, 3000)
+  }, [exam._id])
   const questionClick = (index) => {
     if (index !== oldPosition) {
       oldPosition = index

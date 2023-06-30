@@ -15,6 +15,9 @@ export const DocumentAPI = {
   async getDocument(id) {
     return await api.get(`/document/${id}`);
   },
+  async countTestView(id) {
+    return await api.put(`/countViewDocument/${id}`);
+  },
 
   async getDocumentsByUser(query) {
     return await api.get(`document/documentsByUser?${queryString.stringify(query)}`);

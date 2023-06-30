@@ -16,6 +16,9 @@ export const NewAPI = {
   async getNewById(id) {
     return await api.get(`/news/${id}`);
   },
+  async countView(id) {
+    return await api.put(`/countViewNews/${id}`);
+  },
 
   async getLatestNews(newId) {
     return await api.get(`/new/latest?id=${newId}`);
