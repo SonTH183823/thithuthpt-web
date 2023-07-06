@@ -45,7 +45,7 @@ const HistorySection = ({userId, isToeic = false}) => {
         if (sort.value === 2) {
           data.sort = '0'
         }
-        const res = await HistoryAPI.getAllHistoryByUserId(data);
+        const res = await HistoryAPI.getHistoryByUserId(data);
         if (res.total) {
           setHistories(res.data);
           setTotal(res.total);
@@ -74,7 +74,7 @@ const HistorySection = ({userId, isToeic = false}) => {
       if (sort.value === 2) {
         data.sort = '0'
       }
-      const res = await HistoryAPI.getAllHistoryByUserId(data);
+      const res = await HistoryAPI.getHistoryByUserId(data);
       setPage(page + 1);
       if (res.data.length) {
         setHistories([...histories, ...res.data]);

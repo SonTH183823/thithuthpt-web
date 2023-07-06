@@ -6,8 +6,11 @@ export const HistoryAPI = {
     return await api.post("/history", {...data});
   },
 
-  async getAllHistoryByUserId(query) {
+  async getHistoryByUserId(query) {
     return await api.get(`/historyUser?${queryString.stringify(query)}`);
+  },
+  async getStatisticalHistoryByUserId(query) {
+    return await api.get(`/statisticalHistoryUser?${queryString.stringify(query)}`);
   },
   async getBXHByExamId(id) {
     return await api.get(`/BXH/${id}`);

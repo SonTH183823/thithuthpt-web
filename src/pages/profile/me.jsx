@@ -14,11 +14,9 @@ import HistorySection from "@/components/user/HistorySection";
 
 export default function ProfileUser() {
   const user = useSelector((state) => state.auth.profile);
-  console.log(user)
   const [isClient, setIsClient] = useState(true);
   const [tabActive, setTabActive] = useState(1);
   const [index, setIndex] = useState(0);
-  const router = useRouter()
   const handleSelectTab = (event, tab) => {
     setIndex(index + 1)
     setTabActive(tab)
@@ -36,7 +34,10 @@ export default function ProfileUser() {
     } else if (tabActive === 3) {
       return <HistorySection userId={user._id} isToeic={true}/>
     }
-    return <ResultProfile/>
+    return <>
+      <ResultProfile userId={user._id}/>
+      <ResultProfile userId={user._id} isToeic={true}/>
+    </>
   }
   return (
     <div>
