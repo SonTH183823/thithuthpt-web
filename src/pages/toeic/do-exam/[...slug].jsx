@@ -100,8 +100,8 @@ export default function DoToeic({exam, listQuestion}) {
           {
             exam.cateToeic === 2 ?
               <SubPartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion}
-                                numberListening={exam.numberListening}/> :
-              <PartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion}/>
+                                numberListening={exam.numberListening} listeningFile={exam.listeningFile}/> :
+              <PartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion} listeningFile={exam.listeningFile}/>
           }
           <div className={"bg-base-100 rounded-xl px-4 lg:hidden block mt-4"}>
             <h3 className={'!m-2 !mb-3'}>Thời gian còn lại</h3>

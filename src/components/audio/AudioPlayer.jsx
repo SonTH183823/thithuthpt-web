@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import {domainUpload} from "../../configs/configs";
 
-function AudioPlayer(props) {
+function AudioPlayer({link}) {
   return (
     <div className={'w-full'}>
       <ReactAudioPlayer
-        src={'http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3'}
+        src={`${domainUpload}/${link}`}
         controls
         volume={0.5}
         className={'w-full'}

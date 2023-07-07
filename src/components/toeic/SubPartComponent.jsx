@@ -8,7 +8,7 @@ import AudioPlayer from "@/components/audio/AudioPlayer";
 import ModalConfirmFinishExam from "@/components/modal/ModalConfirmFinishExam";
 import eventEmitter from "../../utils/eventEmitter";
 
-function PartComponent({part, setTabActive, listQuestion, numberListening}) {
+function PartComponent({part, setTabActive, listQuestion, numberListening, listeningFile}) {
   const answers = ['A', 'B', 'C', 'D']
   let oldPosition = null
   const [listQues, setListQues] = useState([...Array(listQuestion.length).fill(0)])
@@ -68,7 +68,7 @@ function PartComponent({part, setTabActive, listQuestion, numberListening}) {
     <div className="lg:grid grid-cols-3 lg:space-x-4">
       <div className="col-span-2 relative">
         {part === 1 && <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
-          <AudioPlayer/>
+          <AudioPlayer link={listeningFile}/>
         </div>}
         <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
           {exportQues().map((item, index) => (
