@@ -7,7 +7,7 @@ function AudioPlayer(props) {
       <ReactAudioPlayer
         src={'http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3'}
         controls
-        volume
+        volume={0.5}
         className={'w-full'}
       />
     </div>

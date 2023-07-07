@@ -1,17 +1,18 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import DetailExam from "@/components/exam/DetailExam";
-import ButtonPrimary from "@/components/button/ButtonPrimary";
-import Image from "next/image";
-import examImg from '@/assets/images/exam.jpeg'
-import examImg2 from '@/assets/images/test/tets.png'
 import CountDown from "@/components/exam-details/CountDown";
-import {answerConfig} from "../../../configs/configs";
 import FourOhFour from "../../404";
 import LayoutWithoutFooter from "@/components/layout/LayoutWithoutFooter";
 import AudioPlayer from "@/components/audio/AudioPlayer";
 import ModalConfirmFinishExam from "@/components/modal/ModalConfirmFinishExam";
 import PartComponent from "@/components/toeic/PartComponent";
 import {ExamAPI} from "../../../apis/exam";
+import SubPartComponent from "@/components/toeic/SubPartComponent";
+import {HistoryAPI} from "../../../apis/history";
+import {strToSlug} from "../../../utils/common";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
+import eventEmitter from "../../../utils/eventEmitter";
 
 export async function getServerSideProps({params}) {
   let exam = {};
@@ -34,46 +35,49 @@ export async function getServerSideProps({params}) {
 }
 
 export default function DoToeic({exam, listQuestion}) {
-  let oldPosition = null
-  const [listQues, setListQues] = useState(Array(200).fill(0))
   const [time, setTime] = useState(exam.time * 60)
   const [tabActive, setTabActive] = useState(1)
+  const router = useRouter()
+  const [listAnswer, setListAnswer] = useState([])
   useEffect(() => {
     setTimeout(async () => {
       await ExamAPI.countTestView(exam._id, {type: 'test'})
     }, 3000)
   }, [exam._id])
-  const questionClick = (index) => {
-    if (index !== oldPosition) {
-      oldPosition = index
-      const divE = document.getElementById('question-' + index)
-      const rect = divE.getBoundingClientRect();
-      let top = rect.top + window.pageYOffset - 80;
-      let left = rect.left + window.pageXOffset;
-      window.scrollTo({top: top, left: left, behavior: 'smooth'});
-    }
-  }
 
-  const handleAnsQues = (index, ans) => {
-    if (listQues[index] === answerConfig[ans].value) {
-      setListQues(l => {
-        let newA = [...l]
-        newA[index] = 0
-        return newA
-      })
+  useEffect(() => {
+    if (time === 0) {
+      onFinishExam()
+    }
+  }, [time])
+
+  useEffect(() => {
+    eventEmitter.on('submit-toeic-ans', (data) => {
+      setListAnswer([...data])
+    })
+  }, [])
+
+  const onFinishExam = async () => {
+    const data = {
+      examId: exam._id,
+      listListeningAnswer: listAnswer.splice(0, exam.numberListening),
+      listReadingAnswer: listAnswer,
+      timeSpent: exam.time * 60 - time
+    }
+    const res = await HistoryAPI.finishExam(data)
+    if (res) {
+      router.push(`/history/${strToSlug(exam.title)}-${res._id}`);
     } else {
-      setListQues(l => {
-        let newA = [...l]
-        newA[index] = answerConfig[ans].value
-        return newA
-      })
-    }
-  }
-
-  const finishExam = () => {
-    const modal = document.getElementById("modal-confirm-finish-exam-id");
-    if (modal) {
-      modal.click();
+      toast.error("Đã có lỗi xảy ra!", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   }
 
@@ -87,19 +91,24 @@ export default function DoToeic({exam, listQuestion}) {
               </div>
             </div>
             <div className="block col-span-1 lg:flex flex-col sticky top-20 h-fit lg:h-fit ">
-              <div className={"bg-base-100 rounded-xl px-4 "}>
+              <div className={"bg-base-100 rounded-xl px-4 lg:block hidden"}>
                 <h3 className={'!m-2 !mb-3'}>Thời gian còn lại</h3>
                 <CountDown time={time} setTime={setTime}/>
               </div>
             </div>
           </div>
-          <PartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion}/>
-          <div className={"bg-base-100 rounded-xl px-4 lg:hidden flex mt-4"}>
+          {
+            exam.cateToeic === 2 ?
+              <SubPartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion}
+                                numberListening={exam.numberListening}/> :
+              <PartComponent part={tabActive} setTabActive={setTabActive} listQuestion={listQuestion}/>
+          }
+          <div className={"bg-base-100 rounded-xl px-4 lg:hidden block mt-4"}>
             <h3 className={'!m-2 !mb-3'}>Thời gian còn lại</h3>
             <CountDown time={time} setTime={setTime}/>
           </div>
         </div>
-        <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'} handleClick={finishExam}/>
+        <ModalConfirmFinishExam id={'modal-confirm-finish-exam-id'} handleClick={onFinishExam}/>
       </div>
     ) : <FourOhFour/>}
   </Fragment>)

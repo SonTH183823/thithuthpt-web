@@ -107,7 +107,6 @@ export default function DoExam({exam, listQuestion}) {
         theme: "colored",
       });
     }
-
   }
 
   const arrChange = (val, index) => {

@@ -5,50 +5,23 @@ import CountDown from "@/components/exam-details/CountDown";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {answerConfig} from "../../configs/configs";
 import AudioPlayer from "@/components/audio/AudioPlayer";
+import ModalConfirmFinishExam from "@/components/modal/ModalConfirmFinishExam";
+import eventEmitter from "../../utils/eventEmitter";
 
-function PartComponent({part, setTabActive, listQuestion}) {
+function PartComponent({part, setTabActive, listQuestion, numberListening}) {
   const answers = ['A', 'B', 'C', 'D']
   let oldPosition = null
-  const [listQues, setListQues] = useState([...Array(200).fill(0)])
-  const [startAndNumber, SetStartAndNumber] = useState([0, 6])
-  const structureToeic = {
-    PART1: 0,
-    PART2: 6,
-    PART3: 31,
-    PART4: 70,
-    PART5: 100,
-    PART6: 130,
-    PART7: 146
-  }
-  const startPartIndex = [0, 6, 31, 70, 100, 130, 146]
+  const [listQues, setListQues] = useState([...Array(listQuestion.length).fill(0)])
+  const [startAndNumber, SetStartAndNumber] = useState([0, numberListening])
+  const startPartIndex = [0, numberListening, listQuestion.length]
   useEffect(() => {
     switch (part) {
       case 1: {
-        SetStartAndNumber([0, 6])
+        SetStartAndNumber([0, numberListening])
         break
       }
       case 2: {
-        SetStartAndNumber([6, 31])
-        break
-      }
-      case 3: {
-        SetStartAndNumber([31, 70])
-        break
-      }
-      case 4: {
-        SetStartAndNumber([70, 100])
-        break
-      }
-      case 5: {
-        SetStartAndNumber([100, 130])
-        break
-      }
-      case 6: {
-        SetStartAndNumber([130, 146])
-        break
-      }
-      case 7: {
-        SetStartAndNumber([146, 200])
+        SetStartAndNumber([numberListening, listQuestion.length])
         break
       }
     }
@@ -79,6 +52,7 @@ function PartComponent({part, setTabActive, listQuestion}) {
     }
   }
   const finishExam = () => {
+    eventEmitter.emit('submit-toeic-ans', listQues)
     const modal = document.getElementById("modal-confirm-finish-exam-id");
     if (modal) {
       modal.click();
@@ -93,22 +67,28 @@ function PartComponent({part, setTabActive, listQuestion}) {
   return (
     <div className="lg:grid grid-cols-3 lg:space-x-4">
       <div className="col-span-2 relative">
-        {part <= 4 && <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
+        {part === 1 && <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
           <AudioPlayer/>
         </div>}
         <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
-          {/*{genTabUI()}*/}
           {exportQues().map((item, index) => (
             <div className={'border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
-              {/*<Image src={examImg} alt={''} className={''}/>*/}
-              <div
-                className={'font-semibold bg-backgroundPrimary w-6 h-6 p-2 rounded-full flex items-center justify-center border-primary border-[.5px]'}>
-                {index + 1 + startPartIndex[part - 1]}
+              <div className={'flex mb-2'}>
+                <div
+                  className={'font-semibold bg-backgroundPrimary w-6 h-6 p-2 rounded-full flex items-center justify-center border-primary border-[.5px]'}>
+                  {index + 1 + startPartIndex[part - 1]}
+                </div>
+                <div className={'ml-2 font-semibold'}>{item.content}</div>
               </div>
+              <div className={'grid grid-cols-2 gap-2'}>
+                {item.questions.map((i, indexx) => <div><span className={'font-semibold'}>{answers[indexx]}.</span> {i}
+                </div>)}
+              </div>
+
               <div className={'flex flex-row justify-between'}>
                 {answers.map((ans, idx) =>
                   <div
-                    key={"fans-" + index+ startPartIndex[part - 1] + "-" + idx}
+                    key={"ans-" + index + startPartIndex[part - 1] + "-" + idx}
                     className={'w-[23%] sm:w-1/5 text-center font-semibold bg-base-200 py-2 my-2 rounded-md cursor-pointer text-sm sm:text-base ' + `${(listQues[index + startPartIndex[part - 1]] === answerConfig[ans].value) ? 'active-ques' : 'hover:bg-backgroundPrimary hover:text-black'}`}
                     onClick={() => handleAnsQues(index + startPartIndex[part - 1], ans)}
                   >{ans}</div>)}
@@ -121,18 +101,18 @@ function PartComponent({part, setTabActive, listQuestion}) {
         <div className={"bg-base-100 rounded-xl px-4 py-4 mt-4"}>
           <div className={'grid grid-cols-4 DSxl:grid-cols-5 gap-2'}>
             <div className={'flex items-center justify-center font-semibold text-lg'}>Part</div>
-            {[1, 2, 3, 4, 5, 6, 7].map(item =>
+            {[1, 2].map(item =>
               <div
                 className={`flex items-center justify-center py-2 bg-backgroundPrimary hover:bg-primary rounded-md hover:text-white cursor-pointer ${part === item ? 'bg-primary text-white' : ''}`}
                 key={item}
                 onClick={() => {
                   setTabActive(item)
                 }}
-              >Part {item}</div>)}
+              > {item === 1 ? 'Listening' : 'Reading'}</div>)}
           </div>
         </div>
         <div className={"bg-base-100 rounded-xl px-4 pb-4 mt-4"}>
-          <h3 className={'!m-2 pt-2'}>Danh sách câu hỏi Part {part}</h3>
+          <h3 className={'!m-2 pt-2'}>Danh sách câu hỏi {part === 1 ? 'Listening' : 'Reading'}</h3>
           <div className={'grid grid-cols-8 DSxl:grid-cols-5 gap-2'}>
             {listQues.slice(startAndNumber[0], startAndNumber[1]).map((item, index) => <div
               onClick={() => questionClick(index)}
