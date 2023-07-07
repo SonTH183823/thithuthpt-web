@@ -1,6 +1,7 @@
 import React from 'react';
 
 function TableTypeListQuesHistory({exam, history}) {
+  console.log(history)
   const { numberQuestion, numberListening, numberReading} = exam
   const {rsTypeQuestion, numberQuestionRight, numberListeningQuestionRight, numberReadingQuestionRight} = history
   const isToeic = exam.subject === 9
@@ -30,13 +31,15 @@ function TableTypeListQuesHistory({exam, history}) {
     },
   ]
 
-  const arr = [
+  const arrToeic = [
     {
       name: 'Listening',
+      right: numberListeningQuestionRight,
       numQues: numberListening
     },
     {
       name: 'Reading',
+      right: numberReadingQuestionRight,
       numQues: numberReading
     }
   ]
@@ -45,15 +48,15 @@ function TableTypeListQuesHistory({exam, history}) {
     if (isToeic) {
       return (
         <>
-          {rsTypeQuestion.map((h, index) => (
+          {arrToeic.map((h, index) => (
             <div className="grid grid-cols-8 gap-4 border-b-primary border-b-[1px]" key={'rsTypeQuestionToeic' + index}>
               <div className="px-4 py-2 col-span-1 text-center">{index + 1}</div>
-              <div className="px-4 py-2 col-span-3">{h.label}</div>
-              <div className="px-4 py-2 col-span-2 text-center">{h.value}</div>
-              <div className="px-4 py-2 col-span-2 text-center">{h.total - h.value}</div>
+              <div className="px-4 py-2 col-span-3">{h.name}</div>
+              <div className="px-4 py-2 col-span-2 text-center">{h.right}</div>
+              <div className="px-4 py-2 col-span-2 text-center">{h.numQues - h.right}</div>
             </div>
           ))}
-          {rsTypeQuestion.length > 0 ?
+          {arrToeic.length > 0 ?
             <div className="grid grid-cols-8 gap-4 font-bold border-b-primary border-b-[.5px]">
               <div className="px-4 py-2 col-span-1 text-center"></div>
               <div className="px-4 py-2 col-span-3">Tổng số</div>

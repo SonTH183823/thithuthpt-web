@@ -14,16 +14,21 @@ function ResultComponents({exam, history}) {
         Kết quả
       </h3>
       <div className="grid grid-cols-3 md:gap-8 gap-4 mb-4">
-        <div className={'col-span-1 bg-primary text-white flex flex-col justify-center items-center w-full px-2 md:px-8 py-8 rounded-2xl'}>
+        <div
+          className={'col-span-1 bg-primary text-white flex flex-col justify-center items-center w-full px-2 md:px-8 py-8 rounded-2xl'}>
           <div className={'font-light text-sm md:text-base'}>Số câu đúng</div>
-          <div className={'text-2xl md:text-4xl font-bold'}>{history.numberQuestionRight}/{exam.numberQuestion}</div>
+          {exam.subject === 9 ? <div
+              className={'text-2xl md:text-4xl font-bold'}>{history.numberListeningQuestionRight + history.numberReadingQuestionRight}</div> :
+            <div className={'text-2xl md:text-4xl font-bold'}>{history.numberQuestionRight}/{exam.numberQuestion}</div>}
         </div>
-        <div className={'col-span-1 bg-primary text-white flex flex-col justify-center items-center w-full px-2 md:px-8 py-8 rounded-2xl'}>
-              <div className={'font-light text-sm md:text-base'}>Điểm số</div>
-              <div className={'text-2xl md:text-4xl font-bold'}>{(history.numberQuestionRight * 10 / exam.numberQuestion).toFixed(1)}</div>
+        <div
+          className={'col-span-1 bg-primary text-white flex flex-col justify-center items-center w-full px-2 md:px-8 py-8 rounded-2xl'}>
+          <div className={'font-light text-sm md:text-base'}>Điểm số</div>
+          <div className={'text-2xl md:text-4xl font-bold'}>{(history.point).toFixed(1)}</div>
         </div>
-        <div className={' col-span-1 bg-primary text-white flex flex-col justify-center items-center w-full px-2 md:px-8 py-8 rounded-2xl'}>
-              <div className={'font-light text-sm md:text-base'}>Thời gian làm</div>
+        <div
+          className={' col-span-1 bg-primary text-white flex flex-col justify-center items-center w-full px-2 md:px-8 py-8 rounded-2xl'}>
+          <div className={'font-light text-sm md:text-base'}>Thời gian làm</div>
           <div className={'text-2xl md:text-4xl font-bold'}>{timeSpentConvert(history.timeSpent)}</div>
         </div>
       </div>
