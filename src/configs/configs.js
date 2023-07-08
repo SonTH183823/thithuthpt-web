@@ -1029,23 +1029,23 @@ export const levelConfig = [
 export const awardsConfig = [
   {
     minimumLevel: 0,
-    title: "Dự bị"
+    title: "Tân Binh"
   },
   {
     minimumLevel: 100,
-    title: "Đội 1"
+    title: "Tinh Anh"
   },
   {
     minimumLevel: 200,
-    title: "Lão tướng"
+    title: "Đại Thần"
   },
   {
     minimumLevel: 300,
-    title: "Huấn luyện viên"
+    title: "P.Thủ Lĩnh"
   },
   {
     minimumLevel: 500,
-    title: "Captain"
+    title: "Thủ Lĩnh"
   }
 ]
 

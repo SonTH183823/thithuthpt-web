@@ -5,6 +5,8 @@ import CountDown from "@/components/exam-details/CountDown";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {answerConfig} from "../../configs/configs";
 import AudioPlayer from "@/components/audio/AudioPlayer";
+import eventEmitter from "../../utils/eventEmitter";
+import {genURLImage} from "../../utils/common";
 
 function PartComponent({part, setTabActive, listQuestion}) {
   const answers = ['A', 'B', 'C', 'D']
@@ -79,6 +81,7 @@ function PartComponent({part, setTabActive, listQuestion}) {
     }
   }
   const finishExam = () => {
+    eventEmitter.emit('submit-toeic-ans', listQues)
     const modal = document.getElementById("modal-confirm-finish-exam-id");
     if (modal) {
       modal.click();
@@ -97,13 +100,27 @@ function PartComponent({part, setTabActive, listQuestion}) {
           <AudioPlayer/>
         </div>}
         <div className={"bg-base-100 rounded-xl mt-4 p-4"}>
-          {/*{genTabUI()}*/}
           {exportQues().map((item, index) => (
             <div className={'border-b-primary border-b-2 p-2'} key={index} id={'question-' + index}>
-              {/*<Image src={examImg} alt={''} className={''}/>*/}
-              <div
-                className={'font-semibold bg-backgroundPrimary w-6 h-6 p-2 rounded-full flex items-center justify-center border-primary border-[.5px]'}>
-                {index + 1 + startPartIndex[part - 1]}
+              <div className={'flex mb-2'}>
+                <div
+                    className={'font-semibold bg-backgroundPrimary w-6 h-6 p-2 rounded-full flex items-center justify-center border-primary border-[.5px]'}>
+                  {index + 1 + startPartIndex[part - 1]}
+                </div>
+                <div className={'ml-2 font-semibold'}>{item.content}</div>
+              </div>
+              <div className={'w-full my-2'}>
+                {item?.description ?
+                    <Image
+                        src={genURLImage(item.description)}
+                        alt={''}
+                        className={'w-full h-full cursor-pointer'}
+                        width={2000}
+                        height={200}/> : null}
+              </div>
+              <div className={'grid grid-cols-2 gap-2'}>
+                {item.questions.map((i, indexx) => <div><span className={'font-semibold'}>{answers[indexx]}.</span> {i}
+                </div>)}
               </div>
               <div className={'flex flex-row justify-between'}>
                 {answers.map((ans, idx) =>
