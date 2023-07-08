@@ -5,13 +5,15 @@ import HomeExamList from "@/components/exam/HomeExamList";
 import NewHomeSection from "@/components/home/news/NewHomeSection";
 import FeedbackSection from "@/components/feedback/FeedbackSection";
 import FeatureSection from "@/components/filter/FilterSection";
+import SearchSection from "@/components/home/SearchSection";
 
 export default function Home() {
     return (
         <Fragment>
             <div className="mx-auto bg-base-200">
                 <PrimaryBanner/>
-                <FeatureSection />
+                {/*<FeatureSection />*/}
+                <SearchSection />
                 <div className="container">
                     <HomeExamList title={"ĐỀ THI NỔI BẬT"}/>
                     {/*<HomeExamList title={"MÔN TOÁN"} category={2}/>*/}
