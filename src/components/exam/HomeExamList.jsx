@@ -32,7 +32,7 @@ export default function HomeExamList({title, category}) {
   }
   return (
     <>
-      <div className="pb-8 padding-mobile">
+      <div className="pt-6 pb-8 padding-mobile">
         {loading ? (
           <Fragment>
             <div className="pt-8 flex items-center justify-center">

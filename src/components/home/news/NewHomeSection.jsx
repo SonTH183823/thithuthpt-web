@@ -1,8 +1,6 @@
 import ButtonPrimary from "@/components/button/ButtonPrimary";
-import ButtonSeeMore from "@/components/button/ButtonSeeMore";
 import TitleSection from "@/components/common/TitleSection";
 import NewSekeleton from "@/components/Sekeleton/NewSekeleton";
-// import { async } from "@firebase/util";
 import {NewAPI} from "apis/new";
 import {useRouter} from "next/router";
 import React, {Fragment, useEffect, useState} from "react";
@@ -51,7 +49,7 @@ export default function NewHomeSection() {
         </Fragment>
       ) : (
         <Fragment>
-          <TitleSection className={'uppercase'} title="Tin tức nổi bật"/>
+          <TitleSection className={'uppercase'} title="Tin tức"/>
           {genUINews()}
           <div className="flex justify-center mt-8">
             <ButtonPrimary

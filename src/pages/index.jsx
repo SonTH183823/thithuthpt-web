@@ -20,11 +20,11 @@ export default function Home() {
                     {/*<HomeExamList title={"MÔN LÝ"} category={3}/>*/}
                     {/*<HomeExamList title={"HÓA HỌC"} category={4}/>*/}
                 </div>
-                {/*<div className="bg-white">*/}
-                {/*    <div className={'container'}>*/}
-                {/*        <HomeExamList title={"TÀI LIỆU ÔN TẬP"} category={4}/>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                <div className="bg-white">
+                    <div className={'container'}>
+                        <HomeExamList title={"TÀI LIỆU ÔN TẬP"} category={4}/>
+                    </div>
+                </div>
                 <NewHomeSection/>
                 <AboutSection/>
                 <FeedbackSection/>
