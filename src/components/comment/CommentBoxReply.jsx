@@ -89,7 +89,7 @@ export default function CommentBoxReply({
                   playsInline
                   src={videoURL}
                   className={"h-[150px]"}
-                  poster="https://res.cloudinary.com/dqrn1uojt/image/upload/v1675062159/thumbnail-video-no-button_qf1rax.png"
+                  poster="https://res.cloudinary.com/dlqzy1i0o/image/upload/v1687752287/icon1_wpq15w.png"
                 >
                   <ControlBar autoHide={false} className="my-class"/>
                   <BigPlayButton position="center"/>
