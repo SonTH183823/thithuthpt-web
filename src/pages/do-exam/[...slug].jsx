@@ -13,6 +13,7 @@ import {useRouter} from "next/router";
 import {HistoryAPI} from "../../apis/history";
 import {toast} from "react-toastify";
 import Lightbox from "react-image-lightbox";
+import {useSelector} from "react-redux";
 
 export async function getServerSideProps({params}) {
   let exam = {};
@@ -41,6 +42,15 @@ export default function DoExam({exam, listQuestion}) {
   const [time, setTime] = useState(exam.time * 60)
   const answers = ['A', 'B', 'C', 'D']
   const router = useRouter()
+  const user = useSelector((state) => state.auth.profile);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!user?._id) {
+        router.push('/sign-in')
+      }
+    }, 1000)
+  }, [user])
 
   useEffect(() => {
     setTimeout(async () => {
