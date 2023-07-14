@@ -14,7 +14,9 @@ const nextConfig = {
       "placeimg.com",
       "graph.facebook.com",
       "img.freepik.com",
-      "localhost"
+      "localhost",
+      "139.180.212.5:8200",
+      "thithuthpt.click"
     ],
   },
 }
