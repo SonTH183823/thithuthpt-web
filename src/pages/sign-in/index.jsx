@@ -21,6 +21,7 @@ import {authLogin} from "../../store/auth/auth-slice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import ModalLockAccount from "@/components/modal/ModalLockAccount";
+import {toast} from "react-toastify";
 
 const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
 const schema = yup.object({
@@ -32,7 +33,7 @@ const schema = yup.object({
 
 export default function SignIn() {
   const router = useRouter();
-  const [error, setError] = useState("");
+  const [errorM, setError] = useState("");
   const [number, setNumber] = useState("");
   const [flag, setFlag] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -69,6 +70,16 @@ export default function SignIn() {
       })
       .catch((error) => {
         console.log("error", error);
+        toast.error('Đã có lỗi xảy ra!', {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   };
 
@@ -99,6 +110,16 @@ export default function SignIn() {
       setLoading(false)
       console.log(err.message);
       setError(err.message);
+      toast.error("Đã có lỗi xảy ra!", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -116,6 +137,16 @@ export default function SignIn() {
           console.log(err);
           setCode("");
           setError(err.message);
+          toast.error('Đã có lỗi xảy ra!', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         }
       }
     })();
@@ -223,18 +254,18 @@ export default function SignIn() {
       </Fragment>
       <div className="text-center py-2">hoặc</div>
       <div className="text-center flex flex-col gap-y-2">
-        <div
-          className="flex items-center justify-center gap-x-2 rounded-lg shadow-lg p-4 cursor-pointer hover:bg-backgroundPrimary"
-          onClick={loginWithFacebook}
-        >
-          <Image
-            src={icon_facebook}
-            alt={"icon-facebook"}
-            width={30}
-            height={30}
-          />
-          <span>Đăng nhập với Facebook</span>
-        </div>
+        {/*<div*/}
+        {/*  className="flex items-center justify-center gap-x-2 rounded-lg shadow-lg p-4 cursor-pointer hover:bg-backgroundPrimary"*/}
+        {/*  onClick={loginWithFacebook}*/}
+        {/*>*/}
+        {/*  <Image*/}
+        {/*    src={icon_facebook}*/}
+        {/*    alt={"icon-facebook"}*/}
+        {/*    width={30}*/}
+        {/*    height={30}*/}
+        {/*  />*/}
+        {/*  <span>Đăng nhập với Facebook</span>*/}
+        {/*</div>*/}
         <div
           className="flex items-center justify-center gap-x-2 rounded-lg shadow-lg p-4 cursor-pointer hover:bg-backgroundPrimary"
           onClick={() => loginWithGoogle()}
