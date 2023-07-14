@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import {removeToken, saveTokenToCookie} from "utils/auth";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8003" + "/web",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
