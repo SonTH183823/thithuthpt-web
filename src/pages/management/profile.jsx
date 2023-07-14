@@ -1,9 +1,4 @@
 import React, {useEffect, useState} from "react";
-import LayoutWithSideBar from "@/components/layout/LayoutWithSideBar";
-import Avatar from "@/components/user/Avatar";
-import {Fragment} from "react";
-import ButtonSecondary from "@/components/button/ButtonSecondary";
-// import Select from "react-select";
 import FormGroup from "@/components/common/FormGroup";
 import {Label} from "@/components/label";
 import {useForm} from "react-hook-form";
@@ -12,14 +7,13 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import AvatarWithUpload from "@/components/user/AvatarWithUpload";
 import {useDispatch, useSelector} from "react-redux";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
-import {async} from "@firebase/util";
 import {userAPI} from "apis/user";
 import {toast} from "react-toastify";
-import {CharacteristicsItem, CharacteristicsItemIcon} from "@/components/characteristics/CharacteristicsItem";
+import {CharacteristicsItem} from "@/components/characteristics/CharacteristicsItem";
 import {authUpdateProfile} from "store/auth/auth-slice";
 import phone from '@/assets/images/svg/telephone.svg'
 import mail from '@/assets/images/svg/mail.svg'
-import {router} from "next/client";
+import {useRouter} from "next/router";
 
 const schema = yup.object({
   displayName: yup.string().required("Vui lòng nhập họ tên"),
@@ -30,6 +24,7 @@ export default function MyProfile() {
   const [school, setSchool] = useState("");
   const [name, setName] = useState("");
   const dispatch = useDispatch();
+  const router = useRouter()
   const {
     handleSubmit, formState: {errors},
   } = useForm({
@@ -57,7 +52,6 @@ export default function MyProfile() {
       if (res?.ok) {
         const profileRes = await userAPI.getProfile();
         dispatch(authUpdateProfile(profileRes));
-        router.push('/profile/me')
         toast.success("Cập nhật thông tin thành công!", {
           position: "bottom-right",
           autoClose: 3000,
@@ -68,6 +62,7 @@ export default function MyProfile() {
           progress: undefined,
           theme: "colored",
         });
+        await router.push('/profile/me')
       } else {
         toast.error("Đã có lỗi xảy ra!", {
           position: "bottom-right",
