@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import ButtonPrimary from "../button/ButtonPrimary";
-import finishExam from "@/assets/images/finishExam.png";
+import finishExam from "@/assets/images/finishExam.PNG";
 
 const ModalConfirmFinishExam = ({ handleClick = () => {}, id }) => {
   return (
