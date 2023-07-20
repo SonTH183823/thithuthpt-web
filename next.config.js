@@ -16,6 +16,7 @@ const nextConfig = {
       "img.freepik.com",
       "localhost",
       "139.180.212.5:8200",
+      "api.thithuthpt.click",
       "thithuthpt.click"
     ],
   },
