@@ -8,8 +8,9 @@ import HomeExamItem from "@/components/exam/HomeExamItem";
 import {ExamAPI} from "../../apis/exam";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {useRouter} from "next/router";
+import {DocumentAPI} from "../../apis/document";
 
-export default function HomeExamList({title, category}) {
+export default function HomeExamList({title, isDoc = false}) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter()
@@ -18,7 +19,12 @@ export default function HomeExamList({title, category}) {
     (async () => {
       try {
         setLoading(true)
-        const res = await ExamAPI.filterExam({perPage: 5})
+        let res
+        if (!isDoc) {
+          res = await ExamAPI.filterExam({perPage: 5})
+        } else {
+          res = await DocumentAPI.filterDocument({perPage: 5})
+        }
         setPosts(res.data)
         setLoading(false)
       } catch (e) {
@@ -31,7 +37,7 @@ export default function HomeExamList({title, category}) {
     router.push('/filter?outstanding=1')
   }
   return (
-    <>
+    <div className="container">
       <div className="pt-6 pb-8 padding-mobile">
         {loading ? (
           <Fragment>
@@ -81,15 +87,15 @@ export default function HomeExamList({title, category}) {
                 ))}
             </Swiper>
             <div className="flex justify-center mt-4">
-                <ButtonPrimary
-                    handleClick={handleClick}
-                    title={"Xem tất cả"}
-                    className={"w-[200px]"}
-                />
+              <ButtonPrimary
+                handleClick={handleClick}
+                title={"Xem tất cả"}
+                className={"w-[200px]"}
+              />
             </div>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
