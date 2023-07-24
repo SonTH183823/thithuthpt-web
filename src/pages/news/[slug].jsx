@@ -41,6 +41,12 @@ const DetailNew = ({newData}) => {
       }
     })();
   }, [router.query]);
+
+  useEffect(()=>{
+    if (newData.content) {
+      newData.content = newData.content.replace("Powered by", '').replace('Froala Editor', '').replace('Froala Editor', '')
+    }
+  },[router.query])
   const handleClickCategory = (item) => {
     const slug = strToSlug(item.name);
     router.replace(`/blog/${slug}-${item._id}`);
