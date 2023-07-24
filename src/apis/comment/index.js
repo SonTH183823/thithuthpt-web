@@ -33,7 +33,6 @@ export const commentAPI = {
                            owner,
                            postId,
                          }) {
-    console.log("owner", owner);
     const data = {parentId, userId, owner, postId};
     if (content) {
       data.content = content;

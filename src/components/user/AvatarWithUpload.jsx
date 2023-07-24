@@ -90,7 +90,7 @@ export default function AvatarWithUpload({
             />
           </div>
         ) : <div className="h-[150px] w-[150px] rounded-full bg-white">
-          <FontAwesomeIcon icon={faCircleUser} className={'text-primary w-full h-full'}/>
+          <FontAwesomeIcon icon={faCircleUser} className={'text-primary w-full !h-full'}/>
         </div>}
       </div>
       <label

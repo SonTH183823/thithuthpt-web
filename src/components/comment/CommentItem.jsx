@@ -42,6 +42,7 @@ export default function CommentItem(
     postId,
     title,
   }) {
+  console.log('hihihiii', comment)
   const [numLike, setNumLike] = useState(0)
   const [numDisLike, setNumDisLike] = useState(0)
   const [statusComment, setStatusCmt] = useState(statusCmt)

@@ -67,7 +67,7 @@ export default function ProfileUser() {
               <div
                 className={`lg:mt-5 md:mt-24 mt-20 lg:ml-[210px] lg:w-fit w-full flex items-center lg:items-start justify-center flex-col md:pb-0 pb-4`}>
                 <FullName
-                  fullName={user.name}
+                  fullName={user.name || user.phoneNumber}
                   className={"lg:text-3xl text-2xl block"}
                 ></FullName>
                 <PointComponent userInfo={user}/>
