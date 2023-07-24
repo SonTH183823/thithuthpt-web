@@ -60,9 +60,7 @@ export default function CommentItem(
   const {width} = useWindowSize()
   const router = useRouter()
 
-  const [loadMoreReply, setLoadMoreReply] = useState(
-    comment?.firstChild?.length > 1 ? true : false
-  );
+  const [loadMoreReply, setLoadMoreReply] = useState(false);
   const [isClickShowMore, setIsClickShowMore] = useState(false);
   const [loading, setLoading] = useState(null);
   const toggleShowCommentInput = () => {
@@ -140,7 +138,7 @@ export default function CommentItem(
           userId: profile._id,
           status: val,
           postId,
-          userCmtId: comment.userId?._id,
+          userCmtId: comment.userId?._id || comment.userId,
           title,
           typePost
         })
