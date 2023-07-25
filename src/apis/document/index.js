@@ -7,8 +7,12 @@ export const DocumentAPI = {
   },
 
   async getAllDocument(query) {
+    const f = {
+      active: 1,
+      ...query
+    }
     return await api.get(
-      `document?${queryString.stringify({...query})}`
+      `document?${queryString.stringify({...f})}`
     );
   },
 
@@ -28,13 +32,12 @@ export const DocumentAPI = {
   },
 
   async filterDocument(data) {
+    const f = {
+      active: 1,
+      ...data
+    }
     return await api.get(
-      `document?${queryString.stringify({...data})}`
-    );
-  },
-  async filterToeic(data) {
-    return await api.get(
-      `documentToeic?${queryString.stringify({...data})}`
+      `document?${queryString.stringify({...f})}`
     );
   },
 
@@ -45,7 +48,11 @@ export const DocumentAPI = {
   },
 
   async getRelatedDocument({id, data}) {
-    return await api.get(`document/related/${id}?${queryString.stringify(data)}`);
+    const f = {
+      active: 1,
+      ...data
+    }
+    return await api.get(`document/related/${id}?${queryString.stringify(f)}`);
   },
   async getNewestDocument(data) {
     return await api.get(`newestDocument${queryString.stringify(data)}`);

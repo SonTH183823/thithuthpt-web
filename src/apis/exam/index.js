@@ -31,13 +31,21 @@ export const ExamAPI = {
   },
 
   async filterExam(data) {
+    const filter = {
+      active: 1,
+      ...data
+    }
     return await api.get(
-      `exam?${queryString.stringify({...data})}`
+      `exam?${queryString.stringify({...filter})}`
     );
   },
   async filterToeic(data) {
+    const filter = {
+      active: 1,
+      ...data
+    }
     return await api.get(
-      `examToeic?${queryString.stringify({...data})}`
+      `examToeic?${queryString.stringify({...filter})}`
     );
   },
 
@@ -47,11 +55,19 @@ export const ExamAPI = {
   },
 
   async getFavoriteExams(query) {
-    return await api.get(`/favoriteExam?${queryString.stringify(query)}`);
+    const filter = {
+      active: 1,
+      ...query
+    }
+    return await api.get(`/favoriteExam?${queryString.stringify(filter)}`);
   },
 
   async getRelatedExam({id, data}) {
-    return await api.get(`exam/related/${id}?${queryString.stringify(data)}`);
+    const filter = {
+      active: 1,
+      ...data
+    }
+    return await api.get(`exam/related/${id}?${queryString.stringify(filter)}`);
   },
   async getListQuestionExam({id}) {
     return await api.get(`exam/question/${id}`);
