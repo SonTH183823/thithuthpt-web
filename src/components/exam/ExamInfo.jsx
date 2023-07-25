@@ -14,9 +14,7 @@ import star from "../../assets/images/svg/star.svg";
 function ExamInfo({item}) {
   return (
     <div className={"p-4"}>
-      <TitleExamItem className={"font-bold text-info flex items-center mb-2 cursor-pointer"}>
-        <span>{item.title}</span>
-      </TitleExamItem>
+      <TitleExamItem className={"font-bold text-info flex items-center mb-2 cursor-pointer"}>{item.title}</TitleExamItem>
       <div className={'bg-base-200 rounded-xl p-3'}>
         <div className={'flex flex-row justify-between space-x-4 mb-3'}>
           <CharacteristicsItem icon={star}>

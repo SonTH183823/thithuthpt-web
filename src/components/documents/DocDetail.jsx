@@ -10,25 +10,9 @@ import ModalReportPost from "@/components/modal/ModalReportPost";
 import ModalShare from "@/components/modal/ModalShare";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip as ReactTooltip} from "react-tooltip";
-import {useSelector} from "react-redux";
 import Link from "next/link";
 
-function DocDetail({item, notShowBtn = true}) {
-  const profile = useSelector((state) => state.auth.profile);
-  const handleReport = () => {
-    if (profile?._id) {
-      const modal = document.getElementById("modal-report-post-id");
-      if (modal) {
-        modal.click();
-      }
-    } else {
-      const modal = document.getElementById("modal-require-login-id");
-      if (modal) {
-        modal.click();
-      }
-    }
-  };
-
+function DocDetail({item, notShowBtn = true, isHome = false}) {
   const handleShare = () => {
     const modal = document.getElementById("modal-share-id");
     if (modal) {
@@ -40,7 +24,7 @@ function DocDetail({item, notShowBtn = true}) {
     <div className={'flex h-full flex-col'}>
       <div className={"flex justify-between mb-2"}>
         <TitleExamItem
-          className={"font-bold text-info text-xl flex items-center mb-2 cursor-pointer !m-0 !mr-2 hover:!text-black "}>
+          className={`${isHome ? 'font-bold text-info flex items-center mb-2 cursor-pointer' : 'font-bold text-info text-xl flex items-center mb-2 cursor-pointer !m-0 !mr-2 hover:!text-black'}`}>
           {item.title}
         </TitleExamItem>
         {notShowBtn ? <div className={"flex flex-col sm:flex-row sm:space-x-1"}>
@@ -84,7 +68,7 @@ function DocDetail({item, notShowBtn = true}) {
         </div>
       </div>
       <div className={'bg-base-200 rounded-xl p-3 mt-3 flex-1 h-full'}>
-        <span className={'line-clamp-3'}>{item.description}</span>
+        <span className={`${isHome ? 'line-clamp-2' : 'line-clamp-3'}`}>{item.description}</span>
       </div>
       <ModalReportPost id="modal-report-document" objectId={item._id}/>
       <ModalShare id="modal-share-document" title={item.title}/>

@@ -9,6 +9,7 @@ import {ExamAPI} from "../../apis/exam";
 import ButtonPrimary from "@/components/button/ButtonPrimary";
 import {useRouter} from "next/router";
 import {DocumentAPI} from "../../apis/document";
+import HomeDocItem from "@/components/documents/HomeDocItem";
 
 export default function HomeExamList({title, isDoc = false}) {
   const [posts, setPosts] = useState([]);
@@ -34,7 +35,11 @@ export default function HomeExamList({title, isDoc = false}) {
     })()
   }, [])
   const handleClick = () => {
-    router.push('/filter?outstanding=1')
+    if (isDoc) {
+      router.push('documents')
+    } else {
+      router.push('/filter?outstanding=1')
+    }
   }
   return (
     <div className="container">
@@ -82,7 +87,8 @@ export default function HomeExamList({title, isDoc = false}) {
               {posts.length > 0 &&
                 posts.map((item, index) => (
                   <SwiperSlide key={'item' + index}>
-                    <HomeExamItem item={item} key={item.id || index}/>
+                    {isDoc ? <HomeDocItem item={item} isHome={true} key={item.id || `docs` + index}/> :
+                      <HomeExamItem item={item} key={item.id || 'homexam-' + index}/>}
                   </SwiperSlide>
                 ))}
             </Swiper>
