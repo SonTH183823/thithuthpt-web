@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TitleExamItem from "@/components/exam/TitleExamItem";
 import {CharacteristicsItem} from "@/components/characteristics/CharacteristicsItem";
 import star from "@/assets/images/svg/star.svg";
@@ -13,6 +13,7 @@ import {Tooltip as ReactTooltip} from "react-tooltip";
 import Link from "next/link";
 
 function DocDetail({item, notShowBtn = true, isHome = false}) {
+  const [isReadmore, setReadMore] = useState(true)
   const handleShare = () => {
     const modal = document.getElementById("modal-share-id");
     if (modal) {
@@ -45,12 +46,6 @@ function DocDetail({item, notShowBtn = true, isHome = false}) {
           >
             <i className="fa-regular fa-share text-xl"></i>
           </div>
-          {/*<div*/}
-          {/*  data-tooltip-id="my-tooltip"*/}
-          {/*  data-tooltip-content={'Báo cáo'}*/}
-          {/*  className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"*/}
-          {/*  onClick={(e) => handleReport()}*/}
-          {/*><i className="fa-regular fa-flag text-lg"></i></div>*/}
         </div> : null}
       </div>
 
@@ -68,7 +63,12 @@ function DocDetail({item, notShowBtn = true, isHome = false}) {
         </div>
       </div>
       <div className={'bg-base-200 rounded-xl p-3 mt-3 flex-1 h-full'}>
-        <span className={`${isHome ? 'line-clamp-2' : 'line-clamp-3'}`}>{item.description}</span>
+        <span className={`${isHome ? 'line-clamp-2' : `${isReadmore ? 'line-clamp-3' : ''}`}`}>{item.description}</span>
+        {(item.description.length > 280 && !isHome) ?
+          <div className={'w-full flex justify-center items-center'}>
+          <span className={'text-primary cursor-pointer'}
+                onClick={() => setReadMore(!isReadmore)}>{isReadmore ? 'Đọc thêm' : 'Thu gọn'}</span>
+          </div> : <></>}
       </div>
       <ModalReportPost id="modal-report-document" objectId={item._id}/>
       <ModalShare id="modal-share-document" title={item.title}/>
