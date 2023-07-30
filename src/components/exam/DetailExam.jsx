@@ -22,6 +22,7 @@ import {ExamAPI} from "../../apis/exam";
 import {updateFavoriteExams} from "../../store/exam/exam-slice";
 import {toast} from "react-toastify";
 import Link from "next/link";
+import {domainUpload} from "../../configs/configs";
 
 function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}) {
   const router = useRouter();
@@ -141,7 +142,7 @@ function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}
             data-tooltip-id="my-tooltip"
             data-tooltip-content={'Tải xuống'}
             className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
-            href={item.link}
+            href={`${domainUpload}/${item.link}`}
             target={'_blank'}
           >
             <i className="fa-regular fa-download text-xl"></i>
