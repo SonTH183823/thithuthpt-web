@@ -21,6 +21,7 @@ import ButtonSecondary from "@/components/button/ButtonSecondary";
 import {ExamAPI} from "../../apis/exam";
 import {updateFavoriteExams} from "../../store/exam/exam-slice";
 import {toast} from "react-toastify";
+import Link from "next/link";
 
 function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}) {
   const router = useRouter();
@@ -132,10 +133,19 @@ function DetailExam({isDoExam = false, isShowRs = true, item, isDoAgain = false}
     <div className={"sm:p-4 p-3"}>
       <div className={"flex justify-between mb-2"}>
         <TitleExamItem
-          className={"font-bold text-info text-2xl flex items-center mb-2 cursor-pointer !m-0 !mr-4 hover:!text-black "}>
+          className={"font-bold text-info text-2xl flex items-center mb-2 cursor-pointer !m-0 !mr-4 hover:!text-black hover:opacity-90 "}>
           {item.title}
         </TitleExamItem>
         <div className={"flex flex-col sm:flex-row sm:space-x-1"}>
+          {item?.link && <Link
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content={'Tải xuống'}
+            className="cursor-pointer p-2 h-[30px] w-[30px] flex items-center justify-center"
+            href={item.link}
+            target={'_blank'}
+          >
+            <i className="fa-regular fa-download text-xl"></i>
+          </Link>}
           <div
             data-tooltip-id="my-tooltip"
             data-tooltip-content={isFavorite ? 'Bỏ yêu thích' : 'Yêu thích'}
