@@ -25,7 +25,7 @@ export default function PrimaryDocItem({item}) {
         <DocTag item={item} />
       </div>
       <div className="w-full p-2">
-        <DocDetail notShowBtn={false} item={item}/>
+        <DocDetail notShowBtn={false} item={item} isHome={true}/>
       </div>
 
     </div>
