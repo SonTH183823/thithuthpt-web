@@ -66,6 +66,10 @@ export default function ExamDetail({exam}) {
                 <div className={"bg-base-100 rounded-xl "}>
                   <DetailExam isDoExam={true} item={exam}/>
                 </div>
+                {exam?.description && <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
+                  <div className={'mt-4'}>Mô tả</div>
+                  <div>{exam.description}</div>
+                </div>}
                 <div className={"bg-base-100 p-4 !pt-1 rounded-xl mt-4"}>
                   <TableTypeListQues item={exam}/>
                 </div>
